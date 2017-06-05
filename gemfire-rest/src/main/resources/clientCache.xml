@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <pool name="client">
+    <locator host="localhost" port="10334" />
+  </pool>
+
+  <pdx>
+    <pdx-serializer>
+      <class-name>org.apache.geode.pdx.ReflectionBasedAutoSerializer</class-name>
+      <parameter name="classes">
+        <string>io.pivotal.bookshop.domain.BookOrder,io.pivotal.bookshop.domain.BookOrderItem</string>
+      </parameter>
+      <parameter name="check-portability">
+        <string>true</string>
+      </parameter>
+    </pdx-serializer>
+  </pdx>
+
+  <region name="Customer">
+    <region-attributes refid="PROXY" />
+  </region>
+
+  <region name="BookOrder">
+    <region-attributes refid="PROXY" />
+  </region>
+
+</client-cache>

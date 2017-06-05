@@ -1,0 +1,92 @@
+= Custom-Partitioned Regions
+
+== Introduction
+
+In this lab, you will gain hands-on experience with creating a custom partition resolver.
+
+.Concepts you will gain experience with:
+- Creating a custom partition scheme in GemFire
+- Implementing a custom partition resolver
+
+_Estimated completion time_: 30 minutes
+
+
+== Enabling Co-located regions
+
+Recall that in order to ensure that related data ends up on the same member for partitioned regions, one key step is causing the buckets to be aligned between related regions.
+
+(`TODO-01`): Open the `cluster/cluster.xml` file and add the appropriate configuration to the `BookOrder` region to ensure bucket assignments are aligned with the `Customer` region.
+
+
+== Custom Partitioning
+
+To create a Custom Partitioning scheme for GemFire, we need to implement the `PartitionResolver` interface. We want to partition on `customerId`, which is a common field shared between `Customer` objects and `BookOrder` objects. We will need to make this an attribute of the key as well as the `orderId`. We have been using `Integer` representing just the `orderId` as the key up until this point, so we will need to wrap both the `orderId` and `customerId` in a `OrderKey` class.
+
+. Open the `OrderKey` class
+
+.. (`TODO-02a`) Notice that it contains the key (orderNumber) and the customerNumber, which will be used for partitioning.
+
+.. (`TODO-02b`) Notice that the `hashCode()` and `equals()` methods are based on the `orderNumber` part of the key and not the `customerNumber`. The addition of the `customerNumber` is for the `PartitionResolver` to use, not to impact the 'equality' of entries.
+
+. Create the `PartitionResolver`
+
+.. (`TODO-03`) Open the class `CustomerPartitionResolver` and implement the `getRoutingObject()` method.
+
+.. Using the `EntryOperation`, return the part of the key that will be used for ensuring that `BookOrder` objects related to a given `Customer` land in the same bucket.
+
+.. Notice the `close()` and `getName()` methods. `The close()` method is a callback method required by the `CacheCallback` interface. In this case, there's nothing to do when the cache closes. Similarly, the `getName()` method is specified by the PartitionResolver interface and offers a way to attach a name to the resolver.
+
+. (`TODO-04`) Modify the cluster XML file to register the custom partition resolver
+
+.. Open `cluster/cluster.xml` file
+
+.. Notice that, for the sake of this lab, we've reduced the number of buckets to `5`. That means any entries will land in one of these 5 buckets (0-4) depending on the key value used.
+
+.. Add the appropriate attributes to the `BookOrder` Region to have `io.pivotal.bookshop.domain.CustomerPartitionResolver` declared as the Partition Resolver.
+
+.. `cd` into the `custom-partitioning/cluster/` folder, start gfsh, and start a locator process
+
+.. Start server1 and verify the configuration. If the first server fails to start, it's likely due to incorrectly specifying the partition resolver.
++
+NOTE: Because you are registering a custom `PartitionResolver` on the server, you'll need to explicitly include the option: `--classpath=../../build/classes/main` with the server start commands.
+
+.. Once server 1 starts properly, start servers 2 and 3.
+
+
+. Run the System test
+
+.. (`TODO-05`) Open the `DataLoader` class under `io.pivotal.bookshop.buslogic` package and observe the `populateCustomers()` method and the `populateBookOrders()` method. Notice for example, that `cust1` has customer number `5598`, and has a corresponding book order (`17600`) that the `populateBookOrders()` method creates.  Notice a similar case for `cust3`.
+
+.. (`TODO-06`) Run `DataLoader`. This will load `Customer` objects and `BookOrder` objects into their respective regions. If your PartitionResolver has been correctly implemented, `Customer` objects and related `BookOrder` objects should end up on the same member because they will each use the same bucket number for storage.
+
+.. (`TODO-07`) Use the gfsh `locate entry` command to ascertain whether a customer record and its associated book order are hosted in the same server process.  Here's an example:
++
+----
+gfsh> locate entry --region=BookOrder --key-class=io.pivotal.bookshop.domain.OrderKey --key='{customerNumber: 5598, orderNumber: 17600}'
+----
++
+Note how gfsh supports a JSON representation of the OrderKey class.
++
+Alternatively, you can verify the distribution by using the `PRBFunction` we utilized in the previous `server-regions` lab.  To run this function, you'll have to first install it, in the same manner that we did previously.  Next, run the class `PRBFunctionExecutor` (under the `io.pivotal.training.prb` package) to list the bucket distribution.
++
+After execution completes, look at the console output and observe two things:
+
+... The bucket numbers for the `Customer` region and `BookOrder` regions are on the same member. If they are not, go back and double check your `cluster.xml` configuration and ensure that you've correctly specified co-location.
+
+... The data appears be aligned, as evidenced by the fact that there is one `Customer` entry in each bucket and that there appears to be one `BookOrder` entry for bucket `3` and `4`. Refer to the table below to see how the keys align to buckets. If you DON'T see the described alignment, go back and double check your `PartitionResolver` implementation.
++
+.Keys aligning with bucket numbers (assuming total buckets = 5)
+[cols="2*",options="header"]
+|===
+| Key (customerNumber) | Bucket Number
+| 5598 | 3
+| 5542 | 2
+| 6024 | 4
+|===
+
+.. Return to gfsh (re-connect to the locator if necessary) and stop all servers and the locator using the `shutdown` command.
+
+
+Congratulations!! You have completed this lab.
+
+

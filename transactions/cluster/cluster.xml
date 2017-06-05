@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO-05: Add cache configuration attribute to enable copy on read -->
+<cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0"
+  >
+
+  <!-- TODO-10: Register the LoggingTransactionListener -->
+
+  <region name="Customer">
+    <region-attributes data-policy="partition">
+      <partition-attributes total-num-buckets="7"/>
+      <cache-listener>
+        <class-name>io.pivotal.bookshop.buslogic.LoggingCacheListener</class-name>
+      </cache-listener>
+    </region-attributes>
+  </region>
+
+  <region name="Order">
+    <region-attributes data-policy="partition">
+      <!-- TODO-06: Make appropriate configuration so that the Order region is co-located with Customer -->
+      <partition-attributes total-num-buckets="7" />
+      <cache-listener>
+        <class-name>io.pivotal.bookshop.buslogic.LoggingCacheListener</class-name>
+      </cache-listener>
+    </region-attributes>
+  </region>
+</cache>

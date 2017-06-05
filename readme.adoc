@@ -1,0 +1,45 @@
+= GemFire Developer
+
+Welcome to the GemFire Developer course.
+
+== Setup
+
+To work through this course, you'll need to install:
+
+- http://www.oracle.com/technetwork/java/javase/downloads[Java^] (specifically JDK 8)
+- https://gradle.org/[Gradle^]
+- a Java IDE such as https://spring.io/tools[Spring Tool Suite^] (STS), or https://www.jetbrains.com/idea/[IntelliJ Idea^].
+
+Next, clone this project, and import it into your IDE.  Both STS and IntelliJ Idea provide a mechanism for importing a gradle project.  Consult your IDE's documentation or gradle's user guide for more information.
+
+
+== Course Modules
+
+. link:server-bootstrap/readme{outfilesuffix}[Server Bootstrap]
+. link:server-configuration/readme{outfilesuffix}[Server Configuration]
+. link:server-regions/readme{outfilesuffix}[Server Regions]
+. link:gfsh-practice/readme{outfilesuffix}[Gfsh Practice]
+. link:client-cache/readme{outfilesuffix}[Client Cache]
+. link:query/readme{outfilesuffix}[OQL Queries]
+. link:custom-partitioning/readme{outfilesuffix}[Custom Partitioning]
+. link:server-events/readme{outfilesuffix}[Server-Side Event Handling]
+. link:cache-management/readme{outfilesuffix}[Cache Management]
+. link:client-events/readme{outfilesuffix}[Handling events on the Client]
+. link:data-serialization/readme{outfilesuffix}[Data Serialization]
+. link:transactions/readme{outfilesuffix}[Transaction Management]
+. link:server-functions/readme{outfilesuffix}[Writing Server-Side Functions]
+. link:client-functions/readme{outfilesuffix}[Client Function Execution]
+. link:spring-gemfire/readme{outfilesuffix}[Spring Data GemFire]
+. link:gemfire-rest/readme{outfilesuffix}[REST API]
+
+
+== Useful links:
+
+- http://gemfire.docs.pivotal.io/[GemFire Product Documentation^]
+- http://gemfire.docs.pivotal.io/gemfire/supported_configs/supported_configs_and_system_reqs.html[Supported Configurations and System Requirements^]
+- http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire.properties file reference^]
+- http://gemfire.docs.pivotal.io/geode/reference/topics/cache_xml.html[cache xml element reference^]
+
+
+
+

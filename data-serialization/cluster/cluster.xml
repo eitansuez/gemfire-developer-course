@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <!-- TODO-02: Add the appropriate configuration to ensure that PDX serialization is used -->
+
+  <!-- TODO-03: Add an attribute to the pdx tag to force the server to not de-serialize objects -->
+
+  <region name="Customer">
+    <region-attributes refid="PARTITION">
+
+    </region-attributes>
+  </region>
+
+</cache>

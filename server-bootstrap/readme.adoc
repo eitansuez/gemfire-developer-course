@@ -1,0 +1,86 @@
+= Bootstrap
+
+In this lab, you will install GemFire and start a GemFire cluster on your local machine.
+
+== Install GemFire
+
+Follow http://gemfire.docs.pivotal.io/gemfire/getting_started/installation/install_intro.html[these instructions^] to install the GemFire product onto your local machine.
+
+=== Verify Installation
+
+* From a command shell, invoke:
+
+----
+gfsh version
+----
+
+If the output from the above command does not yield the version of gemfire, go back and verify that gemfire was installed properly and that the gfsh command is in your $PATH.
+
+* Start the gfsh console.  Invoke:
+
+----
+gfsh
+----
+
+You should see a _GFSH_ banner and a prompt.  Invoke:
+
+----
+help
+----
+
+This command should output is 3-4 screens long and lists all of the commands that the gemfire shell supports.
+
+Finally, exist the gemfire shell with:
+
+----
+exit
+----
+
+You should now be back at your normal shell prompt.
+
+
+== Start a GemFire Cluster
+
+Start a cluster consisting of a locator and three servers (all running on the same machine):
+
+- From a command shell:
++
+----
+cd cluster
+./start.sh
+----
++
+(on windows, invoke `start.bat` instead).
+
+[TIP]
+====
+The java tool `jps` is useful to ascertain whether your cluster is running.
+
+From the command line, invoke `jps`, and look for java processes with the name `LocatorLauncher` and `ServerLauncher`.  There should be one locator and three server processes.
+====
+
+
+=== Verify Cluster Operation
+
+The test class `BasicValidationTest` verifies the ability to store and retrieve data into and from GemFire regions.
+
+The test can be run either from your IDE or from the command-line.  For command-line execution, invoke:
+
+----
+cd server-bootstrap
+gradle test
+----
+
+If the test passes, then we're all set to proceed to the next module.
+
+But first, shutdown your cluster, with:
+
+----
+cd cluster
+./stop.sh
+----
+
+(on windows, use `stop.bat` instead).
+
+
+Congratulations!! You have completed this lab.

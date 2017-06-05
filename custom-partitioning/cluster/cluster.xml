@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <region name="Customer">
+    <region-attributes refid="PARTITION">
+      <partition-attributes redundant-copies="1" total-num-buckets="5"/>
+    </region-attributes>
+  </region>
+
+  <region name="BookOrder">
+    <region-attributes refid="PARTITION">
+      <!-- TODO-01: Add appropriate configuration to ensure bucket alignment between Customer and BookOrder regions -->
+      <partition-attributes redundant-copies="1" total-num-buckets="5">
+        <!-- TODO-04: Register the custom PartitionResolver -->
+      </partition-attributes>
+    </region-attributes>
+  </region>
+
+  <region name="Book">
+    <region-attributes refid="REPLICATE"/>
+  </region>
+
+</cache>

@@ -1,0 +1,164 @@
+= Server Configuration
+
+In this lab, you will gain hands-on experience with the basic configuration of a GemFire server cluster.
+
+Concepts you will gain experience with:
+
+* Configuring and starting a locator for member discovery
+* Configuring and starting GemFire cache servers
+* Loading data into the GemFire distributed system
+
+
+== Configuring GemFire properties file
+
+Generally, locators and servers use the same distributed system properties file, which lists locators as the membership coordinator.
+
+Edit `cluster/gemfire.properties` as follows:
+
+. Set the `locators` property to have port `10334` (see the http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire properties file reference^])
+. Set the `cache-xml-file` property to point to the server cache xml file.  Note that this will be a relative path to where the servers run.  As a result, you will probably want a path similar to `../cluster.xml`.
+
+
+== Starting the Locator
+
+From a terminal prompt, navigate to the `cluster/` folder and start the gemfire shell:
+
+----
+$ cd cluster
+$ gfsh
+----
+
+Invoke the following command:
+
+----
+gfsh> help start locator
+----
+
+Take the time to learn about the command `start locator` and its many parameters.  The locator name is a required parameter, all other parameters are optional.
+
+Let's start a locator:
+
+----
+gfsh> start locator --name=locator
+----
+
+Here's the console output:
+
+[.small]
+----
+Starting a Geode Locator in .../server-configuration/cluster/locator...
+...
+Locator in .../server-configuration/cluster/locator on 172.20.1.118[10334] as locator is currently online.
+Process ID: 5199
+Uptime: 2 seconds
+GemFire Version: 9.0.2
+Java Version: 1.8.0_121
+Log File: .../server-configuration/cluster/locator/locator.log
+JVM Arguments: -Dgemfire.enable-cluster-configuration=true -Dgemfire.load-cluster-configuration-from-dir=false -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
+Class-Path: /usr/local/Cellar/gemfire/9.0.2/libexec/lib/geode-core-9.0.2.jar:/usr/local/Cellar/gemfire/9.0.2/libexec/lib/geode-dependencies.jar
+
+Successfully connected to: JMX Manager [host=172.20.1.118, port=1099]
+
+Cluster configuration service is up and running.
+----
+
+Notice how this command has the side effect of creating a subfolder (named after the locator name) and that the locator process is logging to the `locator.log` file within that folder.
+
+
+== Starting the Servers
+
+Let's have two servers join the locator to form a cluster.
+
+Invoke the following command:
+
+----
+gfsh> help start server
+----
+
+Take the time to learn about the command `start server` and its many parameters. There are two aspects to the `start server` command that are significant:
+
+. Since we're starting multiple server processes on the same machine, each daemon process must listen on a unique port.  A simple way to guarantee that each new server listens on a different port is with the option `--server-port=0`.
+
+. The servers must join the locator, and so will need to be given the locator's address.  There are two ways to do this:  using the option `--locators=$hostname[$port]`, or indirectly by referencing the `gemfire.properties` file you prepared earlier.  We'll use this latter option.
+
+Invoke the start server command:
+
+----
+gfsh> start server --name=server1 --server-port=0 --properties-file=gemfire.properties
+----
+
+Here's the console output:
+
+[.small]
+----
+Starting a Geode Server in .../server-configuration/cluster/server1...
+...
+Server in .../server-configuration/cluster/server1 on 172.20.1.118[50719] as server1 is currently online.
+Process ID: 5293
+Uptime: 2 seconds
+GemFire Version: 9.0.2
+Java Version: 1.8.0_121
+Log File: .../server-configuration/cluster/server1/server1.log
+JVM Arguments: -Dgemfire.default.locators=172.20.1.118[10334] -DgemfirePropertyFile=.../server-configuration/cluster/gemfire.properties -Dgemfire.use-cluster-configuration=true -Dgemfire.start-dev-rest-api=false -XX:OnOutOfMemoryError=kill -KILL %p -Dgemfire.launcher.registerSignalHandlers=true -Djava.awt.headless=true -Dsun.rmi.dgc.server.gcInterval=9223372036854775806
+Class-Path: /usr/local/Cellar/gemfire/9.0.2/libexec/lib/geode-core-9.0.2.jar:/usr/local/Cellar/gemfire/9.0.2/libexec/lib/geode-dependencies.jar
+----
+
+Now start a second server in the same manner.  Give the second server a unique name (e.g. `server2`).
+
+List the members of your cluster with the `list members` command:
+
+----
+gfsh> list members
+ Name   | Id
+------- | -----------------------------------------------
+locator | 172.20.1.118(locator:5199:locator)<ec><v0>:1024
+server1 | 172.20.1.118(server1:5293)<v1>:1025
+server2 | 172.20.1.118(server2:5346)<v2>:1026
+----
+
+Congratulations, you now have a three-member cluster up and running.
+
+
+== Data Operations to Verify Cluster
+
+Let's verify that this cluster is operational by running another test that will simply insert a few records into a region and validate the count of records inserted.
+
+This can be done directly from the IDE by running the test named `VerifyCluster`, or from the command line:
+
+----
+cd server-configuration
+gradle test
+----
+
+If the test passes, we're good to go on to the next module.
+
+But before we go on, let's shut down our cluster.
+
+If you've exited gfsh, you must first re-launch gfsh *and* re-connect to the cluster:
+
+----
+$ gfsh
+gfsh> connect
+----
+
+You'll see output similar to this:
+
+----
+Connecting to Locator at [host=localhost, port=10334] ..
+Connecting to Manager at [host=172.20.1.118, port=1099] ..
+Successfully connected to: [host=172.20.1.118, port=1099]
+----
+
+Invoke the following command:
+
+----
+gfsh> help shutdown
+----
+
+Proceed to issue the shutdown command, and make sure to also shutdown the locator:
+
+----
+gfsh> shutdown --include-locators=true
+----
+
+Congratulations!! You have completed this lab.

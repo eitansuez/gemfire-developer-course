@@ -1,0 +1,128 @@
+= Transaction Management
+
+== Introduction
+
+In this lab, you will learn to configure and test GemFire transactions. You can group cache updates with GemFire transactions. Transactions allow you to create dependencies between cache modifications so they all either complete together or fail together.
+
+.Concepts you will gain experience with:
+. Creating the `Customer` region, co-located with the `Order` region.
+. Create a Java class to implement GemFire transaction by using the `CacheTransactionManager` API.
+. Use transactions to update data on both the `Customer` region and the `Order` region.
+
+
+_Estimated completion time_: 45 minutes
+
+
+== Implement the TransactionService functionality
+
+(`TODO-01`): Before beginning, open the test harness, `TransactionalTest` under the `io.pivotal.bookshop.tests` under `src/test/java`. Observe the two tests that will be executed to validate a correct transaction commit and a transaction rollback. Note that the first test asserts that the transaction commits successfully and that the associated values have been updated.
+
+Open the `TransactionsService` class within `io.pivotal.bookshop.buslogic` package and locate the `updateCustomerAndOrder()` method. Your responsibility is to write the necessary code to perform the fetch and update within a transaction. Perform the
+following steps.
+
+. (`TODO-02`): Define `CacheTransactionManager`, and get the transaction context.
+
+. Add the transactional code.
+
+.. (`TODO-03a`) Begin the transaction.
+
+.. (`TODO-03b`) Retrieve and update the `Customer` using the `customerKey` and `updatedCustomerPhone` values. Similarly, retrieve and update the `Order` using the `orderKey` and `updatedOrderDate` value.
+
+.. (`TODO-03c`): Save the `Customer` and `Order` objects in the cache with the same keys.
+
+.. (`TODO-03d`): Commit the transaction.
+
+. (`TODO-04`) Add code in the exception handler to roll back the transaction in case of any error with the transaction. This handler should catch the exception, roll back the transaction and re-throw the exception so the test harness can catch it.
+
+
+== Cache configuration and Server Start
+
+There are several configuration changes you'll want to make to ensure transactions between two partitioned regions work properly.
+
+. Open `cluster/cluster.xml`
+
+. (`TODO-05`): Set the cache configuration attribute `copy-on-read` to `true` to avoid in place changes.
+
+. (`TODO-06`): Add necessary configuration so that the `Order` region is co-located with the `Customer` region.
+
+Save your work.
+
+
+=== Server Start
+
+(`TODO-07`): start a locator and two servers using the cluster/serverStart.gf script script provided in the `cluster` folder:
+
+----
+cd cluster
+gfsh run --file=serverStart.gf
+----
+
+
+== Running the tests
+
+Run each test, and verify that both pass.  Try to reason through what is different in the setup of the second test, that causes the transaction to fail.
+
+Also, take a look at the `listener.log` file that is created in the transactions folder. The last entries should look something like the following output.
+
+[.small]
+----
+[info 2015/11/18 13:27:43.635 MST server2 <ServerConnection on port 56069 Thread 0> tid=0x4a] afterUpdate:   Entry updated for key: 1001
+Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 13:27:43.639 MST server2 <ServerConnection on port 56069 Thread 0> tid=0x4a] afterUpdate:   Entry updated for key: 1001
+Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+----
+
+The output shows the updates to the entries after the transaction commits.  These messages are emitted by the `LoggingCacheListener` class, which is registered as a cache listener on both the `Customer` and `Order` regions.
+
+
+== Implementing a TransactionListener
+
+In this next section, you will implement a `TransactionListener` that will allow you to also track the transactional events, namely the commit and rollback operations. This will allow you to verify that the commit and rollback events actually occur.
+
+To begin, open the `LoggingTransactionListener` class. Note that this class extends `TransactionListenerAdapter` as well as implementing `Declarable`. You will implement two methods that override the methods on the adapter class.
+
+. (`TODO-08`): First, add an `afterCommit()` method that overrides the one in `TransactionListenerAdapter`. In the body of the method, use the logger to log an INFO message that this is an afterCommit event and then also use the `TransactionEvent` object that is passed in to obtain the list of related cache events. Iterate over these events, printing out the event details.
++
+TIP: Refer to one of the methods of the `LoggingCacheListener` for an example of what you might want to print for each event.
+
+. (`TODO-09`): Similarly, add an `afterRollback()` method that overrides the `TransactionListenerAdapter` method and use it to log an `INFO` message that this is an `afterRollback` event. If desired, you may also be interested to obtain and print out related operation(s) that were involved in the transaction that rolled back.
+
+. (`TODO-10`): Open the `cluster.xml` file and add appropriate configuration to register this `LoggingTransactionListener`.
+
+. (`TODO-11`): Use the stop script (`gfsh run --file=serverStop.gf`) to stop the locator and servers. Then, restart and re-run the `TransactionTests` test harness.
+
+
+This time when you look at the end of the `listener.log` file that is created in the `transactions` folder, you should see additional log data that should look something like the following. In this case, you'll notice that the updates happen before the `afterCommit` event is triggered. Notice also that there are two events that are associated with this commit as shown by the event for `Customer` and `Order`.
+
+[.small]
+----
+[info 2015/11/18 15:28:03.590 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a] afterUpdate:   Entry updated for key: 1001
+Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 15:28:03.595 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a] afterUpdate:   Entry updated for key: 1001
+Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+
+[info 2015/11/18 15:28:03.597 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a] afterCommit: TxId= TXId: 192.168.0.60(DataOperations Client:31819:loner):57660:0d39b61c:DataOperations Client:1
+
+[info 2015/11/18 15:28:03.597 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a]    Entry updated for key: 1001
+Old value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=123-654-543, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+New Value: Customer [customerNumber=C001, firstName=Lula, lastName=Wax, Phone=222-22222-0000, Address=Address [addressTag=HOME, addressLine1=123 Main St., city=Topeka, state=KS, postalCode=50505, country=US]]
+
+[info 2015/11/18 15:28:03.598 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a]    Entry updated for key: 1001
+Old value: Order [orderNumber=ORD001, orderDate=Tue Dec 03 00:00:00 MST 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, customerNumber=C001, totalPrice=103.5, orderItems=[ProductItem:  [itemNumber=P001, Description=Toy], ProductItem:  [itemNumber=P002, Description=Watch], ProductItem:  [itemNumber=P003, Description=Pen]]]
+
+[info 2015/11/18 15:28:03.704 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a] afterRollback: TxId= TXId: 192.168.0.60(DataOperations Client:31819:loner):57660:0d39b61c:DataOperations Client:2
+
+[info 2015/11/18 15:28:03.704 MST server2 <ServerConnection on port 57651 Thread 0> tid=0x4a]    Cache event received with operation: UPDATE
+----
+
+
+Congratulations!! You have completed this lab. Be sure to use the `serverStop.gf` script to stop the locator and servers.
+
+

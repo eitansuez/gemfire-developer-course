@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <!-- TODO-01: Define a pool with one entry configured to contact the locator at localhost and listening on port 10334 -->
+
+  <!-- TODO-02:  Define Customer Region as a PROXY region type. Also, create a Book region with CACHING_PROXY region type. -->
+
+
+  <!-- TODO-07: Define a region called "LocalRegion" with LOCAL region type 	-->
+
+</client-cache>

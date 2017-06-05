@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<client-cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <!-- TODO-01: Ensure that subscriptions are enabled on the pool -->
+  <pool name="client">
+    <locator host="localhost" port="10334"/>
+  </pool>
+
+  <region name="Book">
+    <!-- TODO-02: Modify the region attributes to register the LoggingCacheListener. -->
+    <!-- TODO-03: Add a 'parameter' element named 'filename' with a string value
+           for the path to a file that will be used for logging -->
+    <region-attributes refid="CACHING_PROXY">
+    </region-attributes>
+  </region>
+
+  <region name="BookOrder">
+    <region-attributes refid="PROXY"/>
+  </region>
+
+</client-cache>

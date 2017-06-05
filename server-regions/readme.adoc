@@ -1,0 +1,184 @@
+= Server Regions
+
+This lab will take you through the process of creating both replicated regions and partitioned regions in GemFire. An XML file will be used for the configuration.
+
+Concepts you will gain experience with:
+
+* How to create a replicated region across multiple servers
+* Testing the failover and refresh of data on recovered nodes
+* Configuring partitioned regions in GemFire
+
+TIP: TODO comments have been embedded within the lab materials as a form of quick instructions. Use the _Tasks_ View in STS to display them (Window -> Show view -> Tasks)
+
+NOTE: If servers and locator are still running from the previous lab, be sure to stop them at this point. Remember, in order to shut the services down, you'll need to re-connect to the locator using the command `connect`.
+
+It is useful to consult the http://gemfire.docs.pivotal.io/geode/reference/topics/chapter_overview_cache_xml.html[GemFire cache.xml reference^] when working through the lab instructions below.
+
+
+== Creating Replicated Regions
+
+In this first section, you will work with the _Book_ region. The data that this region holds is a relatively small amount, is slow changing, and tends to be reference data. This is the type of data that is a good candidate for replication. We will walk through defining a region as replicated, watching shutdown of nodes, and the redundancy.
+
+. `cd` to the `server-regions` project folder on the command line. This will be your starting point for this lab.
+
+. Use your IDE to open the `cluster/cluster.xml` file.  Add a region attribute to define the `Book` region as a replicated region.
+
+. If the locator is not running, start it using `gfsh` with a command similar to the one used in the prior lab (_start locator.._).  Be sure to start gfsh from the within the `cluster/` folder.
+
+. Start `server1` using a command similar to what was used in the prior lab. Do _not_ start the second server yet.
+
+. In your IDE, locate and run the `BookLoader` class to load 3 books into the `Book` region.
+
+. Open the test class `ReplicationTest` to understand how it looks for values in the `Book` region.
+
+. Run the `ReplicationTest` to verify that the books were found.
+
+. Start the second server using the name `server2`.
++
+NOTE: The `--server-port=0` option is handy for auto-assigning ports for a server.
+
+. Examine the region details by executing the gfsh command `show metrics --region=/Book`. Note the member count and the number of entries for the cluster.
+
+. Stop server1 using the gfsh `stop server` command.
+
+. Re-run `ReplicationTest` and verify that the data can still be found in the remaining server (server 2).
+
+. Stop all the servers in preparation for the next section, but keep the locator running.
+
+
+== Creating Partitioned Regions
+
+In this section, you will use the `Customer` region and try out different partitioning scenarios. You will be using three server instances this time so you can see the benefits of partitioning with redundancy.
+
+. Return to the `cluster/cluster.xml` file and modify the `Customer` region: set the region type to partitioned.
+
+. Start three servers, calling them `server1`, `server2`, and `server3`.
+
+. Run the `CustomerLoader` class to load 3 customers into the distributed system.
+
+. You can observe the partitioning by issuing the following command.
++
+----
+gfsh> show metrics --region=/Customer --categories=partition --member=server1
+----
++
+Note the reported values for `bucketCount`, `primaryBucketCount` and `configuredRedundancy`. Try this for all three servers.
+
+. Use the `locate entry` command to locate one of the Customer records that you just loaded into GemFire.
++
+TIP: you'll need to specify the `key-class` for gfsh to properly lookup the entry
+
+. Now, stop all the servers (but not the locator).
+
+
+== Partitioned Regions with Redundancy
+
+In the prior partitioned region configuration, if one of the servers stops for some reason, all the data stored in that partition is lost. In this section, we'll address that by adding a redundancy factor.
+
+. Go back to the `cluster.xml` file and modify the Customer region attributes to add a redundancy of 1 (meaning there will be one primary and one redundant copy of every entry).
++
+TIP: You can do this either by modifying the region shortcut or by inserting a `partition-attributes` element and specifying this. However, in a later step, you'll add a recovery delay value so you may want to take the extra time to type in the `partition-attributes` element now.
+
+. Save the file and re-start the servers. Re-run the `CustomerLoader` class to re-load the customers.
+
+. Repeat the show metrics command to see what has changed with the updated partitioned region configuration.
+
+. Now, stop `server3` and repeat the `show metrics` command for the remaining two servers. You'll notice that the `primaryBucketCount` value for one of the surviving servers will have increased from 1 to 2, indicating that one of the redundant copies was promoted. Notice also that `numBucketsWithoutRedundancy` is not 0. This indicates that when the server was lost, and the redundant bucket was promoted, redundancy was not re-established for this or any redundant buckets that were on that server.
+
+
+=== Getting more detail via a custom function
+
+You can obtain even more detail by installing and then calling a GemFire function named `PRBFunction`.  The code for this function is in the module named `functions`.
+
+Let's build and deploy this function to our cluster:
+
+. In a terminal, change directories to the `functions` module:
++
+----
+$ cd functions
+----
+
+. Next, build the module:
++
+----
+$ gradle assemble
+----
++
+This should produce a jar file in the `build/libs` subfolder
+
+. Navigate to the `build/libs` subfolder:
++
+----
+$ cd build/libs
+----
+
+. launch gfsh and connect to your cluster:
++
+----
+$ gfsh
+
+gfsh> connect
+----
+
+. Invoke these commands to ensure that you're connected and to verify that no functions are currently registered with the distributed system members:
++
+----
+gfsh> list members
+gfsh> list functions
+----
++
+The output should say _No Functions Found_.
+
+. Now, deploy the jar file:
++
+----
+gfsh> deploy --jar=functions.jar
+----
+
+. Finally, invoked `list functions` once more to validate that the `PRBFunction` is now installed:
++
+----
+gfsh> list functions
+----
+
+
+We're now ready to execute this function.  Back in the `server-regions` module, under the `io.pivotal.training.prb` package, you'll find a class named `PRBFunctionExecutor`.  This program basically invokes the `PRBFunction` we just installed.  Run it.
+
+You'll see that very extensive output is printed that displays every primary bucket and every redundant bucket for each server. Look for buckets with a size > 0 to identify which contain entries. You should see output similar to the following for every server.
+
+[.small]
+----
+Member: HostMachine(server2:77234)<v2>:58224
+	Primary buckets:
+		Row=1, BucketId=2, Bytes=0, Size=0
+		Row=2, BucketId=4, Bytes=0, Size=0
+		Row=3, BucketId=9, Bytes=0, Size=0
+		Row=4, BucketId=12, Bytes=0, Size=0
+		Row=5, BucketId=13, Bytes=0, Size=0
+             ....
+		Row=20, BucketId=60, Bytes=0, Size=0
+		Row=21, BucketId=61, Bytes=676, Size=1
+----
+
+Stop the servers once more.
+
+
+== Partitioned Regions with Redundancy and Recovery Delay
+
+This time, you will add a recovery delay so that after a period of time, redundancy will be re-established. This will address the issue identified in the prior section.
+
+. Go back to the `cluster/cluster.xml` file and modify the partition-attributes element to define a recovery delay of 5 seconds.
++
+TIP: If you used a region shortcut in the prior section, you'll need to add a partition-attributes element inside the region-attributes element for the `Customer` region. Consult http://gemfire.docs.pivotal.io/geode/reference/topics/cache_xml.html#partition-attributes[this reference^] if necessary.
+
+. Save the file and re-start all the servers. Re-run the `CustomerLoader` class to re-load the customers.
+
+. Now, stop `server3` and repeat the `show metrics` command for the remaining two servers. If you run this command within 5 seconds of stopping `server3`, you'll likely see the `numBucketsWithoutRedundancy` is still not 0. Wait a few more seconds and repeat the command. You should see that this value will return to 0. This indicates that redundancy has been re-established within the remaining servers.
+
+. Alternatively, you can re-run the `PRBFunctionExecutor` to print out more detailed bucket listing as outlined in the prior section (you'll have to redeploy the jar file).
+
+. Stop the servers for the final time. Also stop the locator.
+
+
+Congratulations!! You have completed this lab.
+

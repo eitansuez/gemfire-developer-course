@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <region name="Book">
+    <!-- Define the Book region to be Replicated using region attributes and region shortcuts. -->
+  </region>
+
+  <region name="Customer">
+    <!-- Define the Customer region to be partitioned using region shortcuts -->
+    <!-- Ensure that there is one redundant copy and there is a recover delay of 5 seconds-->
+  </region>
+
+</cache>

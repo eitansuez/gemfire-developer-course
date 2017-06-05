@@ -1,0 +1,76 @@
+= Data Serialization
+
+== Introduction
+
+.Concepts you will gain experience with:
+. Configuring your cache to perform PDX Auto-Serialization
+. Working with multiple version of domain objects in PDX
+. Learn to use the PdxInstance API
+
+_Estimated completion time_: 40 minutes
+
+
+== Configuring the Cache for PDX Auto-Serialization
+
+In this section, you will focus on configuring PDX Auto-Serialization in both the client and server configurations.
+
+. (`TODO-01`) To begin, open the `Customer` class definition in the `io.pivotal.bookshop.domain` package. Take a moment to examine how it's written. Note first of all that it does not implement `java.io.Serializable` at all. Also note that one of the fields is an `Address` instance that represents various attributes related to a customer's address (ex. city, state, zip code, etc). If you like, you can also open this `Address` class (in the same package) and note that it also does not implement `java.io.Serializable`. In this condition, the only way to ensure these objects are serialized is to use one of the PDX Serialization techniques. Note also that both the `Customer` and `Address` classes have default constructors, which are a requirement for PDX Serialization.
+
+. (`TODO-02`) Next, open the `cluster/cluster.xml` file. Your task is to add the appropriate configuration to enable PDX Serialization in the server cache.
+
+. (`TODO-03`) Add an attribute to the pdx element signaling that the server should _not_ de-serialize objects.
+
+. `cd` into the `cluster` folder, launch gfsh, then use gfsh commands to start a locator and two servers.
++
+NOTE: Do _not_ use the `--classpath` argument when starting servers. It is important in observing the benefit of PDX Serialization that the domain classes not be on the classpath of the servers.
+
+. (`TODO-04`) Open the `src/main/resources/clientCache.xml` file and make a similar modification to the definition to support PDX Auto-Serialization. Do _not_ set the attribute to force client to read as a serialized object. We actually do want the PDX de-serialization to take place on the client.
+
+. (`TODO-05`) On the client side, we must also specify a serializer class name.  Add a `class-name` xml element and specify the fully qualified class name for the `ReflectionBasedAutoSerializer`. In addition, configure a parameter to the auto-serializer called `classes` that registers the classes that should be auto-serialized. You can use wild cards to be sure you get both the `Customer` class and `Address` class in the `io.pivotal.bookshop.domain` package.
+
+. (`TODO-06`) Locate the `CustomerLoader` class in the `io.pivotal.bookshop.buslogic` package and run it. This will load 3 customers into the Customer region on the server.
+
+. Return to gfsh and execute a query to select values from the Customer region.  The output should resemble the following:
+
+[.small]
+----
+custNum | firstName | lastName |                     primaryAddress                  | myBookOrders
+------- | --------- | -------- | --------------------------------------------------- | -------------------------
+5598    | Kari      | Powell   | class org.apache.geode.pdx.internal.PdxInstanceImpl | class java.util.ArrayList
+6024    | Trenton   | Garcia   | class org.apache.geode.pdx.internal.PdxInstanceImpl | class java.util.ArrayList
+5543    | Lula      | Wax      | class org.apache.geode.pdx.internal.PdxInstanceImpl | class java.util.ArrayList
+
+----
+
+
+== Working with PDX Domain Object Versions
+
+In this section, you'll begin to understand the power of PDX as you modify the definition of the `Customer` class and see that multiple versions of the class definition can be used within the GemFire distributed system at the same time.
+
+. (`TODO-07`) To begin, open the `Customer` class again and add a `telephoneNumber` field of type `String`. Also add a getter and setter method. You might also want to go to the `toString()` method and add code to ensure the values of this new field get printed.
+
+. (`TODO-08`) Open the `NewCustomerClient` class in the `io.pivotal.bookshop.buslogic` package.  In the `main()` method.  Write the code to create a new `Customer` instance. Be sure to set the new `telephoneNumber` property. Save the entry with the key `9999`.
+
+. (`TODO-09`) Add code to retrieve the newly inserted `Customer` entry (key: `9999`) and print it out (log it).
+
+. Run `NewCustomerClient` to insert this new record into GemFire.
+
+. Return to gfsh and re-issue the query command. This time, note that there is the additional entry for key `9999`.  Notice also that there is a new field displayed for `telephoneNumber`. Note that the first three entries now show this field value as `null`, which is the expected behavior.
+
+
+== Using PdxInstance
+
+In this last section, you will gain familiarity working with the `PdxInstance` class. This class offers the ability to fetch and manipulate objects without necessarily having their domain definitions on the classpath.  With `PdxInstance`, one can also de-serialize only the fields that are required to perform necessary processing.
+
+. (`TODO-10`) Open the `PdxInstanceClient` class in the `io.pivotal.bookshop.buslogic` package.  Add the necessary code to fetch the entry for key `9999`, processing it as a `PdxInstance`. Extract and print just the `telephoneNumber` field.
++
+TIP: It may be a good idea to add a test to ensure the instance you got back is an instance of PdxInstance and print out a notice if it isn't.
+
+. (`TODO-11`) Return to the `clientCache.xml` file and modify the attribute of the pdx element to tell the client cache _not_ to de-serialize entries into `Customer` objects. This is necessary if you intend to process your entries as `PdxInstance` objects.
+
+. Run the `PdxInstanceClient` and verify that you were able to obtain the `telephoneNumber` field and that it is the correct value. It should be the value you set in the prior section when you created the new `Customer` entry.
+
+
+Congratulations!! You have completed this lab.
+
+

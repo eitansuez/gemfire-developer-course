@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cache
+    xmlns="http://geode.apache.org/schema/cache"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
+    version="1.0">
+
+  <region name="Customer">
+    <region-attributes refid="REPLICATE"/>
+    <index name="PrimIndex">
+      <primary-key field="intValue"/>
+    </index>
+    <index name="customerNumberKeyIndex" from-clause="/Customer" expression="customerNumber" key-index="true" />
+  </region>
+
+  <region name="Book">
+    <region-attributes refid="REPLICATE"/>
+  </region>
+
+  <region name="BookOrder">
+    <region-attributes refid="REPLICATE"/>
+  </region>
+
+  <region name="InventoryItem">
+    <region-attributes refid="REPLICATE"/>
+  </region>
+
+</cache>

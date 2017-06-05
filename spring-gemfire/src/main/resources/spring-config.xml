@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:gfe="http://www.springframework.org/schema/gemfire"
+       xsi:schemaLocation="http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+  <!-- TODO-01: Define a client pool -->
+  <!-- TODO-14: Enable subscriptions on the pool -->
+
+  <!-- TODO-02: Define the overall client cache declaration and point it to the pool object created above -->
+
+  <!-- TODO-03: Define a client region as a proxy for the Book -->
+
+  <!-- TODO-15: Register a cache listener for the Book region-->
+  <!-- TODO-16: Register interest in key 999 (type java.lang.Long) for the Book region -->
+
+  <!-- TODO-06: Add a definition to create a GemfireTemplate and use the Book region -->
+
+  <!-- TODO-11: Enable gfe-data namespace and create a gfe-data:repositories declaration that scans the appropriate package -->
+
+</beans>

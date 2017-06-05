@@ -1,0 +1,70 @@
+= Server Side Event Handling
+
+== Introduction
+
+In this lab, you will learn to configure events on the server side of a GemFire distributed system.
+
+.Concepts you will gain experience with:
+- Creating and registering a CacheLoader
+- Creating and registering a CacheWriter
+
+_Estimated completion time_: 30 minutes
+
+
+== Preparation
+
+. start a locator and one server by using scripts provided in the `server-events` module, as follows:
++
+----
+cd server-events/cluster
+gfsh run --file=serverStart.gf
+----
+
+. In your IDE, navigate to the `server-events` module.  Open the test class `ServerEventsTests` (in `src/test/java` under the `io.pivotal.bookshop.tests` package) and review the tests.
+
+. Finally, run the tests (right mouse click on `ServerEventsTest  -> Run As -> JUnit Test`). You will see that 2 of the 3 tests currently fail.
+
+
+== Creating and Implementing a CacheLoader
+
+The objective of the cache loader is to load data on cache misses on the GemFire server. `The load()` method is called when the `region.get()` operation can't find the value in the cache. The value returned from the cache loader is put into the cache, and returned to the `get()` operation.
+
+. The definition of the `BookCacheLoader` class is provided in the `io.pivotal.bookshop.buslogic` package. Open this class file and add the code in the `load()` method to return a new `Book` instance. It can either  be explicitly generated in this method or by a helper class that you create. Ordinarily this would be loaded from an external data source such as a JDBC data source.
+
+. Open the `cluster/cluster.xml` file and add the necessary configuration to register the `BookCacheLoader` with the `Book` region.
+
+. Stop and re-start the server. It should now be running with the newly registered `BookCacheLoader`.
++
+[NOTE]
+====
+To stop the servers, you can use a command similar to the above start command
+
+----
+gfsh run --file=serverStop.gf
+----
+====
+
+. Re-run the test `shouldLoadEntryOnCacheMiss()`; it should now pass.
+
+
+== Creating and Implementing a CacheWriter
+
+In this section, you will implement a `CacheWriter` that performs validation of new entries. If you recall, any new entries that are created will fire the `beforeCreate()` event method. One of the benefits of having this method called before the actual insert is that we can perform validation to ensure entries meet our desired expectation.
+
+. To begin, refer to your `ServerEventsTests` unit test. The last two tests are designed to assert the correct behavior of your `ValidatingCacheWriter` implementation.
++
+NOTE: In reality, the test `shouldAllowEntryWrite()` would pass even if there was no `CacheWriter` registered as you've already seen.  Its main purpose is to ensure that a correct insert does _not_ generate an error.
+
+. Now, open the `ValidatingCacheWriter` class in the `io.pivotal.bookshop.buslogic` package.  Notice that the `beforeCreate()` method is left open for you to implement the functionality. Also note that there is a method called `validateNewValue()` where the logic is performed to determine a valid entry. Take a moment to examine this code. You've had some experience already with querying from the client. This is an example of a query being performed on the server. As you can see, a prospective book is considered valid if no other entry exists having the same `itemNumber`.
+
+. Now, return to the `beforeCreate()` method and implement the appropriate functionality to obtain the correct value, call the validate method and throw a `CacheWriterException` if the book is considered invalid.
+
+. Return to the `cluster.xml` file and add the necessary configuration to register the `ValidatingCacheWriter` with the `Book` region.
+
+. Save your work, stop and re-start the server.
+
+. Verify you've correctly implemented and registered the `ValidatingCacheWriter` by re-running the `ServerEventsTests` JUnit test. All tests should now pass.
+
+
+Congratulations!! You have completed this lab.
+

@@ -1,0 +1,126 @@
+= Cache Management
+
+== Introduction
+
+In this lab, you will learn to configure cache expiration and cache eviction.
+
+.Concepts you will gain experience with:
+. Configuring cache expiration
+. Configuring cache eviction
+
+
+_Estimated completion time_: 30 minutes
+
+
+== Configuring Cache Expiration
+
+Expiration ensures that your data is current and pertinent by removing old and unused entries from GemFire. It can also give you some control over region size. When you try to access an expired entry, GemFire looks to another source for a fresh update. If the data does not exist in another member, the cache loader you have installed on the data region is called.
+
+This exercise uses idle time expiration, configured through the XML file to destroy expired entries. The program creates four entries and then waits beyond the expiration time. During the wait time, the program updates one entry and accesses another. When the expiration time elapses, the third and fourth entries (which are not accessed and not modified) expire. The cache listener installed on the region reports all changes to the entries.
+
+=== Configure the XML
+
+Configure and add the corresponding region attributes in `src/main/resources/cluster.xml` to:
+
+. (`TODO-01`) Configure the `Customer` region with entry idle time expiration. Set the timeout to `10 seconds`, and `destroy` expiration action.  Consult the http://gemfire.docs.pivotal.io/geode/reference/topics/cache_xml.html#entry-idle-time[cache xml reference^] as necessary.
+
+. (`TODO-02`) Configure the `ServerCacheListener` cache listener to report changes to the cached data.
+
+
+=== Configure the Application
+
+Open the `SampleDataExpiration` class skeleton within `io.pivotal.bookshop.buslogic` package, and add the code for the following behavior:
+
+. (`TODO-03`) Add the code in the `getExpirationTime()` method to programmatically retrieve and return the entry idle timeout setting from the region attributes (`cluster.xml` file).
++
+TIP: You can access these configured values by invoking the appropriate `get()` method on the region.
+
+. (`TODO-04`) Add the code in the `updateCustomer()` method to update the customer details of the key passed in. Make changes to any information, except the key value and the customer ID. A good option is to add a new address.
+
+. (`TODO-05`) Review the `retrieveAndPrintRegionData()` method and observe its purpose is to iterate over the entries and print out the details of each.
+
+. (`TODO-06`) Add the code in the `run()` method, in the following sequence:
+
+.. Retrieve and populate the cache with the customer's data.
+
+.. Show the contents of the cache (calling the `retrieveAndPrintRegionData()` method).
+
+.. Get the idle timeout value, and use `Thread.sleep()` method to suspend the thread execution for (timeout - 1) seconds (remember the `sleep()` method assumes time is in milliseconds).
+
+.. Perform a `get()` on the Customer region to get one customer, and update the details of the second customer by calling `updateCustomer()`.
+
+.. Use the `Thread.sleep()` method to sleep past expiration timeout.
+
+.. Show the contents of the cache past expiration timeout.
+
+
+=== Executing the Application
+
+Execute the application in your IDE, and observe that after the expiration timeout, the cache contains only data that are either accessed or modified. In this case, we are running in an embedded model for simplicity.  Notice that because you retrieved entry 5540 and updated entry 5541, they remain in the cache after expiration.
+
+[.small]
+----
+Received afterCreate event for entry: 5540, Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+Received afterCreate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+Received afterCreate event for entry: 5542, Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+Received afterCreate event for entry: 5543, Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Server 1 : Loaded customers data ****************
+
+5540 => Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+5541 => Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+5542 => Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+5543 => Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+Before the idle time expiration, access and update one entry each...
+
+Accessed customer, Lula  data !!
+Received afterUpdate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+************ Updated customer data ****************
+
+Received afterDestroy event for entry: 5543
+Received afterDestroy event for entry: 5542
+After the expiration timeout, the cache contains:
+
+5540 => Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+5541 => Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+Closing the cache and disconnecting.
+----
+
+
+== Configuring Cache Eviction
+
+You can use eviction to control how much heap your data regions use. Eviction controls your data region size by removing least recently used (LRU) entries to make way for new data. It kicks in when your data region reaches a specified size or entry count. In this exercise, the data region is configured to keep the entry count at `4` or below by destroying LRU entries. A cache listener installed on the region reports the changes to the region entries.
+
+=== Configuring the XML
+
+(`TODO-07`) Configure and add the corresponding region attributes in the `cluster.xml` to destroy entries when the region reaches entry count of `4` . You should put this just after the cache listener entry in the file.
+
+
+=== Running the Application
+
+Open the `SampleDataEviction` class within the `io.pivotal.bookshop.buslogic` package. Observe that the code is written to first insert 4 Customer entries, followed by a fifth entry. Run this program and observe the output. You should see something like the following:
+
+[.small]
+----
+Received afterCreate event for entry: 5540, Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+Received afterCreate event for entry: 5541, Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+Received afterCreate event for entry: 5542, Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+Received afterCreate event for entry: 5543, Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Loaded customers data ****************
+5540 => Customer [customerNumber=5540, firstName=Lula, lastName=Wax]
+5541 => Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+5542 => Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+5543 => Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+************ Loaded customers data ****************
+Received afterCreate event for entry: 5544, Customer [customerNumber=5544, firstName=Fifth, lastName=Customer]
+Received afterDestroy event for entry: 5540
+************ Inserted one more customer data ****************
+5541 => Customer [customerNumber=5541, firstName=Tom, lastName=Mcginns]
+5542 => Customer [customerNumber=5542, firstName=Peter, lastName=Fernendez]
+5543 => Customer [customerNumber=5543, firstName=Jenny, lastName=Tsai]
+5544 => Customer [customerNumber=5544, firstName=Fifth, lastName=Customer]
+----
+
+Notice that in order to insert the fifth entry, it had to evict one of the other entries. The method it used was to locate the least recently used (the first entry) and evict it. Observe the above output and note that when entry `5544` was created that entry `5540` was destroyed.
+
+
+Congratulations!! You have completed this lab.
