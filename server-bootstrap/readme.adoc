@@ -46,7 +46,7 @@ Start a cluster consisting of a locator and three servers (all running on the sa
 - From a command shell:
 +
 ----
-cd cluster
+cd server-bootstrap/cluster
 ./start.sh
 ----
 +
