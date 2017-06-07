@@ -6,3 +6,9 @@
 .gradle
 build
 
+# eclipse artifacts:
+.classpath
+.project
+.settings
+bin
+
