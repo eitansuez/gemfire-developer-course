@@ -36,7 +36,7 @@ public class ClientCacheTests {
   }
 
   @Test
-  public void testFetchFromProxyRegions() {
+  public void dataShouldExist() {
     Customer customer = customers.get(5598L);
     assertNotNull("Customer shouldn't be null", customer);
     assertEquals("Failed to fetch the correct customer object", "Kari", customer.getFirstName());
@@ -50,7 +50,7 @@ public class ClientCacheTests {
   @Ignore
   // TODO-08: Remove @Ignore annotation, re-run tests and this one should pass as well
   // TODO-09: Re-run the tests and verify that both pass
-  public void testLocalRegion() {
+  public void localRegionShouldExist() {
     Region<Long, String> localRegion = cache.getRegion("LocalRegion");
     assertNotNull("Region should not be null", localRegion);
   }
