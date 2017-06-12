@@ -26,6 +26,17 @@ In this first section, you will work with the _Book_ region. The data that this 
 . If the locator is not running, start it using `gfsh` with a command similar to the one used in the prior lab (_start locator.._).  Be sure to start gfsh from the within the `cluster/` folder.
 
 . Start `server1` using a command similar to what was used in the prior lab. Do _not_ start the second server yet.
++
+[IMPORTANT]
+====
+In addition to the usual flags `properties-file`, `server-port`, and `name`, this time add a `classpath` flag as well, like so:
+
+----
+start server --server-port=0 --properties-file=gemfire.properties --name=server1 --classpath=../../build/classes/main
+----
+
+Certain gfsh commands used to fetch or locate entries on the server need the ability to deserialize objects from regions.  Currently, all our types are java serializable objects, meaning that the class files need to be on the server classpath for these commands to do their job.
+====
 
 . In your IDE, locate and run the `BookLoader` class to load 3 books into the `Book` region.
 
