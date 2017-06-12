@@ -16,7 +16,7 @@ Generally, locators and servers use the same distributed system properties file,
 Edit `cluster/gemfire.properties` as follows:
 
 . Set the `locators` property to have port `10334` (see the http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire properties file reference^])
-. Set the `cache-xml-file` property to point to the server cache xml file.  Note that this will be a relative path to where the servers run.  As a result, you will probably want a path similar to `../cluster.xml`.
+. Set the `cache-xml-file` property to point to the server cache xml file.  Note that this will be a relative path to where the servers run.  Consequently, you will need to set the path to `../cluster.xml`.
 
 
 == Starting the Locator
