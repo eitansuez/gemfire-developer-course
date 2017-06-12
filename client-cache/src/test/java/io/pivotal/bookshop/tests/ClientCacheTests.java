@@ -31,15 +31,22 @@ public class ClientCacheTests {
 
   @Test
   public void regionsShouldExist() {
-    assertNotNull("Failed to fetch Book region", books);
-    assertNotNull("Failed to fetch Customer region", customers);
+    assertNotNull(books);
+    assertNotNull(customers);
   }
 
   @Test
-  public void dataShouldExist() {
+  public void customersShouldExist() {
+    assertNotNull(customers);
+
     Customer customer = customers.get(5598L);
     assertNotNull("Customer shouldn't be null", customer);
     assertEquals("Failed to fetch the correct customer object", "Kari", customer.getFirstName());
+  }
+
+  @Test
+  public void booksShouldExist() {
+    assertNotNull(books);
 
     Book book = books.get(456L);
     assertNotNull("Book shouldn't be null", book);
