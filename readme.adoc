@@ -39,6 +39,7 @@ Next, clone this project, and import it into your IDE.  Both STS and IntelliJ Id
 - http://gemfire.docs.pivotal.io/gemfire/supported_configs/supported_configs_and_system_reqs.html[Supported Configurations and System Requirements^]
 - http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire.properties file reference^]
 - http://gemfire.docs.pivotal.io/geode/reference/topics/cache_xml.html[cache xml element reference^]
+- http://gemfire-90-javadocs.docs.pivotal.io/[gemfire javadocs^]
 
 
 
