@@ -20,7 +20,9 @@ public class ClientCacheTests {
 
   @Before
   public void setUp() throws Exception {
-    // TODO-04: Write the getCache method to initialize the client cache with the clientCache.xml file
+    // TODO-04: Write the code to obtain a reference to a ClientCache instance;
+    //  if necessary, use the set() method to configure your client cache factory
+    //  before calling create()
 
     // TODO-05: Make call to the getRegion() method to get the Book and Customer regions
     // from the ClientCache and assign to instance variables
