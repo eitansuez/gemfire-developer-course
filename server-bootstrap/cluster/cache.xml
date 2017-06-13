@@ -7,9 +7,6 @@
 
   <region name="Customer">
     <region-attributes refid="REPLICATE"/>
-    <index name="PrimIndex">
-      <primary-key field="intValue"/>
-    </index>
     <index name="customerNumberKeyIndex" from-clause="/Customer" expression="customerNumber" key-index="true" />
   </region>
 
