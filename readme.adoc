@@ -32,6 +32,9 @@ Next, clone this project, and import it into your IDE.  Both STS and IntelliJ Id
 . link:spring-gemfire/readme{outfilesuffix}[Spring Data GemFire]
 . link:gemfire-rest/readme{outfilesuffix}[REST API]
 
+== Addendum
+
+. https://github.com/eitansuez/simple-multisite[Multi-site Configuration^]
 
 == Useful links:
 
