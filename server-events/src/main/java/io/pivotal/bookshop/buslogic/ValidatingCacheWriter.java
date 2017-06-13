@@ -37,7 +37,7 @@ public class ValidatingCacheWriter extends CacheWriterAdapter<String, Book> impl
    *
    * @param book  New book value to validate
    * @param books Book region reference used to create a query
-   * @return True if new value is valid (i.e no other entry has the same itemNumber)
+   * @return true if new value is valid (i.e no other entry has the same itemNumber)
    * @throws QueryException If this query fails for some reason
    */
   private boolean validateNewValue(Book book, Region books) throws QueryException {
