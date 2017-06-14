@@ -24,7 +24,7 @@ Next, clone this project, and import it into your IDE.  Both STS and IntelliJ Id
 . link:custom-partitioning/readme{outfilesuffix}[Custom Partitioning]
 . link:server-events/readme{outfilesuffix}[Server-Side Event Handling]
 . link:cache-management/readme{outfilesuffix}[Cache Management]
-. link:client-events/readme{outfilesuffix}[Handling events on the Client]
+. link:client-events/readme{outfilesuffix}[Handling events on the Client] | https://github.com/eitansuez/gemfire_cq_demo[Continuous Query Demo^]
 . link:data-serialization/readme{outfilesuffix}[Data Serialization]
 . link:transactions/readme{outfilesuffix}[Transaction Management]
 . link:server-functions/readme{outfilesuffix}[Writing Server-Side Functions]
