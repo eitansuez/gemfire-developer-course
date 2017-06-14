@@ -48,7 +48,7 @@ First, you will implement a CacheListener that will log all _create_ events. Per
 
 . (`TODO-04a`) Locate the `init()` method and implement the functionality to extract a property named _filename_ to a String. Then, use this value to call `initializeLogger()` to set up the logger to point to this file.
 
-. (`TODO-04b`) Locate the afterCreate() method. Implement this method to log an info type message using the logger class attribute. In the log message, include both the key and new value.  Optionally, implement the other methods defined by the CacheListener to log additional events of interest (ex when an entry is updated or deleted).
+. (`TODO-04b`) Locate the `afterCreate()` method. Implement this method to log an `info` type message using the logger class attribute. In the log message, include both the key and new value.  Optionally, implement the other methods defined by the `CacheListener` to log additional events of interest (ex when an entry is updated or deleted).
 +
 TIP: Refer to the http://gemfire-90-javadocs.docs.pivotal.io/org/apache/geode/cache/CacheListener.html[JavaDocs for the `CacheListener` interface^] as well as the http://gemfire-90-javadocs.docs.pivotal.io/org/apache/geode/cache/EntryEvent.html[`EntryEvent` interface^] to determine the correct methods to invoke.
 
@@ -108,17 +108,17 @@ In this next section, you will be combining your understanding of event processi
 
 . (`TODO-06`) Open the `SimpleCQListener` class and implement the code of the `onEvent()` method. Write code to print out the various values of the `CqEvent` object that is passed in.
 
-. Next, open the CQClient class and locate the registerCq() method. Perform the following steps to set up and register the continuous query.
+. Next, open the `CQClient` class and locate the `registerCq()` method. Perform the following steps to set up and register the continuous query.
 
-.. (`TODO-07`) Use the pool instance to get a QueryService instance
+.. (`TODO-07`) Use the pool instance to get a `QueryService` instance
 
-.. (`TODO-08`) Use the QueryService to create a CqAttributes instance, registering the SimpleCQListener class created in the prior step.
+.. (`TODO-08`) Use the `QueryService` to create a `CqAttributes` instance, registering the `SimpleCQListener` class created in the prior step.
 
-.. (`TODO-09`) Write a query to trigger an event when a BookOrder is created having a totalPrice greater than $100.
+.. (`TODO-09`) Write a query to trigger an event when a `BookOrder` is created having a totalPrice greater than $100.
 
-.. (`TODO-10`) Using the CqAttributes you created and the query you wrote, create a new CqQuery and then execute it. If you decide to execute with initial results, capture the results and iterate over them, printing out the orders.
+.. (`TODO-10`) Using the CqAttributes you created and the query you wrote, create a new `CqQuery` and then execute it. If you decide to execute with initial results, capture the results and iterate over them, printing out the orders.
 
-. Finally, test out your implementation
+. Finally, test out your implementation:
 
 .. Start by running the `CQClient` class. Right mouse click on the file or in the editor and select `Run As -> Java Application`. This application will run to a certain point. You should see the following in the console output.
 +
