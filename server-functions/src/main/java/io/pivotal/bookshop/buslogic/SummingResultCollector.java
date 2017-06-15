@@ -4,18 +4,17 @@ import org.apache.geode.cache.execute.FunctionException;
 import org.apache.geode.cache.execute.ResultCollector;
 import org.apache.geode.distributed.DistributedMember;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
-public class SummingResultCollector implements ResultCollector<Serializable, Serializable> {
+public class SummingResultCollector implements ResultCollector<BigDecimal, BigDecimal> {
 
   private BigDecimal total = BigDecimal.ZERO;
 
   @Override
   public void addResult(DistributedMember memberID,
-                        Serializable resultOfSingleExecution) {
-    total = total.add((BigDecimal) resultOfSingleExecution);
+                        BigDecimal resultOfSingleExecution) {
+    total = total.add(resultOfSingleExecution);
   }
 
   @Override
@@ -25,16 +24,16 @@ public class SummingResultCollector implements ResultCollector<Serializable, Ser
 
   @Override
   public void endResults() {
-    // No special processing required.
+    total = total.setScale(2, BigDecimal.ROUND_HALF_UP);
   }
 
   @Override
-  public Serializable getResult() throws FunctionException {
-    return total.setScale(2, BigDecimal.ROUND_HALF_UP);
+  public BigDecimal getResult() throws FunctionException {
+    return total;
   }
 
   @Override
-  public Serializable getResult(long timeout, TimeUnit unit)
+  public BigDecimal getResult(long timeout, TimeUnit unit)
       throws FunctionException, InterruptedException {
     return this.getResult();
   }
