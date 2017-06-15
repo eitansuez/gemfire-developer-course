@@ -45,7 +45,7 @@ To perform this task, open the `server-functions` project in your IDE.
 
 You'll need to register the function you just wrote with the server cache configuration.
 
-. (`TODO-08`) Open the `cluster/cluster.xml` file and add the necessary configuration to enable PDX Serialization using the `ReflectionBasedAutoSerializer`.
+. (`TODO-08`) Open the `cluster/cluster.xml` file and add the necessary configuration to enable PDX Serialization;  also, make sure to set `read-serialized=true`.
 
 . (`TODO-09`) Add the appropriate configuration to register the function
 
