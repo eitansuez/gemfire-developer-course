@@ -13,6 +13,7 @@
   'server-functions',
   'client-functions',
   'spring-gemfire',
-  'gemfire-rest'].each {
+  'gemfire-rest',
+  'data-serializer'].each {
   include it
 }
