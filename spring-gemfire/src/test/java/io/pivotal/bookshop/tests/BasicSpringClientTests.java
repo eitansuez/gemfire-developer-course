@@ -5,14 +5,14 @@ import org.apache.geode.cache.Region;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
-@RunWith(SpringJUnit4ClassRunner.class)
+@RunWith(SpringRunner.class)
 @ContextConfiguration("classpath:spring-config.xml")
 // TODO-04: Open and review basic Spring Test configuration
 public class BasicSpringClientTests {
@@ -34,14 +34,14 @@ public class BasicSpringClientTests {
   @Test
   public void testGemfireTemplate() {
     // TODO-08: Implement this test by writing a query to return books having the author 'Daisy Mae West'
-    //          Assert you only get one item and that it's title is "A Treatise of Treatises"
+    //   Assert you only get one item and that it's title is "A Treatise of Treatises"
     fail("Not Implemented");
   }
 
   @Test
   public void testGemfireRepositories() {
     // TODO-13: Write a test that calls your findBy method. Use the above query as an example of how to perform the query
-    //          and assert the correct results
+    //   and assert the correct results
     fail("Not Implemented");
   }
 }
