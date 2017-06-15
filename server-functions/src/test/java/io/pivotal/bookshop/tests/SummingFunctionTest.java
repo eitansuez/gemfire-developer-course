@@ -16,23 +16,23 @@ import java.math.BigDecimal;
 import static org.junit.Assert.assertEquals;
 
 public class SummingFunctionTest {
-	private Region<Long, Book> books;
-	
-	@Before
-	public void setup() {
-		ClientCache cache = new ClientCacheFactory().create();
-		books = cache.getRegion("BookOrder");
-	}
-	
-	@Test
-	// TODO-11: Run the test verifying the function performs as expected
-	public void testSummingFunction() {
-		Execution execution = FunctionService.onRegion(books).withArgs("totalPrice")
-				.withCollector(new SummingResultCollector());
+  private Region<Long, Book> books;
 
-		ResultCollector rc = execution.execute("GenericSumFunction");
+  @Before
+  public void setup() {
+    ClientCache cache = new ClientCacheFactory().create();
+    books = cache.getRegion("BookOrder");
+  }
 
-		BigDecimal result = (BigDecimal) rc.getResult();
-		assertEquals(new BigDecimal("93.95"), result); // 40.98 + 52.97
-	}
+  @Test
+  // TODO-11: Run the test verifying the function performs as expected
+  public void testSummingFunction() {
+    Execution execution = FunctionService.onRegion(books).withArgs("totalPrice")
+        .withCollector(new SummingResultCollector());
+
+    ResultCollector rc = execution.execute("GenericSumFunction");
+
+    BigDecimal result = (BigDecimal) rc.getResult();
+    assertEquals(new BigDecimal("93.95"), result); // 40.98 + 52.97
+  }
 }
