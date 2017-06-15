@@ -12,6 +12,7 @@ To work through this course, you'll need to install:
 
 Next, clone this project, and import it into your IDE.  Both STS and IntelliJ Idea provide a mechanism for importing a gradle project.  Consult your IDE's documentation or gradle's user guide for more information.
 
+For solutions to all lab exercises, see the branch named `solutions`.
 
 == Course Modules
 
