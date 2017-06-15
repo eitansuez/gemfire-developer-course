@@ -12,6 +12,7 @@
       <partition-attributes total-num-buckets="10"/>
     </region-attributes>
   </region>
+
   <region name="BookOrder">
     <region-attributes refid="PARTITION_REDUNDANT">
       <partition-attributes total-num-buckets="10"/>
