@@ -4,18 +4,12 @@ import org.apache.geode.cache.execute.FunctionException;
 import org.apache.geode.cache.execute.ResultCollector;
 import org.apache.geode.distributed.DistributedMember;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
-
+import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 public class PRBResultCollector implements ResultCollector<Object[],String> {
 
-  final Map<DistributedMember,Object[]> fullResult = new HashMap<>();
+  private final Map<DistributedMember,Object[]> fullResult = new HashMap<>();
 
   public void addResult(DistributedMember memberID, Object[] resultOfSingleExecution) {
     this.fullResult.put(memberID, resultOfSingleExecution);
@@ -52,25 +46,25 @@ public class PRBResultCollector implements ResultCollector<Object[],String> {
   private void appendBucketInfo(StringBuilder builder, List bucketInfo, String bucketType) {
     int row = 0;
     builder.append("\n\t").append(bucketType).append(" buckets:");
-    for (Iterator i = sort(bucketInfo).iterator(); i.hasNext();) {
-      Map map = (Map) i.next();
+    for (Object o : sort(bucketInfo)) {
+      Map map = (Map) o;
       builder
-        .append("\n\t\t")
-        .append("Row=")
-        .append(++row)
-        .append(", BucketId=")
-        .append(map.get("BucketId"))
-        .append(", Bytes=")
-        .append(map.get("Bytes"))
-        .append(", Size=")
-        .append(map.get("Size"));
+          .append("\n\t\t")
+          .append("Row=")
+          .append(++row)
+          .append(", BucketId=")
+          .append(map.get("BucketId"))
+          .append(", Bytes=")
+          .append(map.get("Bytes"))
+          .append(", Size=")
+          .append(map.get("Size"));
     }
   }
 
   private List sort(List bucketInfo) {
     Map sortedBuckets = new TreeMap();
-    for (int i=0; i<bucketInfo.size(); i++) {
-      Map map = (Map) bucketInfo.get(i);
+    for (Object aBucketInfo : bucketInfo) {
+      Map map = (Map) aBucketInfo;
       sortedBuckets.put(map.get("BucketId"), map);
     }
     return new ArrayList(sortedBuckets.values());
