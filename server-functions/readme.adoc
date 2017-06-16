@@ -2,7 +2,7 @@
 
 == Introduction
 
-In this lab, you will gain hands-on experience with writing and registering  a GemFire function. A test client will invoke the function to compute a total across multiple GemFire servers.
+In this lab, you will gain hands-on experience with writing a GemFire function. A test client will invoke the function to compute a total across multiple GemFire servers.
 
 [.thumb]
 image:images/function_execution.jpg[Function Execution]
@@ -10,12 +10,22 @@ image:images/function_execution.jpg[Function Execution]
 
 .Concepts you will gain experience with:
 . Developing a GemFire function
-. Register functions using XML configuration
 . Execute the function on multiple servers
 . Invoke the function from a client application
 
 
 _Estimated completion time_: 30 minutes
+
+
+== Start up the Back End
+
+. (`TODO-01`) Open the `cluster/cluster.xml` file and add the necessary configuration to enable PDX Serialization;  also, be sure to set `read-serialized=true`.
+
+. (`TODO-02`) Start a locator and two servers in a manner similar to what we've done in past labs, by running `gfsh run --file=serverStart.gf` from within the `cluster` folder.
+
+. From your IDE, execute the `OrderLoader` class (in package `io.pivotal.bookshop.buslogic`).  This will place some data into the the Order Region.
+
+. Via the `gfsh` shell, run a query to inspect the contents of the `BookOrder` region, and verify that we've got two orders.  Optionally, try to locate each of the entries to determine which primary server they reside on.
 
 
 == Develop the Function
@@ -28,39 +38,62 @@ To perform this task, open the `server-functions` project in your IDE.
 
 . Implement the `execute()` method as follows:
 
-.. (`TODO-01`) Enforce that the `FunctionContext` is an instance of `RegionFunctionContext`. It's important that this be done as this function is only designed to be run via the `onRegion(..)` method calls. You might throw a `FunctionException` if this prerequisite isn't met. Assuming the `FunctionContext` argument is an instance of `RegionFunctionContext`, cast it to an instance of `RegionFunctionContext`.
+.. (`TODO-03`) Enforce that the `FunctionContext` is an instance of `RegionFunctionContext`. It's important that this be done as this function is only designed to be run via the `onRegion(..)` method calls. You might throw a `FunctionException` if this prerequisite isn't met. Assuming the `FunctionContext` argument is an instance of `RegionFunctionContext`, cast it to an instance of `RegionFunctionContext`.
 
-.. (`TODO-02`) Use the `FunctionContext` to get the parameter passed from the client. This will represent the name of the field on the `PdxInstance` for which the summing operation will be performed.
+.. (`TODO-04`) Use the `FunctionContext` to get the parameter passed from the client. This will represent the name of the field on the `PdxInstance` for which the summing operation will be performed.
 
-.. (`TODO-03`) Use the `PartitionRegionHelper` class to get all the local region data. We'll later add additional configuration to ensure that the local data obtained is strictly primary region data. Also initialize an instance of `BigDecimal` as this will be used to hold the sum that will be returned by the function.
+.. (`TODO-05`) Use the `PartitionRegionHelper` class to get all the local region data. We'll later add additional configuration to ensure that the local data obtained is strictly primary region data. Also initialize an instance of `BigDecimal` as this will be used to hold the sum that will be returned by the function.
 
-.. (`TODO-04`) Iterate over the local data, which should be a collection of `PdxInstance` objects. We'll later add configuration to enable PDX Serialization and to enforce that data read on the server side remains serialized.
+.. (`TODO-06`) Iterate over the local data, which should be a collection of `PdxInstance` objects. We'll later add configuration to enable PDX Serialization and to enforce that data read on the server side remains serialized.
 
-.. (`TODO-05`) Use the argument provided to de-serialize (extract) the field that will be used for summing. Initially, extract an `Object`. In a successive step, make sure the field is an instance of `Float` (we are making that assumption). If it is an instance of `Float`, add this value to the current sum.
+.. (`TODO-07`) Use the argument provided to de-serialize (extract) the field that will be used for summing. Initially, extract an `Object`. In a successive step, make sure the field is an instance of `Float` (we are making that assumption). If it is an instance of `Float`, add this value to the current sum.
 
-.. (`TODO-06`) Once all entries have been processed, send the final sum back to the caller. Since you will be only sending one result for this execution, make sure that you signal that this is the last result.
-
-
-== Register the Function and Start Servers
-
-You'll need to register the function you just wrote with the server cache configuration.
-
-. (`TODO-08`) Open the `cluster/cluster.xml` file and add the necessary configuration to enable PDX Serialization;  also, make sure to set `read-serialized=true`.
-
-. (`TODO-09`) Add the appropriate configuration to register the function
-
-. (`TODO-10`) Start a locator and two servers in a manner similar to what we've done in past labs, by running `gfsh run --file=serverStart.gf` from within the `cluster` folder.
-
-. Next, execute `OrderLoader` class found in the `io.pivotal.bookshop.buslogic` package in your IDE. This will load the Order Region with data.
+.. (`TODO-08`) Once all entries have been processed, send the final sum back to the caller. Since you will be only sending one result for this execution, make sure that you signal that this is the last result.
 
 
-== Calling the Function
+== Deploy the Function
 
-Finally, you will test the function using the `SummingFunctionTest` JUnit test found in `src/test/java`.
+
+We have two options for deploying the function:
+
+. We can either restart the servers with the function's class file in the classpath, or
+. we can use the `gfsh deploy` command to hot-deploy the code to all our servers
+
+Let's use the latter option.
+
+. Build and package the code:
++
+----
+cd server-functions
+gradle assemble
+----
++
+This action should produce a jar file in the `build/libs` folder named `server-functions.jar`.
+
+. `cd` into `build/libs`, and start `gfsh`, and invoke:
++
+----
+gfsh> list functions
+----
+
+. Observe that, for now, no functions are listed in the output.  Invoke:
++
+----
+gfsh> deploy --jar=server-functions.jar
+----
++
+Now repeat the `list functions` command.  You should see that gfsh has now deployed the function to all servers, without having to restart them.
+
+Ok, with our function deployed, it's now time to turn our attention to exercising it.
+
+
+== Call the Function
+
+You will test the function using the JUnit test `SummingFunctionTest` (found in `src/test/java`).
 
 . In the next lab exercise, you will focus on the writing the code to execute the function and process the results. For now, you will just worry about executing the function and verifying the results.
 
-. (`TODO-11`) Go ahead and run the program from the IDE. The test should pass.  If not, go back and review your implementation, and also make sure that you ran the `OrderLoader`.
+. (`TODO-09`) Go ahead and run the program from the IDE. The test should pass.  If not, go back and review your implementation, and also make sure that you ran the `OrderLoader`.
 
 . Stop the servers and locator.
 

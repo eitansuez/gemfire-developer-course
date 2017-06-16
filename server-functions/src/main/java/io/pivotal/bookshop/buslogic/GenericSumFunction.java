@@ -17,19 +17,19 @@ public class GenericSumFunction implements Function, Declarable {
   public void execute(FunctionContext context) {
     DistributedMember member = CacheFactory.getAnyInstance().getDistributedSystem().getDistributedMember();
 
-    // TODO-01: Ensure the FunctionContext is a RegionFunctionContext and if so, cast it up to RegionFunctionContext
+    // TODO-03: Ensure the FunctionContext is a RegionFunctionContext and if so, cast it up to RegionFunctionContext
 
-    // TODO-02: Get the argument from the FunctionContext representing the field to perform sum on
+    // TODO-04: Get the argument from the FunctionContext representing the field to perform sum on
 
-    // TODO-03: Use the PartitionRegionHelper to get all the local region data
+    // TODO-05: Use the PartitionRegionHelper to get all the local region data
 
     BigDecimal sum = BigDecimal.ZERO;
-    // TODO-04: Iterate over the values in the local region data
+    // TODO-06: Iterate over the values in the local region data
 
-    // TODO-05: Get the requested field, assert it is a Numeric type, cast it and add it to
+    // TODO-07: Get the requested field, assert it is a Numeric type, cast it and add it to
     //          the summable variable defined above
 
-    // TODO-06: Return the final sum
+    // TODO-08: Return the final sum
 
   }
 

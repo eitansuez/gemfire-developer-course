@@ -5,7 +5,7 @@
     xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
     version="1.0">
 
-  <!-- TODO-08: Add registration code necessary to enable PDX Auto Serialization -->
+  <!-- TODO-01: Add registration code necessary to enable PDX Auto Serialization -->
 
   <region name="Customer">
     <region-attributes refid="PARTITION_REDUNDANT">
@@ -18,7 +18,5 @@
       <partition-attributes total-num-buckets="10"/>
     </region-attributes>
   </region>
-
-  <!-- TODO-09: Add registration code necessary to register GenericSumFunction  -->
 
 </cache>

@@ -25,7 +25,7 @@ public class SummingFunctionTest {
   }
 
   @Test
-  // TODO-11: Run the test verifying the function performs as expected
+  // TODO-09: Run the test verifying the function performs as expected
   public void testSummingFunction() {
     Execution execution = FunctionService
         .onRegion(bookOrders)
