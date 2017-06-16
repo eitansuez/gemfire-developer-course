@@ -1,12 +1,10 @@
 package io.pivotal.bookshop.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
+import io.pivotal.bookshop.domain.BookOrder;
 import org.junit.Test;
 import org.springframework.web.client.RestTemplate;
 
-import io.pivotal.bookshop.domain.BookOrder;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class RestClientTest {
@@ -26,8 +24,8 @@ public class RestClientTest {
 
     // TODO-05: Issue a call to the RestTemplate to fetch an entry having the key 17699 and assigning to the 'order' variable.
     BookOrder order = null;
-    assertNotNull(order);
-    assertEquals(17699L, order.getOrderNumber());
+    assertThat(order).isNotNull();
+    assertThat(order.getOrderNumber()).isEqualTo(17699L);
   }
 
 }

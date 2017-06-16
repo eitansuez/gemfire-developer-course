@@ -12,7 +12,7 @@ import org.junit.Test;
 
 import java.util.stream.Stream;
 
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 public class OqlInquirerTests {
@@ -34,26 +34,26 @@ public class OqlInquirerTests {
   @Test
   public void testBasicQuery() {
     SelectResults<Customer> results = queryObject.doCustomerQuery();
-    assertEquals("Failed basic query: ", 3, results.size());
+    assertThat(results.size()).isEqualTo(3);
 
     Stream<String> firstNames = results.asList().stream().map(Customer::getFirstName);
-    assertTrue(firstNames.anyMatch(name -> name.equals("Lula")));
+    assertThat(firstNames.anyMatch(name -> name.equals("Lula"))).isTrue();
   }
 
   // TODO-05: Run the tests again after implementing doStructQuery() and now this and the testBasicQuery() test should pass.
   @Test
   public void testStructQuery() {
     SelectResults<Struct> results = queryObject.doStructQuery();
-    assertEquals("Failed struct query: ", 3, results.size());
+    assertThat(results.size()).isEqualTo(3);
     Stream<String> firstNames = results.asList().stream().map(item -> (String) item.get("firstName"));
-    assertTrue(firstNames.anyMatch(name -> name.equals("Lula")));
+    assertThat(firstNames.anyMatch(name -> name.equals("Lula"))).isTrue();
   }
 
   // TODO-07: Run the tests again after implementing doJoin() and now all three tests should pass.
   @Test
   public void testJoinQuery() {
     SelectResults<Customer> results = queryObject.doJoin();
-    assertEquals(1, results.size());
-    assertEquals("Wax", results.asList().get(0).getLastName());
+    assertThat(results.size()).isEqualTo(1);
+    assertThat(results.asList().get(0).getLastName()).isEqualTo("Wax");
   }
 }

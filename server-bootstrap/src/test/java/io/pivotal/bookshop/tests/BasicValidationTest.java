@@ -18,8 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.assertj.core.api.Assertions.assertThat;
 
 
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -54,9 +53,9 @@ public class BasicValidationTest {
   @Test
   public void customerKariPowellShouldExist() {
     Customer kari = customerRegion.get(5598L);
-    assertNotNull(kari);
-    assertEquals("Kari", kari.getFirstName());
-    assertEquals("Powell", kari.getLastName());
+    assertThat(kari).isNotNull();
+    assertThat(kari.getFirstName()).isEqualTo("Kari");
+    assertThat(kari.getLastName()).isEqualTo("Powell");
   }
 
 }

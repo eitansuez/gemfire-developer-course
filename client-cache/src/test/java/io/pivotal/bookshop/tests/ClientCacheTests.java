@@ -1,8 +1,5 @@
 package io.pivotal.bookshop.tests;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-
 import io.pivotal.bookshop.domain.Book;
 import io.pivotal.bookshop.domain.Customer;
 import org.apache.geode.cache.Region;
@@ -10,6 +7,8 @@ import org.apache.geode.cache.client.ClientCache;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO-06: Run the test suite
 public class ClientCacheTests {
@@ -31,26 +30,26 @@ public class ClientCacheTests {
 
   @Test
   public void regionsShouldExist() {
-    assertNotNull(books);
-    assertNotNull(customers);
+    assertThat(books).isNotNull();
+    assertThat(customers).isNotNull();
   }
 
   @Test
   public void customersShouldExist() {
-    assertNotNull(customers);
+    assertThat(customers).isNotNull();
 
     Customer customer = customers.get(5598L);
-    assertNotNull("Customer shouldn't be null", customer);
-    assertEquals("Failed to fetch the correct customer object", "Kari", customer.getFirstName());
+    assertThat(customer).isNotNull();
+    assertThat(customer.getFirstName()).isEqualTo("Kari");
   }
 
   @Test
   public void booksShouldExist() {
-    assertNotNull(books);
+    assertThat(books).isNotNull();
 
     Book book = books.get(456L);
-    assertNotNull("Book shouldn't be null", book);
-    assertEquals("Failed to fetch the correct book", "Clifford the Big Red Dog", book.getTitle());
+    assertThat(book).isNotNull();
+    assertThat(book.getTitle()).isEqualTo("Clifford the Big Red Dog");
   }
 
   @Test
@@ -59,7 +58,7 @@ public class ClientCacheTests {
   // TODO-09: Re-run the tests and verify that both pass
   public void localRegionShouldExist() {
     Region<Long, String> localRegion = cache.getRegion("LocalRegion");
-    assertNotNull("Region should not be null", localRegion);
+    assertThat(localRegion).isNotNull();
   }
 
 }

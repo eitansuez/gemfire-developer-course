@@ -17,7 +17,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO-01: Open the test harness and observe the two transaction tests to be run
 // TODO-07: Ensure the locator & servers have been started, then run the tests, verifying both tests pass.
@@ -60,8 +60,8 @@ public class TransactionalTests {
     Customer cust = customerRegion.get(customerKey);
     Order order = orderRegion.get(orderKey);
 
-    assertEquals("Failed to update Customer", updatedCustomerPhone, cust.getPhoneNumber());
-    assertEquals("Failed to update Order", updatedOrderDate.getTime(), order.getOrderDate());
+    assertThat(cust.getPhoneNumber()).isEqualTo(updatedCustomerPhone);
+    assertThat(order.getOrderDate()).isEqualTo(updatedOrderDate.getTime());
   }
 
   @Test(expected = TransactionException.class)

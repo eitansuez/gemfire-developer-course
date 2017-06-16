@@ -1,7 +1,5 @@
 package io.pivotal.bookshop.tests;
 
-import static org.junit.Assert.*;
-
 import org.apache.geode.cache.CacheWriterException;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -11,6 +9,9 @@ import org.junit.Before;
 import org.junit.Test;
 
 import io.pivotal.bookshop.domain.Book;
+
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 public class ServerEventsTests {
 
@@ -41,13 +42,13 @@ public class ServerEventsTests {
   @Test
   public void shouldLoadEntryOnCacheMiss() {
     String key = "Key00";
-    assertFalse("Region is not properly initialized", bookRegion.containsKeyOnServer(key));
+    assertThat(bookRegion.containsKeyOnServer(key)).isFalse();
 
     Book newBook = bookRegion.get(key);
-    assertNotNull("BookCacheLoader failed to create book for Key00", newBook);
-    assertTrue("Key " + key + " not found on server", bookRegion.containsKeyOnServer(key));
-    assertEquals("BookCacheLoader created the incorrect book", "Daisy Mae West", newBook.getAuthor());
-    assertEquals("BookCacheLoader created the incorrect book", 123, newBook.getItemNumber());
+    assertThat(newBook).isNotNull();
+    assertThat(bookRegion.containsKeyOnServer(key)).isTrue();
+    assertThat(newBook.getAuthor()).isEqualTo("Daisy Mae West");
+    assertThat(newBook.getItemNumber()).isEqualTo(123);
   }
 
   /**

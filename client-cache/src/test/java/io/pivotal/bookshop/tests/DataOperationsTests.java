@@ -1,5 +1,7 @@
 package io.pivotal.bookshop.tests;
 
+import io.pivotal.bookshop.buslogic.BookDao;
+import io.pivotal.bookshop.domain.Book;
 import org.apache.geode.cache.EntryExistsException;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -7,10 +9,8 @@ import org.apache.geode.cache.client.ClientCacheFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import io.pivotal.bookshop.buslogic.BookDao;
-import io.pivotal.bookshop.domain.Book;
-
-import static org.junit.Assert.*;
+import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.Assert.fail;
 
 // TODO-10: Open this file and inspect the various test methods.
 // TODO-15: When you have completed implementing the BookDao functionality, run this JUnit test to validate correct implementation
@@ -38,8 +38,8 @@ public class DataOperationsTests {
     dao.insertBook(key, book);
 
     // then can independently verify that book now exists in that region
-    assertNotNull(books.get(key));
-    assertEquals(book, books.get(key));
+    assertThat(books.get(key)).isNotNull();
+    assertThat(books.get(key)).isEqualTo(book);
   }
 
   @Test
@@ -70,8 +70,8 @@ public class DataOperationsTests {
     Book fetchedBook = dao.getBook(key);
 
     // then retrieved book matches the book in the region
-    assertNotNull(fetchedBook);
-    assertEquals(book, fetchedBook);
+    assertThat(fetchedBook).isNotNull();
+    assertThat(fetchedBook).isEqualTo(book);
   }
 
   @Test
@@ -86,10 +86,10 @@ public class DataOperationsTests {
 
     // then i can independently verify that the stored book has been updated
     // author should be the same as it was..
-    assertEquals(books.get(key).getAuthor(), "Some Author");
+    assertThat(books.get(key).getAuthor()).isEqualTo("Some Author");
     // title should have been updated..
-    assertEquals(books.get(key).getTitle(), "New book title");
-    assertEquals(books.get(key), book2);
+    assertThat(books.get(key).getTitle()).isEqualTo("New book title");
+    assertThat(books.get(key)).isEqualTo(book2);
   }
 
   @Test
@@ -101,7 +101,7 @@ public class DataOperationsTests {
     dao.updateBook(key, book);
 
     // then no book should have been inserted/placed in the region
-    assertNull(dao.getBook(key));
+    assertThat(dao.getBook(key)).isNull();
   }
 
   @Test
@@ -114,7 +114,7 @@ public class DataOperationsTests {
     dao.removeBook(key);
 
     // then the entry no longer exists in the region
-    assertNull(books.get(key));
+    assertThat(books.get(key)).isNull();
   }
 
 }

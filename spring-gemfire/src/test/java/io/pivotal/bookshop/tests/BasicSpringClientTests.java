@@ -9,7 +9,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import javax.annotation.Resource;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringRunner.class)
@@ -28,7 +28,7 @@ public class BasicSpringClientTests {
   // TODO-05: Run first test to verify basic configuration
   public void simpleClientTest() {
     Book book = books.get(456L);
-    assertEquals("Clifford the Big Red Dog", book.getTitle());
+    assertThat(book.getTitle()).isEqualTo("Clifford the Big Red Dog");
   }
 
   @Test

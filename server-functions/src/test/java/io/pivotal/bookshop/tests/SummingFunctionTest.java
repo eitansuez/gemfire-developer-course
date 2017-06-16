@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import java.math.BigDecimal;
 
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class SummingFunctionTest {
   private Region<Long, BookOrder> bookOrders;
@@ -35,6 +35,6 @@ public class SummingFunctionTest {
     ResultCollector rc = execution.execute("GenericSumFunction");
 
     BigDecimal result = (BigDecimal) rc.getResult();
-    assertEquals(new BigDecimal("93.95"), result); // 40.98 + 52.97
+    assertThat(result).isEqualTo(new BigDecimal("93.95")); // 40.98 + 52.97
   }
 }

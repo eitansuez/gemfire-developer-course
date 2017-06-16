@@ -9,8 +9,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import static junit.framework.TestCase.assertNotNull;
-import static org.junit.Assert.assertEquals;
+import static org.assertj.core.api.Assertions.assertThat;
 
 @Log4j2
 public class VerifyCluster {
@@ -32,7 +31,7 @@ public class VerifyCluster {
   @Test
   public void shouldWriteCustomersToRegion() {
     populateCustomers();
-    assertEquals(3, customerRegion.getAll(customerRegion.keySetOnServer()).size());
+    assertThat(customerRegion.getAll(customerRegion.keySetOnServer()).size()).isEqualTo(3);
   }
 
   private void populateCustomers() {
@@ -40,7 +39,7 @@ public class VerifyCluster {
     cust1.addOrder(17699);
     cust1.addOrder(18009);
     cust1.addOrder(18049);
-    assertNotNull(customerRegion);
+    assertThat(customerRegion).isNotNull();
     customerRegion.put(5598L, cust1);
     log.info("Inserted a customer: " + cust1);
 

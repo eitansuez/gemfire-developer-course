@@ -3,9 +3,7 @@ package io.pivotal.bookshop.domain;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
+import static org.assertj.core.api.Assertions.assertThat;
 
 public class CustomerTest {
 
@@ -29,20 +27,20 @@ public class CustomerTest {
 
   @Test
   public void twoCustomersWithDifferentNumbersShouldNotBeEqual() {
-    assertNotEquals(customer, customer2);
+    assertThat(customer).isNotEqualTo(customer2);
   }
 
   @Test
   public void twoCustomersWithSameNumberShouldBeEqual() {
-    assertEquals(customer, customer3);
+    assertThat(customer).isEqualTo(customer3);
   }
 
   @Test
   public void customerToStringShouldIncludeCustomerNumberAndNameFields() {
     String toString = customer.toString();
-    assertTrue(toString.contains("Eitan"));
-    assertTrue(toString.contains("Suez"));
-    assertTrue(toString.contains("123"));
+    assertThat(toString).contains("Eitan");
+    assertThat(toString).contains("Suez");
+    assertThat(toString).contains("123");
     System.out.println(toString);
   }
 }
