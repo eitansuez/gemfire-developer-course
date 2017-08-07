@@ -18,21 +18,21 @@ public class CustomerLoader {
       cust1.addOrder(17699L);
       cust1.addOrder(18009L);
       cust1.addOrder(18049L);
-      addCustomer(customerRegion, 5598L, cust1);
+      addCustomer(customerRegion, cust1);
 
-      Customer cust2 = new Customer(5543, "Lula", "Wax", "12345");
+      Customer cust2 = new Customer(5543L, "Lula", "Wax", "12345");
       cust2.addOrder(17699L);
-      addCustomer(customerRegion, 543L, cust2);
+      addCustomer(customerRegion, cust2);
 
       Customer cust3 = new Customer(6024L, "Trenton", "Garcia", "88888");
-      addCustomer(customerRegion, 6024L, cust3);
-
+      addCustomer(customerRegion, cust3);
     }
   }
 
-  private static void addCustomer(Region<Long, Customer> customerRegion, Long key, Customer value) {
-    customerRegion.put(key, value);
-    log.info("Inserted a customer: " + value);
+  private static void addCustomer(Region<Long, Customer> customerRegion, Customer customer) {
+    long key = customer.getCustomerNumber();
+    customerRegion.put(key, customer);
+    log.info("Inserted a customer: " + customer);
   }
 
 }
