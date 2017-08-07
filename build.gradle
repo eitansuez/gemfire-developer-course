@@ -17,16 +17,16 @@ subprojects {
 
   dependencies {
     ['geode-core', 'geode-wan', 'geode-cq'].each {
-      compile "io.pivotal.gemfire:$it:9.0.4"
+      compile "io.pivotal.gemfire:$it:9.1.0"
     }
-    compile 'org.springframework.data:spring-data-gemfire:2.0.0.M3'
+    compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC2'
     compile 'org.projectlombok:lombok:1.16.16'
 
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.springframework:spring-test:5.0.0.RC1'
+    testCompile 'org.springframework:spring-test:5.0.0.RC3'
     testCompile 'org.assertj:assertj-core:3.8.0'
   }
 
@@ -34,7 +34,7 @@ subprojects {
 
 project(':gemfire-rest') {
   dependencies {
-    compile 'org.springframework:spring-web:5.0.0.RC1'
+    compile 'org.springframework:spring-web:5.0.0.RC3'
   }
 }
 
