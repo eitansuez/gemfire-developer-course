@@ -38,6 +38,19 @@ start server --server-port=0 --properties-file=gemfire.properties --name=server1
 Certain gfsh commands used to fetch or locate entries on the server need the ability to deserialize objects from regions.  Currently, all our types are java serializable objects, meaning that the class files need to be on the server classpath for these commands to do their job.
 ====
 
+.What directory are Java classes compiled to?
+****
+It depends:
+
+* Maven usually places `.class` files in the `target/classes` folder
+* Before version 4.0, gradle used to put class file in `build/classes/main`
+* As of version 4.0, gradle now uses `build/classes/java/main`, to account for the fact that projects may be written in more than one language
+* Eclipse and STS typically auto-compile Java source code to a folder named `bin`
+
+If you're using eclipse or STS, it may be simplest to specify `--classpath=../../bin`
+
+****
+
 . In your IDE, locate and run the `BookLoader` class to load 3 books into the `Book` region.
 
 . Open the test class `ReplicationTest` to understand how it looks for values in the `Book` region.
