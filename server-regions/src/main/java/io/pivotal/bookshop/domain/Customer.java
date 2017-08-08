@@ -8,7 +8,7 @@ import java.util.ArrayList;
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of={"customerNumber"})
 @ToString(of={"customerNumber", "firstName", "lastName"})
-@Builder
+//@Builder
 public class Customer implements Serializable {
   private static final long serialVersionUID = 7526471155622776147L;
 
