@@ -18,8 +18,8 @@ public class BookOrder implements Serializable {
   private float shippingCost, totalPrice;
 
   public BookOrder(Long orderNumber, Date orderDate, float shippingCost,
-                   Date shipDate, ArrayList<BookOrderItem> orderItems, Long customerNumber,
-                   float totalPrice) {
+                   Date shipDate, ArrayList<BookOrderItem> orderItems,
+                   Long customerNumber, float totalPrice) {
     this.orderNumber = orderNumber;
     this.orderDate = orderDate;
     this.shippingCost = shippingCost;
