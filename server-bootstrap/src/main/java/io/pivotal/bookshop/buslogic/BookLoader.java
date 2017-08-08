@@ -12,20 +12,40 @@ import org.springframework.stereotype.Component;
 public class BookLoader {
 
   public void populateBooks(Region<Long, Book> bookRegion) {
-    Book book = new Book(123, "Run on sentences and drivel on all things mundane",
-        (float) 34.99, 2011, "Daisy Mae West", "A Treatise of Treatises");
-    bookRegion.put(123L, book);
-    log.info("Inserted a book: " + book);
+    Book book = Book.builder()
+        .itemNumber(123)
+        .description("Run on sentences and drivel on all things mundane")
+        .retailCost(34.99f)
+        .yearPublished(2011)
+        .author("Daisy Mae West")
+        .title("A Treatise of Treatises")
+        .build();
+    addBook(book, bookRegion);
 
-    Book book2 = new Book(456, "A book about a dog",
-        (float) 11.99, 1971, "Clarence Meeks", "Clifford the Big Red Dog");
-    bookRegion.put(456L, book2);
-    log.info("Inserted a book: " + book2);
+    Book book2 = Book.builder()
+        .itemNumber(456)
+        .description("A book about a dog")
+        .retailCost(11.99f)
+        .yearPublished(1971)
+        .author("Clarence Meeks")
+        .title("Clifford the Big Red Dog")
+        .build();
+    addBook(book2, bookRegion);
 
-    Book book3 = new Book(789, "Theoretical information about the structure of Operating Systems",
-        (float) 59.99, 2011, "Jim Heavisides", "Operating Systems: An Introduction");
-    bookRegion.put(789L, book3);
-    log.info("Inserted a book: " + book3);
+    Book book3 = Book.builder()
+        .itemNumber(789)
+        .description("Theoretical information about the structure of Operating Systems")
+        .retailCost(59.99f)
+        .yearPublished(2011)
+        .author("Jim Heavisides")
+        .title("Operating Systems: An Introduction")
+        .build();
+    addBook(book3, bookRegion);
+  }
+
+  private void addBook(Book book, Region<Long, Book> bookRegion) {
+    bookRegion.put(book.getItemNumber(), book);
+    log.info("Inserted book: " + book);
   }
 
 
