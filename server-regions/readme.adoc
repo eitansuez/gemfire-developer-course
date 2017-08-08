@@ -32,7 +32,7 @@ In this first section, you will work with the _Book_ region. The data that this 
 In addition to the usual flags `properties-file`, `server-port`, and `name`, this time add a `classpath` flag as well, like so:
 
 ----
-start server --server-port=0 --properties-file=gemfire.properties --name=server1 --classpath=../../build/classes/main
+start server --server-port=0 --properties-file=gemfire.properties --name=server1 --classpath=../../build/classes/java/main
 ----
 
 Certain gfsh commands used to fetch or locate entries on the server need the ability to deserialize objects from regions.  Currently, all our types are java serializable objects, meaning that the class files need to be on the server classpath for these commands to do their job.

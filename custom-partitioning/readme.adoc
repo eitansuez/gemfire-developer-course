@@ -48,7 +48,7 @@ To create a Custom Partitioning scheme for GemFire, we need to implement the `Pa
 
 .. Start server1 and verify the configuration. If the first server fails to start, it's likely due to incorrectly specifying the partition resolver.
 +
-NOTE: Because you are registering a custom `PartitionResolver` on the server, you'll need to explicitly include the option: `--classpath=../../build/classes/main` with the server start commands.
+NOTE: Because you are registering a custom `PartitionResolver` on the server, you'll need to explicitly include the option: `--classpath=../../build/classes/java/main` with the server start commands.
 
 .. Once server 1 starts properly, start servers 2 and 3.
 
