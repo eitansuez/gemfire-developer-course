@@ -1,9 +1,13 @@
 
-This module demonstrates how to customize the serialization mechanism from the default java serialization to the GemFire DataSerializable mechanism.
+This module demonstrates how to customize the serialization mechanism from the default java serialization to the GemFire `DataSerializable` mechanism.
 
-We basically serialize Customer objects, which have child Address objects.  Not how both implements the DataSerializable interface with implementations of the fromData and toData methods.
+We basically serialize `Customer` objects, which have child `Address` objects.  Note how both implement the `DataSerializable` interface with implementations of the `fromData()` and `toData()` methods.
 
-Experiment with implementation by starting a cluster (see cluster folder and start script), running the SimpleClientWriter to persist a customer to GemFire, and finally reading it back with the SimpleClientReader program.
+Experiment with implementation by:
+
+- starting a cluster (see cluster folder and start script), 
+- running the `SimpleClientWriter` to persist a customer to GemFire, and finally 
+- reading it back with the `SimpleClientReader` program.
 
 
 
