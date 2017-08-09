@@ -39,7 +39,7 @@ TIP: You can access these configured values by invoking the appropriate `get()` 
 
 . (`TODO-05`) Review the `retrieveAndPrintRegionData()` method and observe its purpose is to iterate over the entries and print out the details of each.
 
-. (`TODO-06`) Add the code in the `run()` method, in the following sequence:
+. (`TODO-06`) Add the code in the `main()` method, in the following sequence:
 
 .. Retrieve and populate the cache with the customer's data.
 
