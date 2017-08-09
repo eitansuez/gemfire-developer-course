@@ -31,7 +31,7 @@ public class Customer {
 
   public Customer(long customerNumber, String firstName, String lastName, String postalCode) {
     this(customerNumber, firstName, lastName);
-    this.primaryAddress = new Address(postalCode);
+    this.primaryAddress = Address.builder().postalCode(postalCode).build();
   }
 
   public Customer(long customerNumber, String firstName,
