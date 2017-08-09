@@ -20,7 +20,7 @@ subprojects {
       compile "io.pivotal.gemfire:$it:9.1.0"
     }
     compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC2'
-    compile 'org.projectlombok:lombok:1.16.16'
+    compile 'org.projectlombok:lombok:1.16.18'
 
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'

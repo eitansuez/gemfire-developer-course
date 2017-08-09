@@ -5,11 +5,8 @@ import io.pivotal.bookshop.domain.BookOrderItem;
 import io.pivotal.bookshop.domain.InventoryItem;
 import lombok.extern.log4j.Log4j2;
 import org.apache.geode.cache.Region;
-import org.apache.geode.cache.client.ClientCache;
-import org.apache.geode.cache.client.ClientCacheFactory;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 @Component
@@ -17,16 +14,45 @@ import java.util.Date;
 public class OrderLoader {
 
   public void populateBookOrders(Region<Long, BookOrder> orderRegion) {
-    // Order for Kari Powell for book: A Treatise of Treatises
-    BookOrder order1 = new BookOrder(17699, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5598, (float) 40.98);
-    order1.addOrderItem(new BookOrderItem(1, 123, 1, (float) 0));
+
+    BookOrder order1 = BookOrder.builder()
+        .orderNumber(17699L)
+        .orderDate(new Date())
+        .totalPrice(40.98f)
+        .shipDate(new Date())
+        .shippingCost(5.99f)
+        .customerNumber(5598L) // Kari Powell
+        .orderItem(BookOrderItem.builder()
+            .orderLine(1)
+            .itemNumber(123) // A Treatise of Treatises
+            .quantity(1)
+            .discount(0f)
+            .build())
+        .build();
+
     orderRegion.put(17699L, order1);
     log.info("Inserted a book order: " + order1);
 
-    // Order for Lula Wax   book: A Treatise of Treatises & Clifford the Big Red Dog
-    BookOrder order2 = new BookOrder(17700, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5543, (float) 52.97);
-    order2.addOrderItem(new BookOrderItem(1, 123, 1, (float) 0));
-    order2.addOrderItem(new BookOrderItem(2, 456, 1, (float) 0));
+    BookOrder order2 = BookOrder.builder()
+        .orderNumber(17700L)
+        .orderDate(new Date())
+        .totalPrice(52.97f)
+        .shipDate(new Date())
+        .shippingCost(5.99f)
+        .customerNumber(5543L) // Lula Wax
+        .orderItem(BookOrderItem.builder()
+            .orderLine(1)
+            .itemNumber(123) // A Treatise of Treatises
+            .quantity(1)
+            .discount(0f)
+            .build())
+        .orderItem(BookOrderItem.builder()
+            .orderLine(2)
+            .itemNumber(456) // Clifford the Big Red Dog
+            .quantity(1)
+            .discount(0f)
+            .build())
+        .build();
     orderRegion.put(17700L, order2);
     log.info("Inserted a book order: " + order2);
   }

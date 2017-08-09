@@ -10,33 +10,37 @@ import org.springframework.stereotype.Component;
 public class BookLoader {
 
   public void populateBooks(Region<Long, Book> bookRegion) {
-    Book book = new Book(123,
-        "Run on sentences and drivel on all things mundane",
-        34.99f,
-        2011,
-        "Daisy Mae West",
-        "A Treatise of Treatises"
-        );
+    Book book = Book.builder()
+        .itemNumber(123L)
+        .author("Daisy Mae West")
+        .title("A Treatise of Treatises")
+        .description("Run on sentences and drivel on all things mundane")
+        .yearPublished(2011)
+        .retailCost(34.99f)
+        .build();
+
     addBook(book, bookRegion);
 
-    Book book2 = new Book(
-        456,
-        "A book about a dog",
-        11.99f,
-        1971,
-        "Clarence Meeks",
-        "Clifford the Big Red Dog"
-        );
+    Book book2 = Book.builder()
+        .itemNumber(456L)
+        .author("Clarence Meeks")
+        .title("Clifford the Big Red Dog")
+        .description("A book about a dog")
+        .yearPublished(1971)
+        .retailCost(11.99f)
+        .build();
+
     addBook(book2, bookRegion);
 
-    Book book3 = new Book(
-        789,
-        "Theoretical information about the structure of Operating Systems",
-        59.99f,
-        2011,
-        "Jim Heavisides",
-        "Operating Systems: An Introduction"
-        );
+    Book book3 = Book.builder()
+        .itemNumber(789L)
+        .author("Jim Heavisides")
+        .title("Operating Systems: An Introduction")
+        .description("Theoretical information about the structure of Operating Systems")
+        .yearPublished(2011)
+        .retailCost(59.99f)
+        .build();
+
     addBook(book3, bookRegion);
   }
 
