@@ -47,7 +47,7 @@ custNum | firstName | lastName |                     primaryAddress             
 
 In this section, you'll begin to understand the power of PDX as you modify the definition of the `Customer` class and see that multiple versions of the class definition can be used within the GemFire distributed system at the same time.
 
-. (`TODO-07`) To begin, open the `Customer` class again and add a `telephoneNumber` field of type `String`. Also add a getter and setter method. You might also want to go to the `toString()` method and add code to ensure the values of this new field get printed.
+. (`TODO-07`) To begin, open the `Customer` class again and add a `telephoneNumber` field of type `String`. Also, add this fieldname to the `@ToString` annotation.
 
 . (`TODO-08`) Open the `NewCustomerClient` class in the `io.pivotal.bookshop.buslogic` package.  In the `main()` method.  Write the code to create a new `Customer` instance. Be sure to set the new `telephoneNumber` property. Save the entry with the key `9999`.
 
