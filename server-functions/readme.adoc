@@ -21,7 +21,7 @@ _Estimated completion time_: 30 minutes
 
 . (`TODO-01`) Open the `cluster/cluster.xml` file and add the necessary configuration to enable PDX Serialization;  also, be sure to set `read-serialized=true`.
 
-. (`TODO-02`) Start a locator and two servers in a manner similar to what we've done in past labs, by running `gfsh run --file=serverStart.gf` from within the `cluster` folder.
+. (`TODO-02`) Start a locator and two servers in a manner similar to what we've done in past labs, by running `gfsh run --file=start.gf` from within the `cluster` folder.
 
 . From your IDE, execute the `OrderLoader` class (in package `io.pivotal.bookshop.buslogic`).  This will place some data into the the Order Region.
 

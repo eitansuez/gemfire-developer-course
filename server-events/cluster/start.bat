@@ -1,4 +1,4 @@
 @echo off
 
-call gfsh run --file=serverStart.gf
+call gfsh run --file=start.gf
 

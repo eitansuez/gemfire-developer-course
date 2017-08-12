@@ -50,11 +50,11 @@ Save your work.
 
 === Server Start
 
-(`TODO-07`): start a locator and two servers using the cluster/serverStart.gf script script provided in the `cluster` folder:
+(`TODO-07`): start a locator and two servers using the `cluster/start.gf` script provided in the `cluster` folder:
 
 ----
 cd cluster
-gfsh run --file=serverStart.gf
+gfsh run --file=start.gf
 ----
 
 
@@ -92,7 +92,7 @@ TIP: Refer to one of the methods of the `LoggingCacheListener` for an example of
 
 . (`TODO-10`): Open the `cluster.xml` file and add appropriate configuration to register this `LoggingTransactionListener`.
 
-. (`TODO-11`): Use the stop script (`gfsh run --file=serverStop.gf`) to stop the locator and servers. Then, restart and re-run the `TransactionTests` test harness.
+. (`TODO-11`): Use the stop script (`gfsh run --file=stop.gf`) to stop the locator and servers. Then, restart and re-run the `TransactionTests` test harness.
 
 
 This time when you look at the end of the `listener.log` file that is created in the `transactions` folder, you should see additional log data that should look something like the following. In this case, you'll notice that the updates happen before the `afterCommit` event is triggered. Notice also that there are two events that are associated with this commit as shown by the event for `Customer` and `Order`.
@@ -123,6 +123,6 @@ New Value: Order [orderNumber=ORD001, orderDate=Thu Apr 25 00:00:00 MDT 2013, cu
 ----
 
 
-Congratulations!! You have completed this lab. Be sure to use the `serverStop.gf` script to stop the locator and servers.
+Congratulations!! You have completed this lab. Be sure to use the `stop.gf` script to stop the locator and servers.
 
 

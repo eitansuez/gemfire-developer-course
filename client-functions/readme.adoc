@@ -63,7 +63,7 @@ In this section, you will be running the test code you just finished writing to 
 . start a locator and two servers with the command:
 +
 ----
-gfsh run --file=serverStart.gf
+gfsh run --file=start.gf
 ----
 
 . Run the `OrderLoader` to populate the `BookOrder` region

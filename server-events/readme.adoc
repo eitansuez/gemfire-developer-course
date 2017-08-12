@@ -17,7 +17,7 @@ _Estimated completion time_: 30 minutes
 +
 ----
 cd server-events/cluster
-gfsh run --file=serverStart.gf
+gfsh run --file=start.gf
 ----
 
 . In your IDE, navigate to the `server-events` module.  Open the test class `ServerEventsTests` (in `src/test/java` under the `io.pivotal.bookshop.tests` package) and review the tests.
@@ -40,7 +40,7 @@ The objective of the cache loader is to load data on cache misses on the GemFire
 To stop the servers, you can use a command similar to the above start command
 
 ----
-gfsh run --file=serverStop.gf
+gfsh run --file=stop.gf
 ----
 ====
 

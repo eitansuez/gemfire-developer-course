@@ -1,4 +1,4 @@
 @echo off
 
-call gfsh run --file=serverStop.gf
+call gfsh run --file=stop.gf
 

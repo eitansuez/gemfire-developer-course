@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gfsh run --file=serverStop.gf
+gfsh run --file=stop.gf

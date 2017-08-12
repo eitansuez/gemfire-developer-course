@@ -1,3 +1,3 @@
 #!/bin/sh
 
-gfsh run --file=serverStart.gf
+gfsh run --file=start.gf
