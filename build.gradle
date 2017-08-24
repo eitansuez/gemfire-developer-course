@@ -10,15 +10,11 @@ subprojects {
 
   repositories {
     mavenCentral()
-    maven { url 'http://commercial-repo.pivotal.io/data3/gemfire-release-repo/gemfire' }
     maven { url 'https://repo.spring.io/libs-milestone' }
     maven { url 'https://repo.spring.io/release' }
   }
 
   dependencies {
-    ['geode-core', 'geode-wan', 'geode-cq'].each {
-      compile "io.pivotal.gemfire:$it:9.1.0"
-    }
     compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC2'
     compile 'org.projectlombok:lombok:1.16.18'
 
