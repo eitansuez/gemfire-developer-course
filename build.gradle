@@ -5,24 +5,23 @@ subprojects {
 
   apply plugin: 'java'
 
-  sourceCompatibility = '1.8'
-  targetCompatibility = '1.8'
-
   repositories {
     mavenCentral()
     maven { url 'https://repo.spring.io/libs-milestone' }
     maven { url 'https://repo.spring.io/release' }
   }
 
+  sourceCompatibility = 1.8
+
   dependencies {
-    compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC2'
+    compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC3'
     compile 'org.projectlombok:lombok:1.16.18'
 
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
     compile 'org.apache.logging.log4j:log4j-slf4j-impl:2.8.2'
 
     testCompile 'junit:junit:4.12'
-    testCompile 'org.springframework:spring-test:5.0.0.RC3'
+    testCompile 'org.springframework:spring-test:5.0.0.RC4'
     testCompile 'org.assertj:assertj-core:3.8.0'
   }
 
@@ -30,7 +29,7 @@ subprojects {
 
 project(':gemfire-rest') {
   dependencies {
-    compile 'org.springframework:spring-web:5.0.0.RC3'
+    compile 'org.springframework:spring-web:5.0.0.RC4'
   }
 }
 
