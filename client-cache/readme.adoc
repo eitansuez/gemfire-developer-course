@@ -80,7 +80,7 @@ NOTE: You will not edit the test code itself, which performs the get operations.
 
 In this final section, you will define a local region and run a test to load and fetch data from it.
 
-. (`TODO-07`) Open the `xml/clientCache.xml` file and add an additional region called `LocalRegion`. Use the region shortcuts to define this as a local region.
+. (`TODO-07`) Open the `clientCache.xml` file and add an additional region called `LocalRegion`. Use the region shortcuts to define this as a local region.
 
 . (`TODO-08`) Return to the `ClientCacheTests` class and comment the `@Ignore` annotation on `testLocalRegion()`.
 
