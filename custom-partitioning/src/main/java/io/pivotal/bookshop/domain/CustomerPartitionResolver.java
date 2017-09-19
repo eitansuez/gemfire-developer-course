@@ -13,7 +13,7 @@ public class CustomerPartitionResolver implements PartitionResolver<OrderKey, Bo
 
   @Override
   public String getName() {
-    return this.getClass().getName() + "PartitionResolver";
+    return getClass().getName();
   }
 
   @Override
