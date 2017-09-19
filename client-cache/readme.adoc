@@ -50,11 +50,11 @@ In addition to providing configuration information in the cache xml file, you ca
 |===
 | Property | Meaning
 
-| log-level | Level of detail of the messages written to the system member’s log. Setting log-level to one of the ordered levels causes all messages of that level and greater severity to be printed.Valid values from lowest to highest are fine, config, info, warning, error, severe, and none. Default = config
+| log-level | Level of detail of the messages written to the system member’s log. Setting log-level to one of the ordered levels causes all messages of that level and greater severity to be printed.Valid values from lowest to highest are _fine_, _config_, _info_, _warning_, _error_, _severe_, and _none_. Default = _config_
 
-| durable-client-id | Used only for clients in a client/server installation. If set, this indicates that the client is durable and identifies the client. The ID is used by servers to reestablish any messaging that was interrupted by client downtime. Default = none
+| durable-client-id | Used only for clients in a client/server installation. If set, this indicates that the client is durable and identifies the client. The ID is used by servers to reestablish any messaging that was interrupted by client downtime. Default = _none_
 
-| durable-client-timeout | Used only for clients in a client/server installation. Number of seconds this client can remain disconnected from its server and have the server continue to accumulate durable events for it. Default = 300
+| durable-client-timeout | Used only for clients in a client/server installation. Number of seconds this client can remain disconnected from its server and have the server continue to accumulate durable events for it. Default = _300_
 |===
 
 
