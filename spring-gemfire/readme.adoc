@@ -99,7 +99,7 @@ In this final section, you will explore the capabilities of Spring Data GemFire 
 
 . (`TODO-16`) Finally, add another entry inside the client-region definition to register interest in the key `999`.
 +
-TIP: Note that this key is of type java.util.Long so you'll need to configure the key correspondingly when creating the interest registration.
+TIP: Note that this key is of type `java.util.Long` so you'll need to configure the key correspondingly when creating the interest registration.  Also, you can use the Spring `<value>` element to specify that value.
 
 . (`TODO-18`) Open the `ClientConsumer` class and take a look at the functionality implemented there. As you can see, all the class does is initialize the Spring `ApplicationContext` and then wait for the `ClientWorker` to perform some operations on the cache. Our `LoggingCacheListener` will report when an entry having the key `999` gets created or deleted. Go ahead and run `ClientConsumer` now.
 
