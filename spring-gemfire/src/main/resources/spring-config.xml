@@ -10,7 +10,7 @@
 
   <!-- TODO-02: Define the overall client cache declaration and point it to the pool object created above -->
 
-  <!-- TODO-03: Define a client region as a proxy for the Book -->
+  <!-- TODO-03: Define a client region as a caching proxy for the Book -->
 
   <!-- TODO-15: Register a cache listener for the Book region-->
   <!-- TODO-16: Register interest in key 999 (type java.lang.Long) for the Book region -->
