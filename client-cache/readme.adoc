@@ -32,7 +32,7 @@ gradle seedRegions
 ----
 
 
-== Configuring the Cache Client XML file
+== Configure the Cache Client XML file
 
 The client's cache.xml `<client-cache>` declaration automatically configures it as a standalone Gemfire application. At this point, the locator and server will have already been started and the listener is listening on port `10334`. In this section, you will edit the `clientCache.xml` file located in `src/main/resources` to perform the following tasks.
 
@@ -41,22 +41,9 @@ The client's cache.xml `<client-cache>` declaration automatically configures it 
 . (`TODO-02`) Define a region called `Customer` as a proxy type region using either the `refid` (region shortcut) or explicitly using region attributes. Similarly, create a region called `Book` but this time create it as a caching proxy type region.
 
 
-== Configuring additional cache properties
+== Configure additional cache properties
 
-In addition to providing configuration information in the cache xml file, you can also define properties using a `gemfire.properties` file (also located in `src/main/resources`). In this section, you will use this file to define the logging level that will be used by the client application. Some of the possible configurations are found in the table below.  Consult the GemFire User Guide's http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire properties reference^] for a full list of properties.
-
-.Client Cache properties
-[cols="1,3",options="header"]
-|===
-| Property | Meaning
-
-| log-level | Level of detail of the messages written to the system member’s log. Setting log-level to one of the ordered levels causes all messages of that level and greater severity to be printed.Valid values from lowest to highest are _fine_, _config_, _info_, _warning_, _error_, _severe_, and _none_. Default = _config_
-
-| durable-client-id | Used only for clients in a client/server installation. If set, this indicates that the client is durable and identifies the client. The ID is used by servers to reestablish any messaging that was interrupted by client downtime. Default = _none_
-
-| durable-client-timeout | Used only for clients in a client/server installation. Number of seconds this client can remain disconnected from its server and have the server continue to accumulate durable events for it. Default = _300_
-|===
-
+In addition to providing configuration information in the cache xml file, you can also define properties using a `gemfire.properties` file (also located in `src/main/resources`). In this section, you will use this file to define the logging level that will be used by the client application. Consult the GemFire User Guide's http://gemfire.docs.pivotal.io/geode/reference/topics/gemfire_properties.html[gemfire properties reference^] for a full list of properties, and to find out the list of valid values for this property.
 
 (`TODO-03`) Open the `gemfire.properties` file and set the log level initially to `warning`.
 
@@ -65,13 +52,17 @@ In addition to providing configuration information in the cache xml file, you ca
 
 Open the `ClientCacheTests.java` file in the `io.pivotal.bookshop.tests` package (under `src/test/java`) and add code for the following methods.
 
+=> Run the tests.  All four unit tests should fail.
+
+Inspect the code.  Clearly the client is not yet configured.
+
 . (`TODO-04`) In the `setup()` method to, add code to create a `ClientCache`. Use the appropriate method on the `ClientCacheFactory` class to set the `cache-xml-file` property to `clientCache.xml`.
 
 . (`TODO-05`) Also, add code to the same `setup()` method to get the `Customer` region and assign to the class private field `customers`. Add a similar statement to get the `Book` region and assign to the private field `books`.
 +
 NOTE: You will not edit the test code itself, which performs the get operations. Details on how to make such calls to the region will be covered in the next section.
 
-. (`TODO-06`) Finally, run the program to verify you were able to connect. If you implemented the client cache configuration and the client setup code correctly, two tests should pass (one test is currently being ignored, and will be addressed in the next section of this lab).
+. (`TODO-06`) Re-run the tests.  The tests `regionsShouldExist`, `customersShouldExist`, and `booksShouldExist` should now pass.
 
 . As an optional step, go back and edit the `gemfire.properties` file and change the log level to `fine`. Re-run the application and notice the additional detail that is output when running your client application.
 
@@ -82,7 +73,7 @@ In this final section, you will define a local region and run a test to load and
 
 . (`TODO-07`) Open the `clientCache.xml` file and add an additional region called `LocalRegion`. Use the region shortcuts to define this as a local region.
 
-. (`TODO-08`) Return to the `ClientCacheTests` class and comment the `@Ignore` annotation on `testLocalRegion()`.
+. (`TODO-08`) Return to the `ClientCacheTests` class.  Update the setup method to obtain a reference to the local region and assign it to the field variable localRegion.
 
 . (`TODO-09`) Finally re-run the tests and verify that all tests pass.
 

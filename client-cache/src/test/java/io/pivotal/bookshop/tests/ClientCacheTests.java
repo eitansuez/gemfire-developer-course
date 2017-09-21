@@ -16,6 +16,7 @@ public class ClientCacheTests {
   private ClientCache cache;
   private Region<Long, Book> books;
   private Region<Long, Customer> customers;
+  private Region<Long, String> localRegion;
 
   @Before
   public void setUp() throws Exception {
@@ -26,6 +27,7 @@ public class ClientCacheTests {
     // TODO-05: Make call to the getRegion() method to get the Book and Customer regions
     // from the ClientCache and assign to instance variables
 
+    // TODO-08: obtain a reference to the local region, assign it to localRegion above
   }
 
   @Test
@@ -53,11 +55,8 @@ public class ClientCacheTests {
   }
 
   @Test
-  @Ignore
-  // TODO-08: Remove @Ignore annotation, re-run tests and this one should pass as well
-  // TODO-09: Re-run the tests and verify that both pass
+  // TODO-09: Re-run the tests and verify that they all pass
   public void localRegionShouldExist() {
-    Region<Long, String> localRegion = cache.getRegion("LocalRegion");
     assertThat(localRegion).isNotNull();
   }
 
