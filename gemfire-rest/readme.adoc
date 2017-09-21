@@ -84,7 +84,7 @@ Choose _Add..._ to add a new monitor. As local monitoring port, enter 8081 (this
 +
 TIP: Don't forget to start the monitor after adding it! The most common error at this point is to forget to start the monitor.
 
-. (`TODO-07`) Return to the RestClientTest class in the STS and locate the BASE_URL definition. Change the port from `8080` to `8081` so that the TCP/IP monitor you just configured can intercept the requests. Re-run the test and observe the result. You'll need to expand the TCP/IP tab (by double-clicking on it). You should be able to observe that the proper entry came back as indicated by the response body.
+. (`TODO-07`) Return to the `RestClientTest` class in the STS and locate the BASE_URL definition. Change the port from `8080` to `8081` so that the TCP/IP monitor you just configured can intercept the requests. Re-run the test and observe the result. You'll need to expand the TCP/IP tab (by double-clicking on it). You should be able to observe that the proper entry came back as indicated by the response body.
 
 . Return to the JUnit out put screen and observe in the Failure Trace the message being reported. Notice that the expected form of a Data object doesn't match the form being supplied by the JSON object being returned by the server.
 
