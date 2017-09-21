@@ -19,6 +19,25 @@ public class DataOperationsTests {
   private BookDao dao;
   private Region<Long, Book> books;
 
+  private Book book = Book.builder()
+      .itemNumber(key)
+        .title("All About GemFire")
+        .author("Some Author")
+        .description("New test book")
+        .retailCost(28.77f)
+        .yearPublished(2014)
+        .build();
+
+  private Book book2 = Book.builder()
+      .itemNumber(key)
+      .title("All About GemFire, part 2")
+      .author("Some Other Author")
+      .description("Another new test book")
+      .retailCost(33.77f)
+      .yearPublished(2015)
+      .build();
+
+
   @Before
   public void setUp() throws Exception {
     ClientCache cache = new ClientCacheFactory().create();
@@ -32,7 +51,6 @@ public class DataOperationsTests {
   @Test
   public void shouldInsertBook() {
     // given a book
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
 
     // when put book into region via dao's "insertBook" method
     dao.insertBook(key, book);
@@ -45,12 +63,10 @@ public class DataOperationsTests {
   @Test
   public void shouldFailToInsertBookIfAlreadyExists() {
     // given a book already exists in the Book region
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
     books.put(key, book);
 
     try {
       // when i attempt to insert another book using same key
-      Book book2 = new Book(key, "New test book2", (float) 33.77, 2014, "Some Author2", "All About GemFire2");
       dao.insertBook(key, book2);
       fail("Should have thrown an EntryExistsException");
     } catch (EntryExistsException ex) {
@@ -63,7 +79,6 @@ public class DataOperationsTests {
   @Test
   public void shouldFetchBookByKey() {
     // given a book exists in the Book region
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
     books.put(key, book);
 
     // when i fetch the book via dao's "getBook" method
@@ -77,12 +92,11 @@ public class DataOperationsTests {
   @Test
   public void shouldUpdateExistingBook() {
     // given a book exists in the Book region
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
     books.put(key, book);
 
     // when i update the title of the book with the dao's "updateBook" method
-    Book book2 = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "New book title");
-    dao.updateBook(key, book2);
+    Book updatedBook = book.toBuilder().title("New book title").build();
+    dao.updateBook(key, updatedBook);
 
     // then i can independently verify that the stored book has been updated
     // author should be the same as it was..
@@ -95,7 +109,6 @@ public class DataOperationsTests {
   @Test
   public void shouldNotCreateRecordWhenUpdatingNonExistingBook() {
     // given a book
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
 
     // when I try to call updateBook when in fact no entry for key exists
     dao.updateBook(key, book);
@@ -107,7 +120,6 @@ public class DataOperationsTests {
   @Test
   public void shouldDeleteBook() {
     // given a book exists in the Book region
-    Book book = new Book(key, "New test book", (float) 28.77, 2014, "Some Author", "All About GemFire");
     books.put(key, book);
 
     // when i remove the book via the dao "removeBook" method

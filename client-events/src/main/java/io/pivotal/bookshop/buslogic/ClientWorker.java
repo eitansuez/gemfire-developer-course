@@ -34,7 +34,17 @@ public class ClientWorker {
 
     // Update one value in the cache
     log.info("Putting new value for 999");
-    region.put(999L, new Book(999, "A spy fiction thriller about a retrograde amnesiac who must discover who he is ", (float) 34.99, 2011, "Robert Ludlum", "Bourne Identity"));
+
+    Book book = Book.builder()
+        .itemNumber(999)
+        .title("Bourne Identity")
+        .author("Robert Ludlum")
+        .description("A spy fiction thriller about a retrograde amnesiac who must discover who he is")
+        .yearPublished(2011)
+        .retailCost(34.99f)
+        .build();
+
+    region.put(999L, book);
 
     // Destroy one entry in the cache
     log.info("Destroying 999");

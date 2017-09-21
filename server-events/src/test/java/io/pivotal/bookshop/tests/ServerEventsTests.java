@@ -17,13 +17,14 @@ public class ServerEventsTests {
 
   private ClientCache clientCache;
   private Region<String, Book> bookRegion;
-  private Book book = new Book(124,
-      "A spy fiction thriller about a retrograde amnesiac " +
-          "who must discover who he is ",
-      34.99f,
-      2011,
-      "Robert Ludlum",
-      "Bourne Identity");
+  private Book book = Book.builder()
+      .itemNumber(124)
+      .title("Bourne Identity")
+      .author("Robert Ludlum")
+      .description("A spy fiction thriller about a retrograde amnesiac who must discover who he is")
+      .yearPublished(2011)
+      .retailCost(34.99f)
+      .build();
 
   @Before
   public void setup() {
