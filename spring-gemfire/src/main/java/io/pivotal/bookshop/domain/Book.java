@@ -8,15 +8,12 @@ import java.io.Serializable;
 //TODO-10: Create a repository interface in the io.pivotal.bookshop.buslogic package that implements CrudRepository
 //       Declare a 'findBy' method that will find all Book items that match the specified author.
 
-@NoArgsConstructor
-@Getter
-@Setter
-@EqualsAndHashCode(of={"itemNumber"})
-@ToString(of={"itemNumber", "title", "author"})
+@NoArgsConstructor @Getter @Setter
+@EqualsAndHashCode(of = {"itemNumber"})
+@ToString(of = {"itemNumber", "title", "author"})
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Book implements Serializable {
-
   private static final long serialVersionUID = 7526471155622776147L;
 
   private long itemNumber;

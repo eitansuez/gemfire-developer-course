@@ -5,8 +5,8 @@ import lombok.*;
 import java.io.Serializable;
 
 @NoArgsConstructor @Getter @Setter
-@EqualsAndHashCode(of={"itemNumber"})
-@ToString(of={"itemNumber", "title", "author"})
+@EqualsAndHashCode(of = {"itemNumber"})
+@ToString(of = {"itemNumber", "title", "author"})
 @AllArgsConstructor
 @Builder(toBuilder = true)
 public class Book implements Serializable {
