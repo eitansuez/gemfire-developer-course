@@ -9,7 +9,6 @@ import org.apache.geode.cache.client.ClientCacheFactory;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
 import java.util.Date;
 
 // TODO: make this test more meaningful
@@ -43,21 +42,21 @@ public class DataProducer {
         .orderNumber(18049).orderDate(new Date())
         .shippingCost(5.99f).shipDate(new Date())
         .customerNumber(5543).totalPrice(80.94f)
+        .orderItem(BookOrderItem.builder()
+            .orderLine(1).itemNumber(123).quantity(5).discount(100f).build())
         .build();
-    ord1.addOrderItem(BookOrderItem.builder()
-        .orderLine(1).itemNumber(123).quantity(5).discount(100f).build());
     orderRegion.put(18049L, ord1);
     log.info("Added: " + ord1);
   }
 
   private static void addAnotherOrder(Region<Long, BookOrder> orderRegion) {
     BookOrder ord1 = BookOrder.builder()
-      .orderNumber(18009).orderDate(new Date())
+        .orderNumber(18009).orderDate(new Date())
         .shippingCost(5.99f).shipDate(new Date())
         .customerNumber(5543).totalPrice(180.94f)
+        .orderItem(BookOrderItem.builder()
+            .orderLine(1).itemNumber(123).quantity(5).build())
         .build();
-    ord1.addOrderItem(BookOrderItem.builder()
-      .orderLine(1).itemNumber(123).quantity(5).build());
     orderRegion.put(18009L, ord1);
     log.info("Added: " + ord1);
   }

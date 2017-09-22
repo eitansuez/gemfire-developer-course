@@ -29,9 +29,10 @@ project(':server-bootstrap') { dependencies { compile project(':domain') } }
 project(':server-configuration') { dependencies { compile project(':domain') } }
 project(':server-regions') { dependencies { compile project(':domain') } }
 project(':client-cache') { dependencies { compile project(':domain') } }
-project(':server-events') { dependencies { compile project(':domain') } }
 project(':query') { dependencies { compile project(':domain') } }
 project(':cache-management') { dependencies { compile project(':domain') } }
+project(':client-events') { dependencies { compile project(':domain') } }
+project(':server-events') { dependencies { compile project(':domain') } }
 
 project(':gemfire-rest') {
   dependencies { compile 'org.springframework:spring-web:5.0.0.RC4' }
