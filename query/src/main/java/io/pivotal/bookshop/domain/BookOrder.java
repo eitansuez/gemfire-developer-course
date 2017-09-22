@@ -9,25 +9,15 @@ import java.util.Date;
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of={"orderNumber"})
 @ToString(of={"orderNumber", "orderDate", "customerNumber", "totalPrice"})
+@AllArgsConstructor
+@Builder
 public class BookOrder implements Serializable {
   private static final long serialVersionUID = 7526471155622776147L;
 
   private Long orderNumber, customerNumber;
   private Date orderDate, shipDate;
-  private ArrayList<BookOrderItem> orderItems = new ArrayList<>();
+  private final ArrayList<BookOrderItem> orderItems = new ArrayList<>();
   private float shippingCost, totalPrice;
-
-  public BookOrder(Long orderNumber, Date orderDate, float shippingCost,
-                   Date shipDate, ArrayList<BookOrderItem> orderItems,
-                   Long customerNumber, float totalPrice) {
-    this.orderNumber = orderNumber;
-    this.orderDate = orderDate;
-    this.shippingCost = shippingCost;
-    this.shipDate = shipDate;
-    this.orderItems = orderItems;
-    this.customerNumber = customerNumber;
-    this.totalPrice = totalPrice;
-  }
 
   public void addOrderItem(BookOrderItem item) {
     orderItems.add(item);

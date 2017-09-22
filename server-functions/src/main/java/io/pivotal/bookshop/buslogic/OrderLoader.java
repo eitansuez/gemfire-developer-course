@@ -6,7 +6,6 @@ import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
 
-import java.util.ArrayList;
 import java.util.Date;
 
 // TODO-10: Start locator and two servers. Then Run this OrderLoader class
@@ -23,12 +22,16 @@ public class OrderLoader {
   private static void populateBookOrders(ClientCache cache) {
     Region<Long, BookOrder> orders = cache.getRegion("BookOrder");
     // Order for Kari Powell for book: A Treatise of Treatises
-    BookOrder order1 = new BookOrder(17699, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5598, (float) 40.98);
+    BookOrder order1 = BookOrder.builder().orderNumber(17699).orderDate(new Date())
+        .shippingCost(5.99f).shipDate(new Date())
+        .customerNumber(5598).totalPrice(40.98f).build();
     order1.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
     orders.put(17699L, order1);
 
     // Order for Lula Wax   book: A Treatise of Treatises & Clifford the Big Red Dog
-    BookOrder order2 = new BookOrder(17700, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5543, (float) 52.97);
+    BookOrder order2 = BookOrder.builder().orderNumber(17700).orderDate(new Date())
+        .shippingCost(5.99f).shipDate(new Date())
+        .customerNumber(5543).totalPrice(52.97f).build();
     order2.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
     order2.addOrderItem(BookOrderItem.builder().orderLine(2).itemNumber(456).build());
     orders.put(17700L, order2);

@@ -39,7 +39,11 @@ public class DataProducer {
 
 
   private static void addLowOrder(Region<Long, BookOrder> orderRegion) {
-    BookOrder ord1 = new BookOrder(18049, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5543, (float) 80.94);
+    BookOrder ord1 = BookOrder.builder()
+        .orderNumber(18049).orderDate(new Date())
+        .shippingCost(5.99f).shipDate(new Date())
+        .customerNumber(5543).totalPrice(80.94f)
+        .build();
     ord1.addOrderItem(BookOrderItem.builder()
         .orderLine(1).itemNumber(123).quantity(5).discount(100f).build());
     orderRegion.put(18049L, ord1);
@@ -47,7 +51,11 @@ public class DataProducer {
   }
 
   private static void addAnotherOrder(Region<Long, BookOrder> orderRegion) {
-    BookOrder ord1 = new BookOrder(18009, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5543, (float) 180.94);
+    BookOrder ord1 = BookOrder.builder()
+      .orderNumber(18009).orderDate(new Date())
+        .shippingCost(5.99f).shipDate(new Date())
+        .customerNumber(5543).totalPrice(180.94f)
+        .build();
     ord1.addOrderItem(BookOrderItem.builder()
       .orderLine(1).itemNumber(123).quantity(5).build());
     orderRegion.put(18009L, ord1);

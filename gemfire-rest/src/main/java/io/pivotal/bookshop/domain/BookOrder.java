@@ -10,6 +10,8 @@ import java.util.Date;
 @Setter
 @EqualsAndHashCode(of = {"orderNumber"})
 @ToString
+@AllArgsConstructor
+@Builder
 public class BookOrder {
   private static final long serialVersionUID = 7526471155622776147L;
 
@@ -21,23 +23,10 @@ public class BookOrder {
   private Date orderDate;
   private Date shipDate;
 
-  private ArrayList<BookOrderItem> orderItems = new ArrayList<>();
+  private final ArrayList<BookOrderItem> orderItems = new ArrayList<>();
 
   private float totalPrice;
   private float shippingCost;
-
-  public BookOrder(long orderNumber, Date orderDate, float shippingCost,
-                   Date shipDate, ArrayList<BookOrderItem> orderItems, long customerNumber,
-                   float totalPrice) {
-
-    this.orderNumber = orderNumber;
-    this.orderDate = orderDate;
-    this.shippingCost = shippingCost;
-    this.shipDate = shipDate;
-    this.orderItems = orderItems;
-    this.customerNumber = customerNumber;
-    this.totalPrice = totalPrice;
-  }
 
   public void addOrderItem(BookOrderItem item) {
     orderItems.add(item);

@@ -7,6 +7,8 @@ import java.io.Serializable;
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of = {"itemNumber"})
 @ToString(of = {"itemNumber", "title", "author"})
+@AllArgsConstructor
+@Builder
 public class Book implements Serializable {
   private static final long serialVersionUID = 7526471155622776147L;
 
@@ -16,15 +18,5 @@ public class Book implements Serializable {
   private int yearPublished;
   private String author;
   private String title;
-
-  public Book(long itemNumber, String description, float retailCost,
-              int yearPublished, String author, String title) {
-    this.itemNumber = itemNumber;
-    this.description = description;
-    this.retailCost = retailCost;
-    this.yearPublished = yearPublished;
-    this.author = author;
-    this.title = title;
-  }
 
 }

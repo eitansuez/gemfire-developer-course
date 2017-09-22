@@ -18,8 +18,7 @@ public class BookOrder implements Serializable {
   private long orderNumber;
   private long customerNumber;
   private Date orderDate, shipDate;
-  @Singular
-  private List<BookOrderItem> orderItems;
+  @Singular private List<BookOrderItem> orderItems;
   private float shippingCost, totalPrice;
 
 }

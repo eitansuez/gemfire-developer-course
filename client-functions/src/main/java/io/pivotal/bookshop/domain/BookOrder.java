@@ -1,9 +1,6 @@
 package io.pivotal.bookshop.domain;
 
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -12,25 +9,16 @@ import java.util.Date;
 @Getter
 @Setter
 @EqualsAndHashCode(of = {"orderNumber"})
+@AllArgsConstructor
+@Builder
 public class BookOrder {
   private static final long serialVersionUID = 7526471155622776147L;
 
   private long orderNumber;
   private long customerNumber;
   private Date orderDate, shipDate;
-  private ArrayList<BookOrderItem> orderItems = new ArrayList<>();
+  private final ArrayList<BookOrderItem> orderItems = new ArrayList<>();
   private float totalPrice, shippingCost;
-
-  public BookOrder(long orderNumber, Date orderDate, float shippingCost,
-                   Date shipDate, ArrayList<BookOrderItem> orderItems, long customerNumber, float totalPrice) {
-    this.orderNumber = orderNumber;
-    this.orderDate = orderDate;
-    this.shippingCost = shippingCost;
-    this.shipDate = shipDate;
-    this.orderItems = orderItems;
-    this.customerNumber = customerNumber;
-    this.totalPrice = totalPrice;
-  }
 
   public void addOrderItem(BookOrderItem item) {
     orderItems.add(item);
