@@ -17,21 +17,19 @@ public class CustomerLoader {
 
       Customer cust1 = Customer.builder().customerNumber(5598)
           .firstName("Kari").lastName("Powell")
-          .primaryAddress(Address.builder().postalCode("44444").build()).build();
-      cust1.addOrder(17699L);
-      cust1.addOrder(18009L);
-      cust1.addOrder(18049L);
+          .bookOrder(17699L).bookOrder(18009L).bookOrder(18049L)
+          .address(Address.builder().postalCode("44444").build()).build();
       addCustomer(customerRegion, cust1);
 
       Customer cust2 = Customer.builder().customerNumber(5543)
           .firstName("Lula").lastName("Wax")
-          .primaryAddress(Address.builder().postalCode("12345").build()).build();
-      cust2.addOrder(17699L);
+          .bookOrder(17699L)
+          .address(Address.builder().postalCode("12345").build()).build();
       addCustomer(customerRegion, cust2);
 
       Customer cust3 = Customer.builder().customerNumber(6024)
           .firstName("Trenton").lastName("Garcia")
-          .primaryAddress(Address.builder().postalCode("88888").build()).build();
+          .address(Address.builder().postalCode("88888").build()).build();
       addCustomer(customerRegion, cust3);
     }
   }

@@ -27,10 +27,10 @@ subprojects {
 
 project(':server-bootstrap') { dependencies { compile project(':domain') } }
 project(':server-configuration') { dependencies { compile project(':domain') } }
-project(':server-events') { dependencies { compile project(':domain') } }
+project(':server-regions') { dependencies { compile project(':domain') } }
 project(':client-cache') { dependencies { compile project(':domain') } }
+project(':server-events') { dependencies { compile project(':domain') } }
 project(':query') { dependencies { compile project(':domain') } }
-project(':server-bootstrap') { dependencies { compile project(':domain') } }
 project(':cache-management') { dependencies { compile project(':domain') } }
 
 project(':gemfire-rest') {
