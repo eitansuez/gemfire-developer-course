@@ -28,24 +28,24 @@ public class DataLoader {
 
     Customer cust1 = Customer.builder().customerNumber(5598)
         .firstName("Kari").lastName("Powell")
-        .primaryAddress(Address.builder().postalCode("44444").build())
+        .address(Address.builder().postalCode("44444").build())
+        .bookOrder(17600L)
       .build();
-    cust1.addOrder(17600);
     customers.put(cust1.getCustomerNumber(), cust1);
     log.info("Inserted a customer: " + cust1);
 
     Customer cust2 = Customer.builder().customerNumber(5542)
         .firstName("Lula").lastName("Wax")
-        .primaryAddress(Address.builder().postalCode("12345").build())
-        .build();
+        .address(Address.builder().postalCode("12345").build())
+      .build();
     customers.put(cust2.getCustomerNumber(), cust2);
     log.info("Inserted a customer: " + cust2);
 
     Customer cust3 = Customer.builder().customerNumber(6024)
         .firstName("Trenton").lastName("Garcia")
-        .primaryAddress(Address.builder().postalCode("88888").build())
-        .build();
-    cust3.addOrder(17700);
+        .address(Address.builder().postalCode("88888").build())
+        .bookOrder(17700L)
+      .build();
     customers.put(cust3.getCustomerNumber(), cust3);
     log.info("Inserted a customer: " + cust3);
   }
@@ -56,17 +56,19 @@ public class DataLoader {
     OrderKey key1 = new OrderKey(5598, 17600);
     BookOrder order1 = BookOrder.builder().orderNumber(17600).orderDate(new Date())
         .shippingCost(5.99f).shipDate(new Date())
-        .customerNumber(5598).totalPrice(40.98f).build();
-    order1.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
+        .customerNumber(5598).totalPrice(40.98f)
+        .orderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build())
+      .build();
     orders.put(key1, order1);
 
     // Order for Lula Wax   book: A Treatise of Treatises & Clifford the Big Red Dog
     OrderKey key2 = new OrderKey(6024, 17700);
     BookOrder order2 = BookOrder.builder().orderNumber(17700).orderDate(new Date())
         .shippingCost(5.99f).shipDate(new Date())
-        .customerNumber(6024).totalPrice(52.97f).build();
-    order2.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
-    order2.addOrderItem(BookOrderItem.builder().orderLine(2).itemNumber(456).build());
+        .customerNumber(6024).totalPrice(52.97f)
+        .orderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build())
+        .orderItem(BookOrderItem.builder().orderLine(2).itemNumber(456).build())
+      .build();
     orders.put(key2, order2);
   }
 

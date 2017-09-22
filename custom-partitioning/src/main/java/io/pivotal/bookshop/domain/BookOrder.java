@@ -3,12 +3,10 @@ package io.pivotal.bookshop.domain;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of={"orderNumber"})
 @ToString(of={"orderNumber", "orderDate", "customerNumber", "totalPrice"})
 @AllArgsConstructor
@@ -19,11 +17,7 @@ public class BookOrder implements Serializable {
   private long orderNumber;
   private long customerNumber;
   private Date orderDate, shipDate;
-  private final ArrayList<BookOrderItem> orderItems = new ArrayList<>();
+  @Singular private List<BookOrderItem> orderItems;
   private float shippingCost, totalPrice;
-
-  public void addOrderItem(BookOrderItem item) {
-    orderItems.add(item);
-  }
 
 }
