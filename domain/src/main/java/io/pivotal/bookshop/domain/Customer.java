@@ -16,7 +16,8 @@ public class Customer implements Serializable {
 
   private long customerNumber;
   private String firstName, lastName;
-  private Address primaryAddress;
+  @Singular
+  private List<Address> addresses;
   @Singular
   private List<Long> bookOrders;
 
