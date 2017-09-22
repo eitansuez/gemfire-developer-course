@@ -38,18 +38,19 @@ public class VerifyCluster {
   private void populateCustomers() {
     Customer cust1 = Customer.builder().customerNumber(5598)
         .firstName("Kari").lastName("Powell")
-        .primaryAddress(Address.builder().postalCode("44444").build()).build();
-    cust1.addOrder(17699);
-    cust1.addOrder(18009);
-    cust1.addOrder(18049);
+        .primaryAddress(Address.builder().postalCode("44444").build())
+        .bookOrder(17699L).bookOrder(18009L).bookOrder(18049L)
+        .build();
+
     assertThat(customerRegion).isNotNull();
     customerRegion.put(5598L, cust1);
     log.info("Inserted a customer: " + cust1);
 
     Customer cust2 = Customer.builder().customerNumber(5543)
         .firstName("Lula").lastName("Wax")
-        .primaryAddress(Address.builder().postalCode("12345").build()).build();
-    cust2.addOrder(17699);
+        .primaryAddress(Address.builder().postalCode("12345").build())
+        .bookOrder(17699L)
+        .build();
     customerRegion.put(5543L, cust2);
     log.info("Inserted a customer: " + cust2);
 

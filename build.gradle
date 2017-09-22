@@ -24,8 +24,11 @@ subprojects {
     testCompile 'org.springframework:spring-test:5.0.0.RC4'
     testCompile 'org.assertj:assertj-core:3.8.0'
   }
-
 }
+
+project(':server-bootstrap') { dependencies { compile project(':domain') } }
+project(':query') { dependencies { compile project(':domain') } }
+project(':server-configuration') { dependencies { compile project(':domain') } }
 
 project(':gemfire-rest') {
   dependencies {

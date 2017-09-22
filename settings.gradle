@@ -1,6 +1,7 @@
 [ 'server-bootstrap',
   'server-configuration',
   'functions',
+  'domain',
   'server-regions',
   'client-cache',
   'query',
