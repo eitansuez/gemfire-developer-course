@@ -59,11 +59,17 @@ public class OrderLoader {
 
   public void populateInventory(Region<Long, InventoryItem> inventoryRegion) {
 
-    InventoryItem item1 = new InventoryItem(123, (float) 12.50, (float) 34.99, 12, "BookRUs", "Seattle");
+    InventoryItem item1 = InventoryItem.builder().itemNumber(123)
+        .costToXYZ(12.5f).priceToCustomer(34.99f)
+        .quantityInStock(12)
+        .vendor("BooksRUs").location("Seattle").build();
     inventoryRegion.put(123L, item1);
     log.info("Inserted an inventory item: " + item1);
 
-    InventoryItem item2 = new InventoryItem(456, (float) 12.50, (float) 11.99, 1, "BookRUs", "Seattle");
+    InventoryItem item2 = InventoryItem.builder().itemNumber(456)
+        .costToXYZ(12.50f).priceToCustomer(11.99f)
+        .quantityInStock(1)
+        .vendor("BooksRUs").location("Seattle").build();
     inventoryRegion.put(456L, item2);
     log.info("Inserted an inventory item: " + item2);
 

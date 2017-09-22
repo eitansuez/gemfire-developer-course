@@ -101,16 +101,28 @@ public class TransactionalTests {
 
   private void loadCustomers() {
     Map<Long, Customer> customerMap = new HashMap<>();
-    Customer cust1 = new Customer("C001", "Lula", "Wax", "123-654-543");
-    cust1.addAddress(new Address("123 Main St.", null, null, "Topeka", "KS", "50505", "US", "HOME"));
+    Address address1 = Address.builder().addressLine1("123 Main St")
+        .city("Topeka").state("KS").postalCode("50505")
+        .country("US").addressTag("HOME").build();
+    Customer cust1 = Customer.builder().customerNumber("C001")
+        .firstName("Lula").lastName("Wax").phoneNumber("123 654-543")
+        .address(address1).build();
     customerMap.put(1001L, cust1);
 
-    Customer cust2 = new Customer("C002", "Tom", "Mcginns", "123-456-789");
-    cust2.addAddress(new Address("123 Main St.", null, null, "San Fransisco", "CA", "50505", "US", "HOME"));
+    Address address2 = Address.builder().addressLine1("123 Main St")
+        .city("San Francisco").state("CA").postalCode("50505")
+        .country("US").addressTag("HOME").build();
+    Customer cust2 = Customer.builder().customerNumber("C002")
+        .firstName("Tom").lastName("Mcginns").phoneNumber("123 456-789")
+        .address(address2).build();
     customerMap.put(1002L, cust2);
 
-    Customer cust3 = new Customer("C003", "Peter", "Fernandez", "123-456-789");
-    cust3.addAddress(new Address("123 Main St.", null, null, "San Fransisco", "CA", "50505", "US", "HOME"));
+    Address address3 = Address.builder().addressLine1("123 Main St")
+        .city("San Francisco").state("CA").postalCode("50505")
+        .country("US").addressTag("HOME").build();
+    Customer cust3 = Customer.builder().customerNumber("C003")
+        .firstName("Peter").lastName("Fernandez").phoneNumber("123 456-789")
+        .address(address3).build();
     customerMap.put(1003L, cust3);
 
     customerRegion.putAll(customerMap);

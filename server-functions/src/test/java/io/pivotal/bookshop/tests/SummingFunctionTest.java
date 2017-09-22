@@ -29,7 +29,7 @@ public class SummingFunctionTest {
   public void testSummingFunction() {
     Execution execution = FunctionService
         .onRegion(bookOrders)
-        .withArgs("totalPrice")
+        .setArguments("totalPrice")
         .withCollector(new SummingResultCollector());
 
     ResultCollector rc = execution.execute("GenericSumFunction");

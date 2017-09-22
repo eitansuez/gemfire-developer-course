@@ -1,9 +1,6 @@
 package io.pivotal.bookshop.buslogic;
 
-import io.pivotal.bookshop.domain.BookOrder;
-import io.pivotal.bookshop.domain.BookOrderItem;
-import io.pivotal.bookshop.domain.Customer;
-import io.pivotal.bookshop.domain.OrderKey;
+import io.pivotal.bookshop.domain.*;
 import lombok.extern.log4j.Log4j2;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -30,16 +27,25 @@ public class DataLoader {
     Region<Long, Customer> customers = cache.getRegion("Customer");
     log.info("Got the Customer Region: " + customers);
 
-    Customer cust1 = new Customer(5598, "Kari", "Powell", "44444");
+    Customer cust1 = Customer.builder().customerNumber(5598)
+        .firstName("Kari").lastName("Powell")
+        .primaryAddress(Address.builder().postalCode("44444").build())
+      .build();
     cust1.addOrder(17600);
     customers.put(cust1.getCustomerNumber(), cust1);
     log.info("Inserted a customer: " + cust1);
 
-    Customer cust2 = new Customer(5542, "Lula", "Wax", "12345");
+    Customer cust2 = Customer.builder().customerNumber(5542)
+        .firstName("Lula").lastName("Wax")
+        .primaryAddress(Address.builder().postalCode("12345").build())
+        .build();
     customers.put(cust2.getCustomerNumber(), cust2);
     log.info("Inserted a customer: " + cust2);
 
-    Customer cust3 = new Customer(6024, "Trenton", "Garcia", "88888");
+    Customer cust3 = Customer.builder().customerNumber(6024)
+        .firstName("Trenton").lastName("Garcia")
+        .primaryAddress(Address.builder().postalCode("88888").build())
+        .build();
     cust3.addOrder(17700);
     customers.put(cust3.getCustomerNumber(), cust3);
     log.info("Inserted a customer: " + cust3);

@@ -20,7 +20,7 @@ public class SummingClient {
     Region<Long, Customer> customer = cache.getRegion("BookOrder");
 
     Execution execution = FunctionService.onRegion(customer)
-        .withArgs("totalAmount")
+        .setArguments("totalAmount")
         .withCollector(new SummingResultCollector());
 
     ResultCollector rc = execution.execute("GenericSumFunction");

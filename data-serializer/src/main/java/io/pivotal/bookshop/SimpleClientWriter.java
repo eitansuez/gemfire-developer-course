@@ -15,9 +15,14 @@ public class SimpleClientWriter {
 
     Region<Long, Customer> customerRegion = cache.getRegion("Customer");
 
-    Customer c = new Customer(1001L, "John", "Doe");
-    Address address = new Address("123 Some St", "", "", "Austin", "TX", "77777", "USA", "512.333.4444", "Home Address");
-    c.setPrimaryAddress(address);
+    Address address = Address.builder()
+        .addressLine1("123 Some St")
+        .city("Austin").state("TX").postalCode("77777")
+        .country("USA").phoneNumber("512 333-4444").addressTag("Home Address").build();
+
+    Customer c = Customer.builder().customerNumber(1001L)
+        .firstName("John").lastName("Doe")
+        .primaryAddress(address).build();
 
     customerRegion.put(1001L, c);
 

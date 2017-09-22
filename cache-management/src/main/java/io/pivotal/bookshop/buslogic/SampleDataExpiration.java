@@ -63,27 +63,39 @@ public class SampleDataExpiration {
 
   private static void populateCustomerRegion(Region<Long, Customer> customerRegion) {
     Map<Long, Customer> customerMap = new HashMap<>();
-    Customer cust1 = new Customer(5540, "Lula", "Wax");
-    cust1.addAddress(new Address("123 Main St.", null, null, "Topeka",
-        "KS", "50505", "US", "423-555-3322", "HOME"));
+    Customer cust1 = Customer.builder().customerNumber(5540)
+        .firstName("Lula").lastName("Wax").build();
+    cust1.addAddress(Address.builder()
+        .addressLine1("123 Main St")
+        .city("Topeka").state("KS").postalCode("50505")
+        .country("US").phoneNumber("423 555-3322").addressTag("HOME").build());
     cust1.addOrder(17699);
     customerMap.put(5540L, cust1);
 
-    Customer cust2 = new Customer(5541, "Tom", "Mcginns");
-    cust2.addAddress(new Address("123 Main St.", null, null,
-        "San Fransisco", "CA", "50505", "US", "423-555-3322", "HOME"));
+    Customer cust2 = Customer.builder().customerNumber(5541)
+        .firstName("Tom").lastName("Mcginns").build();
+    cust2.addAddress(Address.builder()
+        .addressLine1("123 Main St")
+        .city("San Francisco").state("CA").postalCode("50505")
+        .country("US").phoneNumber("423 555-3322").addressTag("HOME").build());
     cust2.addOrder(17699);
     customerMap.put(5541L, cust2);
 
-    Customer cust3 = new Customer(5542, "Peter", "Fernandez");
-    cust3.addAddress(new Address("123 Main St.", null, null,
-        "San Fransisco", "CA", "50505", "US", "423-555-3322", "HOME"));
+    Customer cust3 = Customer.builder().customerNumber(5542)
+        .firstName("Peter").lastName("Fernandez").build();
+    cust3.addAddress( Address.builder()
+        .addressLine1("123 Main St")
+        .city("San Francisco").state("CA").postalCode("50505")
+        .country("US").phoneNumber("423 555-3322").addressTag("HOME").build());
     cust3.addOrder(17699);
     customerMap.put(5542L, cust3);
 
-    Customer cust4 = new Customer(5543, "Jenny", "Tsai");
-    cust4.addAddress(new Address("123 Main St.", null, null, "Topeka",
-        "CA", "50505", "US", "423-555-3322", "HOME"));
+    Customer cust4 = Customer.builder().customerNumber(5543)
+        .firstName("Jenny").lastName("Tsai").build();
+    cust4.addAddress( Address.builder()
+        .addressLine1("123 Main St")
+        .city("Topeka").state("CA").postalCode("50505")
+        .country("US").phoneNumber("423 555-3322").addressTag("HOME").build());
     cust4.addOrder(17699);
     customerMap.put(5543L, cust4);
 

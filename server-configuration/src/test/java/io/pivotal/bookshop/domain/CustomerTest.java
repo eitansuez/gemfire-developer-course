@@ -11,18 +11,13 @@ public class CustomerTest {
 
   @Before
   public void setup() {
-    customer = new Customer();
-    customer.setCustomerNumber(123L);
-    customer.setFirstName("Eitan");
-    customer.setLastName("Suez");
+    customer = Customer.builder().customerNumber(123)
+        .firstName("Eitan").lastName("Suez").build();
 
-    customer2 = new Customer();
-    customer2.setCustomerNumber(333L);
-    customer2.setFirstName("John");
-    customer2.setLastName("Doe");
+    customer2 = Customer.builder().customerNumber(333)
+        .firstName("John").lastName("Doe").build();
 
-    customer3 = new Customer();
-    customer3.setCustomerNumber(123L);
+    customer3 = Customer.builder().customerNumber(123).build();
   }
 
   @Test
