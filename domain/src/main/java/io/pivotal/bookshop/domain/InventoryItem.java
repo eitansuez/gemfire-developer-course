@@ -6,7 +6,7 @@ import java.io.Serializable;
 
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode
-@ToString(of={"itemNumber", "quantityInStock", "location"})
+@ToString(of = {"itemNumber", "quantityInStock", "location"})
 @AllArgsConstructor
 @Builder
 public class InventoryItem implements Serializable {
