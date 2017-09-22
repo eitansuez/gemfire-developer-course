@@ -4,9 +4,7 @@ import lombok.*;
 
 import java.io.Serializable;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @ToString(of={"addressLine1", "city", "state", "postalCode", "country", "phoneNumber"})
 @AllArgsConstructor
 @Builder

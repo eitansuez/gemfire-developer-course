@@ -14,7 +14,7 @@ import java.io.Serializable;
 @EqualsAndHashCode(of={"itemNumber"})
 @ToString(of={"itemNumber", "title", "author"})
 @AllArgsConstructor
-@Builder
+@Builder(toBuilder = true)
 public class Book implements Serializable {
 
   private static final long serialVersionUID = 7526471155622776147L;
