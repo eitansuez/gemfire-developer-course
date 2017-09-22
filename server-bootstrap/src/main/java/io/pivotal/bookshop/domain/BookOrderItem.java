@@ -13,7 +13,7 @@ public class BookOrderItem implements Serializable {
 
   private int orderLine;
   private long itemNumber;
-  private int quantity;
-  private float discount;
+  @Builder.Default private int quantity = 1;
+  @Builder.Default private float discount = 0f;
 
 }

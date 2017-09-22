@@ -56,14 +56,14 @@ public class DataLoader {
     // Order for Kari Powell for book: A Treatise of Treatises
     OrderKey key1 = new OrderKey(5598, 17600);
     BookOrder order1 = new BookOrder(17600, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 5598, (float) 40.98);
-    order1.addOrderItem(new BookOrderItem(1, 123, 1, (float) 0));
+    order1.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
     orders.put(key1, order1);
 
     // Order for Lula Wax   book: A Treatise of Treatises & Clifford the Big Red Dog
     OrderKey key2 = new OrderKey(6024, 17700);
     BookOrder order2 = new BookOrder(17700, new Date(), (float) 5.99, new Date(), new ArrayList<>(), 6024, (float) 52.97);
-    order2.addOrderItem(new BookOrderItem(1, 123, 1, (float) 0));
-    order2.addOrderItem(new BookOrderItem(2, 456, 1, (float) 0));
+    order2.addOrderItem(BookOrderItem.builder().orderLine(1).itemNumber(123).build());
+    order2.addOrderItem(BookOrderItem.builder().orderLine(2).itemNumber(456).build());
     orders.put(key2, order2);
   }
 

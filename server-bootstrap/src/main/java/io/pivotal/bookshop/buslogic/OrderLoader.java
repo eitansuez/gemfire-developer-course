@@ -22,11 +22,8 @@ public class OrderLoader {
         .shipDate(new Date())
         .shippingCost(5.99f)
         .customerNumber(5598L) // Kari Powell
-        .orderItem(BookOrderItem.builder()
-            .orderLine(1)
+        .orderItem(BookOrderItem.builder().orderLine(1)
             .itemNumber(123) // A Treatise of Treatises
-            .quantity(1)
-            .discount(0f)
             .build())
         .build();
 
@@ -40,17 +37,11 @@ public class OrderLoader {
         .shipDate(new Date())
         .shippingCost(5.99f)
         .customerNumber(5543L) // Lula Wax
-        .orderItem(BookOrderItem.builder()
-            .orderLine(1)
+        .orderItem(BookOrderItem.builder().orderLine(1)
             .itemNumber(123) // A Treatise of Treatises
-            .quantity(1)
-            .discount(0f)
             .build())
-        .orderItem(BookOrderItem.builder()
-            .orderLine(2)
+        .orderItem(BookOrderItem.builder().orderLine(2)
             .itemNumber(456) // Clifford the Big Red Dog
-            .quantity(1)
-            .discount(0f)
             .build())
         .build();
     orderRegion.put(17700L, order2);
