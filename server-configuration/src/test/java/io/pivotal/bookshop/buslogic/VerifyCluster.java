@@ -1,7 +1,7 @@
 package io.pivotal.bookshop.buslogic;
 
-import io.pivotal.bookshop.domain.Address;
 import io.pivotal.bookshop.domain.Customer;
+import io.pivotal.bookshop.fixtures.Fixtures;
 import lombok.extern.log4j.Log4j2;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
@@ -22,6 +22,7 @@ public class VerifyCluster {
   public void setup() {
     clientCache = new ClientCacheFactory().create();
     customerRegion = clientCache.getRegion("Customer");
+    assertThat(customerRegion).isNotNull();
   }
 
   @After
@@ -36,30 +37,10 @@ public class VerifyCluster {
   }
 
   private void populateCustomers() {
-    Customer cust1 = Customer.builder().customerNumber(5598)
-        .firstName("Kari").lastName("Powell")
-        .address(Address.builder().postalCode("44444").build())
-        .bookOrder(17699L).bookOrder(18009L).bookOrder(18049L)
-        .build();
-
-    assertThat(customerRegion).isNotNull();
-    customerRegion.put(5598L, cust1);
-    log.info("Inserted a customer: " + cust1);
-
-    Customer cust2 = Customer.builder().customerNumber(5543)
-        .firstName("Lula").lastName("Wax")
-        .address(Address.builder().postalCode("12345").build())
-        .bookOrder(17699L)
-        .build();
-    customerRegion.put(5543L, cust2);
-    log.info("Inserted a customer: " + cust2);
-
-    Customer cust3 = Customer.builder().customerNumber(6024)
-        .firstName("Trenton").lastName("Garcia")
-        .address(Address.builder().postalCode("88888").build()).build();
-
-    customerRegion.put(6024L, cust3);
-    log.info("Inserted a customer: " + cust3);
+    Fixtures.someCustomers().forEach(customer -> {
+      customerRegion.put(customer.getCustomerNumber(), customer);
+      log.info("Inserted a customer: " + customer);
+    });
   }
 
 
