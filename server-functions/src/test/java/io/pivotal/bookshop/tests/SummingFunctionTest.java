@@ -27,14 +27,14 @@ public class SummingFunctionTest {
   @Test
   // TODO-09: Run the test verifying the function performs as expected
   public void testSummingFunction() {
-    Execution execution = FunctionService
+    Execution<String, BigDecimal, BigDecimal> execution = FunctionService
         .onRegion(bookOrders)
         .setArguments("totalPrice")
         .withCollector(new SummingResultCollector());
 
-    ResultCollector rc = execution.execute("GenericSumFunction");
+    ResultCollector<BigDecimal, BigDecimal> rc = execution.execute("GenericSumFunction");
 
-    BigDecimal result = (BigDecimal) rc.getResult();
-    assertThat(result).isEqualTo(new BigDecimal("93.95")); // 40.98 + 52.97
+    BigDecimal result = rc.getResult();
+    assertThat(result.toString()).isEqualTo("93.95"); // 40.98 + 52.97
   }
 }
