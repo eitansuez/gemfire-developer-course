@@ -13,12 +13,12 @@ public class DataLoader {
 
   // TODO-06: Run this class to load Customer and BookOrder entries.
   public static void main(String[] args) {
-    ClientCache cache = new ClientCacheFactory().create();
 
-    populateCustomers(cache);
-    populateBookOrders(cache);
+    try (ClientCache cache = new ClientCacheFactory().create()) {
+      populateCustomers(cache);
+      populateBookOrders(cache);
+    }
 
-    cache.close();
   }
 
   // TODO-05: Observe the values of the keys used for both Customer entries and BookOrder entries below.

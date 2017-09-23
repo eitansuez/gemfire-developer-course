@@ -13,36 +13,33 @@ public class CustomerLoader {
 
   public static void main(String[] args) {
 
-    ClientCache cache = new ClientCacheFactory().create();
-    Region<Long, Customer> customerRegion = cache.getRegion("Customer");
+    try ( ClientCache cache = new ClientCacheFactory().create() ) {
+      Region<Long, Customer> customerRegion = cache.getRegion("Customer");
+      populateCustomers(customerRegion);
+    }
 
-    populateCustomers(customerRegion);
-
-    cache.close();
   }
 
   private static void populateCustomers(Region<Long, Customer> customerRegion) {
     Customer cust1 = Customer.builder().customerNumber(5598)
         .firstName("Kari").lastName("Powell")
-        .primaryAddress(Address.builder().postalCode("44444").build())
+        .address(Address.builder().postalCode("44444").build())
+        .bookOrder(17699L).bookOrder(18009L).bookOrder(18049L)
       .build();
-    cust1.addOrder(17699);
-    cust1.addOrder(18009);
-    cust1.addOrder(18049);
     customerRegion.put(5598L, cust1);
     log.info("Inserted a customer: " + cust1);
 
     Customer cust2 = Customer.builder().customerNumber(5543)
         .firstName("Lula").lastName("Wax")
-        .primaryAddress(Address.builder().postalCode("12345").build())
+        .address(Address.builder().postalCode("12345").build())
+        .bookOrder(17699L)
       .build();
-    cust2.addOrder(17699);
     customerRegion.put(5543L, cust2);
     log.info("Inserted a customer: " + cust2);
 
     Customer cust3 = Customer.builder().customerNumber(6024)
         .firstName("Trenton").lastName("Garcia")
-        .primaryAddress(Address.builder().postalCode("88888").build())
+        .address(Address.builder().postalCode("88888").build())
       .build();
     customerRegion.put(6024L, cust3);
     log.info("Inserted a customer: " + cust3);

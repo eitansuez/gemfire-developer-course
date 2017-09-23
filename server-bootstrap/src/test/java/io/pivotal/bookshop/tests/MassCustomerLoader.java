@@ -32,8 +32,8 @@ public class MassCustomerLoader {
               .customerNumber(i)
               .firstName(firstName + "[" + i + "]")
               .lastName("Powell")
-              .primaryAddress(Address.builder().postalCode("44444").build())
-              .build());
+              .address(Address.builder().postalCode("44444").build())
+            .build());
     }
     log.info("populated customer region.");
   }

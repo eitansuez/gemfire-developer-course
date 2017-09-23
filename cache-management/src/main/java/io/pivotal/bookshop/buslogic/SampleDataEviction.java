@@ -15,22 +15,19 @@ import java.util.Map;
 public class SampleDataEviction {
 
   public static void main(String[] args) throws InterruptedException {
-    Cache cache = new CacheFactory()
-        .set("log-level", "info")
-        .set("cache-xml-file", "cluster.xml")
-        .create();
+    try ( Cache cache = new CacheFactory()
+          .set("log-level", "info")
+          .set("cache-xml-file", "cluster.xml")
+          .create() ) {
 
-    Region<Long, Customer> customerRegion = cache.getRegion("Customer");
+      Region<Long, Customer> customerRegion = cache.getRegion("Customer");
 
-    printRegionContents(customerRegion);
+      printRegionContents(customerRegion);
+      populateCustomer(customerRegion);
+      insertOneMoreCustomer(customerRegion);
+      printRegionContents(customerRegion);
+    }
 
-    populateCustomer(customerRegion);
-
-    insertOneMoreCustomer(customerRegion);
-
-    printRegionContents(customerRegion);
-
-    cache.close();
   }
 
   private static void populateCustomer(Region<Long, Customer> customerRegion) {

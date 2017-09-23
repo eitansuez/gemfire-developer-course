@@ -22,7 +22,7 @@ public class SimpleClientWriter {
 
     Customer c = Customer.builder().customerNumber(1001L)
         .firstName("John").lastName("Doe")
-        .primaryAddress(address).build();
+        .address(address).build();
 
     customerRegion.put(1001L, c);
 

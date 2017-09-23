@@ -38,7 +38,7 @@ public class VerifyCluster {
   private void populateCustomers() {
     Customer cust1 = Customer.builder().customerNumber(5598)
         .firstName("Kari").lastName("Powell")
-        .primaryAddress(Address.builder().postalCode("44444").build())
+        .address(Address.builder().postalCode("44444").build())
         .bookOrder(17699L).bookOrder(18009L).bookOrder(18049L)
         .build();
 
@@ -48,7 +48,7 @@ public class VerifyCluster {
 
     Customer cust2 = Customer.builder().customerNumber(5543)
         .firstName("Lula").lastName("Wax")
-        .primaryAddress(Address.builder().postalCode("12345").build())
+        .address(Address.builder().postalCode("12345").build())
         .bookOrder(17699L)
         .build();
     customerRegion.put(5543L, cust2);
@@ -56,7 +56,7 @@ public class VerifyCluster {
 
     Customer cust3 = Customer.builder().customerNumber(6024)
         .firstName("Trenton").lastName("Garcia")
-        .primaryAddress(Address.builder().postalCode("88888").build()).build();
+        .address(Address.builder().postalCode("88888").build()).build();
 
     customerRegion.put(6024L, cust3);
     log.info("Inserted a customer: " + cust3);

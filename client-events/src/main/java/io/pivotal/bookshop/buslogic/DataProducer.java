@@ -18,22 +18,23 @@ public class DataProducer {
 
   public static void main(String[] args) throws Exception {
 
-    ClientCache cache = new ClientCacheFactory()
+    try (ClientCache cache = new ClientCacheFactory()
         .set("cache-xml-file", "clientWorkerCache.xml")
-        .create();
+        .create()) {
 
-    Region<Long, BookOrder> orderRegion = cache.getRegion("BookOrder");
+      Region<Long, BookOrder> orderRegion = cache.getRegion("BookOrder");
 
-    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
-    System.out.println("Press enter to populate an order over $100");
-    bufferedReader.readLine();
-    addAnotherOrder(orderRegion);
+      BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(System.in));
+      System.out.println("Press enter to populate an order over $100");
+      bufferedReader.readLine();
+      addAnotherOrder(orderRegion);
 
-    System.out.println("Press enter to populate an order less than $100");
-    bufferedReader.readLine();
-    addLowOrder(orderRegion);
+      System.out.println("Press enter to populate an order less than $100");
+      bufferedReader.readLine();
+      addLowOrder(orderRegion);
 
-    cache.close();
+    }
+
   }
 
 

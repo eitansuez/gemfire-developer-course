@@ -12,14 +12,11 @@ import org.apache.geode.cache.client.ClientCacheFactory;
 public class SimpleClientReader {
 
   public static void main(String[] args) throws InterruptedException {
-    ClientCache cache = new ClientCacheFactory().create();
-
-    Region<Long, Customer> customerRegion = cache.getRegion("Customer");
-
-    Customer c = customerRegion.get(1001L);
-
-    System.out.println(c);
-
+    try ( ClientCache cache = new ClientCacheFactory().create() ) {
+      Region<Long, Customer> customerRegion = cache.getRegion("Customer");
+      Customer c = customerRegion.get(1001L);
+      System.out.println(c);
+    }
   }
 
 }

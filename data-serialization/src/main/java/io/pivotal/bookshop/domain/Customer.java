@@ -3,7 +3,7 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * TODO-01: Note that this class does not implement java.io.Serializable. Also note that one of the fields is an instance
@@ -16,16 +16,14 @@ import java.util.ArrayList;
 @Builder
 public class Customer {
   private long customerNumber;
-  private String firstName;
-  private String lastName;
-  private Address primaryAddress;
-  private final ArrayList<Long> myBookOrders = new ArrayList<>();
+  private String firstName, lastName;
+  @Singular
+  private List<Address> addresses;
+  @Singular
+  private List<Long> bookOrders;
 
-  // TODO-07: Add a new field called telephoneNumber of type String. Also add setter and getter as well as adding
-  //          to the toString() method.
+  // TODO-07: Add a new field called telephoneNumber of type String.
+  // Also add the field name to the list of fields for the toString method (see annotation)
 
-  public void addOrder(long orderKey) {
-    myBookOrders.add(orderKey);
-  }
 
 }

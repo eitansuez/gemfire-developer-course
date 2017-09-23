@@ -7,9 +7,7 @@ import java.io.DataInput;
 import java.io.DataOutput;
 import java.io.IOException;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @ToString(of = {"addressLine1", "city", "state", "postalCode", "country"})
 @AllArgsConstructor
 @Builder
