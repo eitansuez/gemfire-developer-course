@@ -2,14 +2,12 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of = {"orderNumber"})
-@ToString
+@ToString(of={"orderNumber", "orderDate", "customerNumber", "totalPrice"})
 @AllArgsConstructor
 @Builder
 public class BookOrder {
@@ -22,14 +20,7 @@ public class BookOrder {
   //          the date from the JSON object being returned. Repeat for the shipDate field below as well.
   private Date orderDate;
   private Date shipDate;
-
-  private final ArrayList<BookOrderItem> orderItems = new ArrayList<>();
-
-  private float totalPrice;
-  private float shippingCost;
-
-  public void addOrderItem(BookOrderItem item) {
-    orderItems.add(item);
-  }
+  @Singular private List<BookOrderItem> orderItems;
+  private float shippingCost, totalPrice;
 
 }

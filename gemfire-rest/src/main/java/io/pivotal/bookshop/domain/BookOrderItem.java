@@ -2,10 +2,8 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-@NoArgsConstructor
-@Getter
-@Setter
-@ToString(of={"orderLine", "itemNumber", "quantity", "discount"})
+@NoArgsConstructor @Getter @Setter
+@ToString
 @AllArgsConstructor
 @Builder
 public class BookOrderItem {

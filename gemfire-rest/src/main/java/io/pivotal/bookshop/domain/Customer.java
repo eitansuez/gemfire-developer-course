@@ -3,7 +3,7 @@ package io.pivotal.bookshop.domain;
 import lombok.*;
 
 import java.io.Serializable;
-import java.util.ArrayList;
+import java.util.List;
 
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of={"customerNumber"})
@@ -15,15 +15,9 @@ public class Customer implements Serializable {
 
   private long customerNumber;
   private String firstName, lastName;
-  private final ArrayList<Address> addresses = new ArrayList<>();
-  private final ArrayList<Long> myBookOrders = new ArrayList<>();
-
-  public void addAddress(Address addr) {
-    addresses.add(addr);
-  }
-
-  public void addOrder(long orderKey) {
-    myBookOrders.add(orderKey);
-  }
+  @Singular
+  private List<Address> addresses;
+  @Singular
+  private List<Long> bookOrders;
 
 }
