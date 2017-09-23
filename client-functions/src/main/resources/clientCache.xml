@@ -13,10 +13,8 @@
 
   <!-- TODO-02: Add configuration to register the appropriate classes (BookOrder and BookOrderItem) -->
 
-  <region name="Customer">
-    <region-attributes refid="PROXY"/>
-  </region>
   <region name="BookOrder">
     <region-attributes refid="PROXY"/>
   </region>
+
 </client-cache>

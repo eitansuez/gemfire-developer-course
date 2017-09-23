@@ -21,10 +21,6 @@
     </pdx-serializer>
   </pdx>
 
-  <region name="Customer">
-    <region-attributes refid="PROXY"/>
-  </region>
-
   <region name="BookOrder">
     <region-attributes refid="PROXY"/>
   </region>
