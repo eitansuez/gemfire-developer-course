@@ -1,6 +1,5 @@
 package io.pivotal.bookshop.buslogic;
 
-import io.pivotal.bookshop.domain.Address;
 import io.pivotal.bookshop.domain.Customer;
 import lombok.extern.log4j.Log4j2;
 import org.apache.geode.cache.Cache;
@@ -8,8 +7,6 @@ import org.apache.geode.cache.CacheFactory;
 import org.apache.geode.cache.Region;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
 @Log4j2
 public class SampleDataExpiration {
@@ -22,7 +19,7 @@ public class SampleDataExpiration {
 
     Region<Long , Customer> customerRegion = cache.getRegion("Customer");
 
-    // TODO-06a: call populateCustomerRegion() to populate the customer region with sample data
+    // TODO-06a: call CustomerLoader.populateCustomerRegion() to populate the customer region with sample data
 
     // TODO-06b: Show the contents by calling retrieveAndPrintRegionData for the customer region
 
@@ -61,51 +58,6 @@ public class SampleDataExpiration {
     log.info("************ Updated customer data ****************\n");
   }
 
-  private static void populateCustomerRegion(Region<Long, Customer> customerRegion) {
-    Map<Long, Customer> customerMap = new HashMap<>();
-    Customer cust1 = Customer.builder().customerNumber(5540)
-        .firstName("Lula").lastName("Wax")
-        .address(Address.builder()
-            .addressLine1("123 Main St")
-            .city("Topeka").state("KS").postalCode("50505")
-            .country("US").phoneNumber("423 555-3322").addressTag("HOME").build())
-        .bookOrder(17699L)
-        .build();
-    customerMap.put(5540L, cust1);
-
-    Customer cust2 = Customer.builder().customerNumber(5541)
-        .firstName("Tom").lastName("Mcginns")
-        .address(Address.builder()
-            .addressLine1("123 Main St")
-            .city("San Francisco").state("CA").postalCode("50505")
-            .country("US").phoneNumber("423 555-3322").addressTag("HOME").build())
-        .bookOrder(17699L)
-        .build();
-    customerMap.put(5541L, cust2);
-
-    Customer cust3 = Customer.builder().customerNumber(5542)
-        .firstName("Peter").lastName("Fernandez")
-        .address(Address.builder()
-            .addressLine1("123 Main St")
-            .city("San Francisco").state("CA").postalCode("50505")
-            .country("US").phoneNumber("423 555-3322").addressTag("HOME").build())
-        .bookOrder(17699L)
-        .build();
-    customerMap.put(5542L, cust3);
-
-    Customer cust4 = Customer.builder().customerNumber(5543)
-        .firstName("Jenny").lastName("Tsai")
-        .address(Address.builder()
-            .addressLine1("123 Main St")
-            .city("Topeka").state("CA").postalCode("50505")
-            .country("US").phoneNumber("423 555-3322").addressTag("HOME").build())
-        .bookOrder(17699L)
-        .build();
-    customerMap.put(5543L, cust4);
-
-    customerRegion.putAll(customerMap);
-    log.info("************ Server 1 : Loaded customers data ****************\n");
-  }
 
   /**
    * TODO-05: Review this code.
