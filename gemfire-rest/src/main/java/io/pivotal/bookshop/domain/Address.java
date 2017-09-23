@@ -2,13 +2,11 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-import java.io.Serializable;
-
 @NoArgsConstructor @Getter @Setter
 @ToString(of={"addressLine1", "city", "state", "postalCode", "country", "phoneNumber"})
 @AllArgsConstructor
 @Builder
-public class Address implements Serializable {
+public class Address {
 
   private static final long serialVersionUID = 7526471155622776147L;
 

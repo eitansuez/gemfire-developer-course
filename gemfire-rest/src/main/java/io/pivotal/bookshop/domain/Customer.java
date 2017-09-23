@@ -2,7 +2,6 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-import java.io.Serializable;
 import java.util.List;
 
 @NoArgsConstructor @Getter @Setter
@@ -10,7 +9,7 @@ import java.util.List;
 @ToString(of={"customerNumber", "firstName", "lastName"})
 @AllArgsConstructor
 @Builder
-public class Customer implements Serializable {
+public class Customer {
   private static final long serialVersionUID = 7526471155622776147L;
 
   private long customerNumber;
