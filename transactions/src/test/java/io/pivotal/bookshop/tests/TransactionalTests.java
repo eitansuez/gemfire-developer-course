@@ -12,10 +12,7 @@ import org.apache.geode.cache.client.ClientCacheFactory;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -79,53 +76,50 @@ public class TransactionalTests {
   }
 
   private void loadOrders() {
-    Map<Long, Order> ordersMap = new HashMap<>();
-
     Calendar orderDate = Calendar.getInstance();
     orderDate.set(2013, Calendar.DECEMBER, 3, 0, 0, 0);
-    ArrayList<ProductItem> arr1 = new ArrayList<>();
-    arr1.add(new ProductItem("P001", "Toy", 30.5f));
-    arr1.add(new ProductItem("P002", "Watch", 60.5f));
-    arr1.add(new ProductItem("P003", "Pen", 12.5f));
-    Order order01 = new Order("ORD001", orderDate.getTime(), arr1, "C001", 103.5f);
-    ordersMap.put(1001L, order01);
 
-    ArrayList<ProductItem> arr2 = new ArrayList<>();
-    arr2.add(new ProductItem("P004", "Shirt", 60.5f));
-    arr2.add(new ProductItem("P005", "Socks", 12.5f));
-    Order order02 = new Order("ORD002", orderDate.getTime(), arr2, "C002", 73.0f);
-    ordersMap.put(1002L, order02);
+    Order firstOrder = Order.builder().orderNumber("ORD001")
+        .orderDate(orderDate.getTime())
+        .item(ProductItem.builder().itemNumber("P001").description("Toy").retailCost(30.5f).build())
+        .item(ProductItem.builder().itemNumber("P002").description("Watch").retailCost(60.5f).build())
+        .item(ProductItem.builder().itemNumber("P003").description("Pen").retailCost(12.5f).build())
+        .customerNumber("C001")
+        .totalPrice(103.5f)
+        .build();
+    orderRegion.put(1001L, firstOrder);
 
-    orderRegion.putAll(ordersMap);
+    Order otherOrder = Order.builder().orderNumber("ORD002")
+        .orderDate(orderDate.getTime())
+        .item(ProductItem.builder().itemNumber("P004").description("Shirt").retailCost(60.5f).build())
+        .item(ProductItem.builder().itemNumber("P005").description("Socks").retailCost(12.5f).build())
+        .customerNumber("C002")
+        .totalPrice(73.0f)
+        .build();
+    orderRegion.put(1002L, otherOrder);
   }
 
   private void loadCustomers() {
-    Map<Long, Customer> customerMap = new HashMap<>();
-    Address address1 = Address.builder().addressLine1("123 Main St")
-        .city("Topeka").state("KS").postalCode("50505")
-        .country("US").addressTag("HOME").build();
     Customer cust1 = Customer.builder().customerNumber("C001")
         .firstName("Lula").lastName("Wax").phoneNumber("123 654-543")
-        .address(address1).build();
-    customerMap.put(1001L, cust1);
+        .address(Address.builder().addressLine1("123 Main St")
+            .city("Topeka").state("KS").postalCode("50505")
+            .country("US").addressTag("HOME").build()).build();
+    customerRegion.put(1001L, cust1);
 
-    Address address2 = Address.builder().addressLine1("123 Main St")
-        .city("San Francisco").state("CA").postalCode("50505")
-        .country("US").addressTag("HOME").build();
     Customer cust2 = Customer.builder().customerNumber("C002")
         .firstName("Tom").lastName("Mcginns").phoneNumber("123 456-789")
-        .address(address2).build();
-    customerMap.put(1002L, cust2);
+        .address(Address.builder().addressLine1("123 Main St")
+            .city("San Francisco").state("CA").postalCode("50505")
+            .country("US").addressTag("HOME").build()).build();
+    customerRegion.put(1002L, cust2);
 
-    Address address3 = Address.builder().addressLine1("123 Main St")
-        .city("San Francisco").state("CA").postalCode("50505")
-        .country("US").addressTag("HOME").build();
     Customer cust3 = Customer.builder().customerNumber("C003")
         .firstName("Peter").lastName("Fernandez").phoneNumber("123 456-789")
-        .address(address3).build();
-    customerMap.put(1003L, cust3);
-
-    customerRegion.putAll(customerMap);
+        .address(Address.builder().addressLine1("123 Main St")
+            .city("San Francisco").state("CA").postalCode("50505")
+            .country("US").addressTag("HOME").build()).build();
+    customerRegion.put(1003L, cust3);
   }
 
 }
