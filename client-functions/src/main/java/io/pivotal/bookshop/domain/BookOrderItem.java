@@ -2,9 +2,7 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @ToString
 @AllArgsConstructor
 @Builder

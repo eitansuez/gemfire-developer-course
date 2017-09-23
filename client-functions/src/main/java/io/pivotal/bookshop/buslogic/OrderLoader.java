@@ -17,11 +17,9 @@ import java.util.Date;
 public class OrderLoader {
 
   public static void main(String[] args) {
-    ClientCache cache = new ClientCacheFactory().create();
-
-    populateBookOrders(cache);
-
-    cache.close();
+    try (ClientCache cache = new ClientCacheFactory().create()) {
+      populateBookOrders(cache);
+    }
   }
 
   private static void populateBookOrders(ClientCache cache) {
