@@ -1,8 +1,6 @@
 package io.pivotal.bookshop.tests;
 
-import io.pivotal.bookshop.buslogic.BookLoader;
-import io.pivotal.bookshop.buslogic.CustomerLoader;
-import io.pivotal.bookshop.buslogic.OrderLoader;
+import io.pivotal.bookshop.buslogic.Loader;
 import io.pivotal.bookshop.domain.Book;
 import io.pivotal.bookshop.domain.BookOrder;
 import io.pivotal.bookshop.domain.Customer;
@@ -19,7 +17,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import javax.annotation.Resource;
 
 import static org.assertj.core.api.Assertions.assertThat;
-
 
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:cache-config.xml"})
@@ -38,16 +35,14 @@ public class BasicValidationTest {
   @Resource(name = "InventoryItem")
   private Region<Long, InventoryItem> inventoryRegion;
 
-  @Autowired private CustomerLoader customerLoader;
-  @Autowired private BookLoader bookLoader;
-  @Autowired private OrderLoader orderLoader;
+  @Autowired private Loader loader;
 
   @Before
   public void seedRegions() {
-    customerLoader.populateCustomers(customerRegion);
-    bookLoader.populateBooks(bookRegion);
-    orderLoader.populateBookOrders(orderRegion);
-    orderLoader.populateInventory(inventoryRegion);
+    loader.populateCustomers(customerRegion);
+    loader.populateBooks(bookRegion);
+    loader.populateBookOrders(orderRegion);
+    loader.populateInventory(inventoryRegion);
   }
 
   @Test

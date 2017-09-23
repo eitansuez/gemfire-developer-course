@@ -14,14 +14,14 @@ import java.math.BigDecimal;
 import java.util.Properties;
 
 @Log4j2
-public class GenericSumFunction implements Function, Declarable {
+public class GenericSumFunction implements Function<String>, Declarable {
 
   @Override
-  public void execute(FunctionContext context) {
+  public void execute(FunctionContext<String> context) {
     if (context instanceof RegionFunctionContext) {
       RegionFunctionContext rfc = (RegionFunctionContext) context;
       String fieldString = (String) rfc.getArguments();
-      Region<Object, PdxInstance> localRegion = PartitionRegionHelper.getLocalDataForContext(rfc);
+      Region<?, PdxInstance> localRegion = PartitionRegionHelper.getLocalDataForContext(rfc);
       BigDecimal summable = BigDecimal.ZERO;
       for (PdxInstance item : localRegion.values()) {
         Object field = item.getField(fieldString);
@@ -51,7 +51,6 @@ public class GenericSumFunction implements Function, Declarable {
   @Override
   public void init(Properties props) {
     // Nothing to do
-
   }
 
 }
