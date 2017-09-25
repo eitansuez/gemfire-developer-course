@@ -4,6 +4,7 @@ package io.pivotal.bookshop.domain;
 import lombok.*;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor @Getter @Setter
@@ -20,5 +21,12 @@ public class Customer implements Serializable {
   private List<Address> addresses;
   @Singular
   private List<Long> bookOrders;
+
+  public void addAddress(Address address) {
+    List<Address> addresses = new ArrayList<>();
+    addresses.addAll(getAddresses());
+    addresses.add(address);
+    setAddresses(addresses);
+  }
 
 }
