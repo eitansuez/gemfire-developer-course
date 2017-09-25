@@ -26,30 +26,6 @@ In this first section, you will work with the _Book_ region. The data that this 
 . If the locator is not running, start it using `gfsh` with a command similar to the one used in the prior lab (_start locator.._).  Be sure to start gfsh from the within the `cluster/` folder.
 
 . Start `server1` using a command similar to what was used in the prior lab. Do _not_ start the second server yet.
-+
-[IMPORTANT]
-====
-In addition to the usual flags `properties-file`, `server-port`, and `name`, this time add a `classpath` flag as well, like so:
-
-----
-start server --server-port=0 --properties-file=gemfire.properties --name=server1 --classpath=../../build/classes/java/main
-----
-
-Certain gfsh commands used to fetch or locate entries on the server need the ability to deserialize objects from regions.  Currently, all our types are java serializable objects, meaning that the class files need to be on the server classpath for these commands to do their job.
-====
-
-.What directory are Java classes compiled to?
-****
-It depends:
-
-* Maven usually places `.class` files in the `target/classes` folder
-* Before version 4.0, gradle used to put class file in `build/classes/main`
-* As of version 4.0, gradle now uses `build/classes/java/main`, to account for the fact that projects may be written in more than one language
-* Eclipse and STS typically auto-compile Java source code to a folder named `bin`
-
-If you're using eclipse or STS, it may be simplest to specify `--classpath=../../bin`
-
-****
 
 . In your IDE, locate and run the `BookLoader` class to load 3 books into the `Book` region.
 
@@ -88,11 +64,74 @@ gfsh> show metrics --region=/Customer --categories=partition --member=server1
 +
 Note the reported values for `bucketCount`, `primaryBucketCount` and `configuredRedundancy`. Try this for all three servers.
 
-. Use the `locate entry` command to locate one of the Customer records that you just loaded into GemFire.
+
+== Locating Entries and the server classpath
+
+For a partitioned region, gfsh has a convenient command, named `locate entry`, which provides simple way to find out what specific cache servers host an entry.
+
+. Use the command `help locate entry` to discover how to properly invoke this command, and what arguments to supply.
 +
 TIP: you'll need to specify the `key-class` for gfsh to properly lookup the entry
 
-. Now, stop all the servers (but not the locator).
+. Use the `locate entry` command to locate one of the Customer records that you just loaded into GemFire.
++
+[NOTE]
+====
+You should get an error message similar to this:
+[.small]
+----
+Message : A ClassNotFoundException was thrown while trying to deserialize cached value.
+Result  : false
+----
+====
+
+Certain gemfire commands require the server to deserialize entries.  For now, we're using basic java serialization, which requires that our domain definitions (Customer, Book, etc..) be on the server process's classpath.
+
+There are two ways to achieve this:
+
+. start the server processes with the `start server` command _and_ with a `--classpath` argument
+. hot deploy the domain jar file using the gemfire `deploy` command.
+
+Let's use the second option:
+
+. exit gfsh
+. navigate to the `domain` directory
+. Generate the domain jar file:
++
+----
+$ gradle assemble
+----
++
+This will compile the code, construct the jar file, and place it into the `build/libs` folder
+. Finally, cd to the `build/libs` folder, launch gfsh, connect to the cluster, and deploy the jar file:
++
+----
+$ cd build/libs
+$ gfsh
+gfsh> connect
+gfsh> deploy --jar=domain.jar
+----
+
+We can now get back to locating entries:
+
+. re-issue the `locate entry` command for each of the three Customer entries, by supplying the region, key-class, and key
+. the output should display the server hosting the primary copy of the entry and the server that hosts the redundant copy.
+
+
+Stop all the servers (but not the locator).
+
+TIP: the `shutdown` command is a simple way to quickly shut down all running servers, but not the locator
+
+.What directory are Java classes compiled to?
+****
+It depends:
+
+* Maven usually places `.class` files in the `target/classes` folder
+* Before version 4.0, gradle used to put class file in `build/classes/main`
+* As of version 4.0, gradle now uses `build/classes/java/main`, to account for the fact that projects may be written in more than one language
+* Eclipse and STS typically auto-compile Java source code to a folder named `bin`
+
+****
 
 
 == Partitioned Regions with Redundancy
