@@ -16,22 +16,22 @@ For solutions to all lab exercises, see the branch named `solutions`.
 
 == Course Modules
 
-. link:server-bootstrap/readme{outfilesuffix}[Server Bootstrap]
-. link:server-configuration/readme{outfilesuffix}[Server Configuration]
-. link:server-regions/readme{outfilesuffix}[Server Regions]
-. link:gfsh-practice/readme{outfilesuffix}[Gfsh Practice]
-. link:client-cache/readme{outfilesuffix}[Client Cache]
-. link:query/readme{outfilesuffix}[OQL Queries]
-. link:custom-partitioning/readme{outfilesuffix}[Custom Partitioning]
-. link:server-events/readme{outfilesuffix}[Server-Side Event Handling]
-. link:cache-management/readme{outfilesuffix}[Cache Management]
-. link:client-events/readme{outfilesuffix}[Handling events on the Client] | https://github.com/eitansuez/gemfire_cq_demo[Continuous Query Demo^]
-. link:data-serialization/readme{outfilesuffix}[Data Serialization]
-. link:transactions/readme{outfilesuffix}[Transaction Management]
-. link:server-functions/readme{outfilesuffix}[Writing Server-Side Functions]
-. link:client-functions/readme{outfilesuffix}[Client Function Execution]
-. link:spring-gemfire/readme{outfilesuffix}[Spring Data GemFire]
-. link:gemfire-rest/readme{outfilesuffix}[REST API]
+. link:server-bootstrap/readme{outfilesuffix}[Server Bootstrap^]
+. link:server-configuration/readme{outfilesuffix}[Server Configuration^]
+. link:server-regions/readme{outfilesuffix}[Server Regions^]
+. link:gfsh-practice/readme{outfilesuffix}[Gfsh Practice^]
+. link:client-cache/readme{outfilesuffix}[Client Cache^]
+. link:query/readme{outfilesuffix}[OQL Queries^]
+. link:custom-partitioning/readme{outfilesuffix}[Custom Partitioning^]
+. link:server-events/readme{outfilesuffix}[Server-Side Event Handling^]
+. link:cache-management/readme{outfilesuffix}[Cache Management^]
+. link:client-events/readme{outfilesuffix}[Handling events on the Client^] | https://github.com/eitansuez/gemfire_cq_demo[Continuous Query Demo^]
+. link:data-serialization/readme{outfilesuffix}[Data Serialization^]
+. link:transactions/readme{outfilesuffix}[Transaction Management^]
+. link:server-functions/readme{outfilesuffix}[Writing Server-Side Functions^]
+. link:client-functions/readme{outfilesuffix}[Client Function Execution^]
+. link:spring-gemfire/readme{outfilesuffix}[Spring Data GemFire^]
+. link:gemfire-rest/readme{outfilesuffix}[REST API^]
 
 == Addendum
 
