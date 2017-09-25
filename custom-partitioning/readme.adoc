@@ -59,7 +59,11 @@ NOTE: Because you are registering a custom `PartitionResolver` on the server, yo
 
 .. (`TODO-06`) Run `DataLoader`. This will load `Customer` objects and `BookOrder` objects into their respective regions. If your PartitionResolver has been correctly implemented, `Customer` objects and related `BookOrder` objects should end up on the same member because they will each use the same bucket number for storage.
 
-.. (`TODO-07`) Use the gfsh `locate entry` command to ascertain whether a customer record and its associated book order are hosted in the same server process.  Here's an example:
+.. (`TODO-07`) Use the gfsh `locate entry` command to ascertain whether a customer record and its associated book order are hosted in the same server process.
++
+NOTE:  the domain jar file will need to be deployed (similar to what we did in the _server regions_ lab) in order for the `locate entry` command to work
++
+Here's an example:
 +
 ----
 gfsh> locate entry --region=BookOrder --key-class=io.pivotal.bookshop.domain.OrderKey --key='{customerNumber: 5598, orderNumber: 17600}'
