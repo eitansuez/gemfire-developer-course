@@ -5,6 +5,8 @@
 **/server[1-9]
 .gradle
 build
+# intellij creates these 'out' folders..
+out
 
 # eclipse artifacts:
 .classpath
