@@ -2,6 +2,7 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -20,7 +21,7 @@ public class BookOrder {
   //          the date from the JSON object being returned. Repeat for the shipDate field below as well.
   private Date orderDate;
   private Date shipDate;
-  @Singular private List<BookOrderItem> orderItems;
+  private final List<BookOrderItem> orderItems = new ArrayList<>();
   private float shippingCost, totalPrice;
 
 }
