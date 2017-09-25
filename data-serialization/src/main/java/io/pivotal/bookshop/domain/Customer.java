@@ -11,7 +11,7 @@ import java.util.List;
  */
 @NoArgsConstructor @Getter @Setter
 @EqualsAndHashCode(of={"customerNumber"})
-@ToString(of={"customerNumber", "firstName", "lastName"})
+@ToString(of={"customerNumber", "firstName", "lastName", "telephoneNumber"})
 @AllArgsConstructor
 @Builder
 public class Customer {
@@ -22,6 +22,7 @@ public class Customer {
   private List<Long> bookOrders;
 
   // TODO-07: Add a new field called telephoneNumber of type String.
+  private String telephoneNumber;
   // Also add the field name to the list of fields for the toString method (see annotation)
 
 

@@ -17,6 +17,8 @@ public class LoggingCacheListener<K, V> extends CacheListenerAdapter<K, V> imple
 
   // TODO-04a: Implement the init function such that you fetch the property 'filename' as a string and call initializeLogger() with it.
   public void init(Properties props) {
+    String filename = props.getProperty("filename");
+    initializeLogger(filename);
   }
 
   private void initializeLogger(String filename) {
@@ -34,14 +36,17 @@ public class LoggingCacheListener<K, V> extends CacheListenerAdapter<K, V> imple
 
   // TODO-04b: Implement afterCreate functionality to log the key and new value to the logger as an info type log entry
   //          Optionally, add log statements or just output to the console for other events (ex afterUpdate, afterDestroy)
+  @Override
   public void afterCreate(EntryEvent<K, V> e) {
-
+    logger.info("entry created, key is: "+e.getKey()+"; value is: "+e.getNewValue());
   }
 
+  @Override
   public void afterUpdate(EntryEvent<K, V> e) {
     logger.info("Received afterUpdate event for entry: " + e.getKey() + ", " + e.getNewValue());
   }
 
+  @Override
   public void afterDestroy(EntryEvent<K, V> e) {
     logger.info("Received afterDestroy event for entry: " + e.getKey());
   }

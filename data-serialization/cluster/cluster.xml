@@ -8,6 +8,7 @@
   <!-- TODO-02: Add the appropriate configuration to ensure that PDX serialization is used -->
 
   <!-- TODO-03: Add an attribute to the pdx tag to force the server to not de-serialize objects -->
+  <pdx read-serialized="true" />
 
   <region name="Customer">
     <region-attributes refid="PARTITION">

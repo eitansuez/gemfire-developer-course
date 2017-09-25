@@ -5,9 +5,14 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://geode.apache.org/schema/cache http://geode.apache.org/schema/cache/cache-1.0.xsd"
     version="1.0"
-  >
+    copy-on-read="true">
 
   <!-- TODO-10: Register the LoggingTransactionListener -->
+  <cache-transaction-manager>
+    <transaction-listener>
+      <class-name>io.pivotal.bookshop.buslogic.LoggingTransactionListener</class-name>
+    </transaction-listener>
+  </cache-transaction-manager>
 
   <region name="Customer">
     <region-attributes data-policy="partition">
@@ -21,7 +26,7 @@
   <region name="Order">
     <region-attributes data-policy="partition">
       <!-- TODO-06: Make appropriate configuration so that the Order region is co-located with Customer -->
-      <partition-attributes total-num-buckets="7" />
+      <partition-attributes total-num-buckets="7" colocated-with="Customer" />
       <cache-listener>
         <class-name>io.pivotal.bookshop.buslogic.LoggingCacheListener</class-name>
       </cache-listener>

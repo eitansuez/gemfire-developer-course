@@ -10,6 +10,14 @@
   </pool>
 
   <!-- TODO-01: Add registration code necessary to enable PDX Auto Serialization -->
+  <pdx read-serialized="false">
+    <pdx-serializer>
+      <class-name>org.apache.geode.pdx.ReflectionBasedAutoSerializer</class-name>
+      <parameter name="classes">
+        <string>io.pivotal.bookshop.domain.*</string>
+      </parameter>
+    </pdx-serializer>
+  </pdx>
 
   <!-- TODO-02: Add configuration to register the appropriate classes (BookOrder and BookOrderItem) -->
 

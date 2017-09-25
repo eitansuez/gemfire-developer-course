@@ -8,10 +8,19 @@
   <region name="Customer">
     <region-attributes refid="REPLICATE">
       <!-- TODO-01: Add a configuration to have an idle time expiration after 10 seconds with an action of destroy -->
+      <entry-idle-time>
+        <expiration-attributes timeout="10" action="destroy" />
+      </entry-idle-time>
 
       <!-- TODO-02: Add a configuration to register the ServerCacheListener as an event listener -->
+      <cache-listener>
+        <class-name>io.pivotal.bookshop.buslogic.ServerCacheListener</class-name>
+      </cache-listener>
 
       <!-- TODO-07: Add a configuration to evict entries when entry count exceeds 4 entries -->
+      <eviction-attributes>
+        <lru-entry-count maximum="4" action="local-destroy" />
+      </eviction-attributes>
 
     </region-attributes>
   </region>

@@ -5,9 +5,12 @@ import lombok.extern.log4j.Log4j2;
 import org.apache.geode.cache.Region;
 import org.apache.geode.cache.client.ClientCache;
 import org.apache.geode.cache.client.ClientCacheFactory;
+import org.apache.geode.cache.execute.FunctionService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.assertj.core.api.Assertions.assertThat;
 
 // TODO-09: Run these tests to verify correct implementation
 // (be sure to start server & locators using server-bootstrap starServers script)
@@ -35,6 +38,13 @@ public class SummingTests {
     // TODO-07: execute the function using the totalPrice field on the BookOrder object
 
     // TODO-08: Get result and assert that the two orders total $93.95
+
+    assertThat(FunctionService.onRegion(bookOrderRegion)
+      .setArguments("totalPrice")
+      .withCollector(new SummingResultCollector())
+      .execute("GenericSumFunction")
+      .getResult()
+      .toString()).isEqualTo("93.95");
 
   }
 

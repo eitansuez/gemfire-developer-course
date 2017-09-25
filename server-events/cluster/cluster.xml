@@ -8,8 +8,14 @@
   <region name="Book">
     <region-attributes refid="REPLICATE">
       <!-- Write the correct XML configuration to register the CacheLoader -->
+      <cache-loader>
+        <class-name>io.pivotal.bookshop.buslogic.BookCacheLoader</class-name>
+      </cache-loader>
 
       <!-- Write the correct XML configuration to register the CacheWriter -->
+      <cache-writer>
+        <class-name>io.pivotal.bookshop.buslogic.ValidatingCacheWriter</class-name>
+      </cache-writer>
 
     </region-attributes>
   </region>

@@ -6,6 +6,7 @@
     version="1.0">
 
   <!-- TODO-01: Enable PDX Serialization and enforce that the server should NOT de-serialize entries when fetching them -->
+  <pdx read-serialized="true" />
 
 
   <region name="Customer">

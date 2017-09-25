@@ -1,5 +1,6 @@
 package io.pivotal.bookshop.domain;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -19,7 +20,9 @@ public class BookOrder {
 
   // TODO-08: Add the appropriate JSON Formatting annotation to tell the converter how to interpret
   //          the date from the JSON object being returned. Repeat for the shipDate field below as well.
+  @JsonFormat(pattern="MM/dd/yyyy")
   private Date orderDate;
+  @JsonFormat(pattern="MM/dd/yyyy")
   private Date shipDate;
   private final List<BookOrderItem> orderItems = new ArrayList<>();
   private float shippingCost, totalPrice;

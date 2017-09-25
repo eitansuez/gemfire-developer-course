@@ -10,11 +10,10 @@ import org.apache.geode.cache.LoaderHelper;
 public class BookCacheLoader implements CacheLoader<String, Book>, Declarable {
 
   public Book load(LoaderHelper<String, Book> helper) {
-    Book newBook = null;
-
-    // Implement the 'load' functionality to create a new book
-
-    return newBook;
+    return Book.builder().itemNumber(123)
+        .author("Daisy Mae West")
+        .title("Gone with the wind")
+        .build();
   }
 
   public void close() {

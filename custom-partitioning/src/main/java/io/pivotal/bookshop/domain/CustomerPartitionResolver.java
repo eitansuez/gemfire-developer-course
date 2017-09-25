@@ -19,7 +19,7 @@ public class CustomerPartitionResolver implements PartitionResolver<OrderKey, Bo
   @Override
   public Serializable getRoutingObject(EntryOperation<OrderKey, BookOrder> eo) {
     // TODO-03: Implement getRoutingObject so the customer number is used as the basis for 'routing'
-    return null;
+    return eo.getKey().getCustomerNumber();
   }
 
   //from Declarable

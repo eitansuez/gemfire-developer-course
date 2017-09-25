@@ -6,6 +6,7 @@
     version="1.0">
 
   <!-- TODO-01: Add registration code necessary to enable PDX Auto Serialization -->
+  <pdx read-serialized="true" />
 
   <region name="Customer">
     <region-attributes refid="PARTITION_REDUNDANT">

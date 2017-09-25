@@ -10,8 +10,16 @@
   </pool>
 
   <!-- TODO-04: Add the appropriate configuration to ensure that PDX serialization is used. -->
-
   <!-- TODO-05:  Add the class-name element that specifies the ReflectionBasedAutoSerializer class. -->
+  <pdx read-serialized="true">
+    <pdx-serializer>
+      <class-name>org.apache.geode.pdx.ReflectionBasedAutoSerializer</class-name>
+      <parameter name="classes">
+        <string>io.pivotal.bookshop.domain.Customer#identity=customerNumber,io.pivotal.bookshop.domain.Address</string>
+      </parameter>
+    </pdx-serializer>
+  </pdx>
+
 
   <!-- Also be sure to add the classes parameter to specify the classes you plan to perform auto serialization on.  Note: You can use wild cards to configure all classes in the domain package. -->
 

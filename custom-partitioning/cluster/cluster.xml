@@ -14,8 +14,11 @@
   <region name="BookOrder">
     <region-attributes refid="PARTITION">
       <!-- TODO-01: Add appropriate configuration to ensure bucket alignment between Customer and BookOrder regions -->
-      <partition-attributes redundant-copies="1" total-num-buckets="5">
+      <partition-attributes redundant-copies="1" total-num-buckets="5" colocated-with="Customer">
         <!-- TODO-04: Register the custom PartitionResolver -->
+        <partition-resolver>
+          <class-name>io.pivotal.bookshop.domain.CustomerPartitionResolver</class-name>
+        </partition-resolver>
       </partition-attributes>
     </region-attributes>
   </region>

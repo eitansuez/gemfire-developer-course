@@ -16,7 +16,8 @@ public class PdxInstanceClient {
     log.info("Got the Customer Region: " + customerRegion);
 
     // TODO-10: Add code to fetch the PdxInstance for key 9999 and extract just the telephoneNumber and print it out.
-
+    PdxInstance pdxInstance = customerRegion.get(9999L);
+    System.out.println("Customer phone # is: "+pdxInstance.getField("telephoneNumber"));
 
     cache.close();
   }

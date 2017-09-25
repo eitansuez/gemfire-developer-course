@@ -6,7 +6,7 @@
     version="1.0">
 
   <!-- TODO-01: Ensure that subscriptions are enabled on the pool -->
-  <pool name="client">
+  <pool name="client" subscription-enabled="true">
     <locator host="localhost" port="10334"/>
   </pool>
 
@@ -15,6 +15,12 @@
     <!-- TODO-03: Add a 'parameter' element named 'filename' with a string value
            for the path to a file that will be used for logging -->
     <region-attributes refid="CACHING_PROXY">
+      <cache-listener>
+        <class-name>io.pivotal.bookshop.buslogic.LoggingCacheListener</class-name>
+        <parameter name="filename">
+          <string>eitanslog.log</string>
+        </parameter>
+      </cache-listener>
     </region-attributes>
   </region>
 

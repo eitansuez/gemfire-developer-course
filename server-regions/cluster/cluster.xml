@@ -7,11 +7,15 @@
 
   <region name="Book">
     <!-- Define the Book region to be Replicated using region attributes and region shortcuts. -->
+    <region-attributes refid="REPLICATE" />
   </region>
 
   <region name="Customer">
     <!-- Define the Customer region to be partitioned using region shortcuts -->
     <!-- Ensure that there is one redundant copy and there is a recovery delay of 5 seconds-->
+    <region-attributes refid="PARTITION">
+      <partition-attributes redundant-copies="1" recovery-delay="5000" />
+    </region-attributes>
   </region>
 
 </cache>

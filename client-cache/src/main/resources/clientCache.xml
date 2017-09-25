@@ -6,10 +6,24 @@
     version="1.0">
 
   <!-- TODO-01: Define a pool with one entry configured to contact the locator at localhost and listening on port 10334 -->
+  <pool name="myPool">
+    <locator host="localhost" port="10334" />
+  </pool>
+
+
 
   <!-- TODO-02:  Define Customer Region as a PROXY region type. Also, create a Book region with CACHING_PROXY region type. -->
+  <region name="Customer">
+    <region-attributes refid="PROXY" />
+  </region>
+  <region name="Book">
+    <region-attributes refid="CACHING_PROXY" />
+  </region>
 
 
   <!-- TODO-07: Define a region called "LocalRegion" with LOCAL region type 	-->
+  <region name="LocalRegion">
+    <region-attributes refid="LOCAL" />
+  </region>
 
 </client-cache>

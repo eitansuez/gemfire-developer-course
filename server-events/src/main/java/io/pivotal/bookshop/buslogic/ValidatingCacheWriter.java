@@ -30,6 +30,17 @@ public class ValidatingCacheWriter extends CacheWriterAdapter<String, Book> impl
   public void beforeCreate(EntryEvent<String, Book> event) throws CacheWriterException {
     // Implement the functionality to obtain the correct value and validate it, issuing
     // a CacheWriterException if new entry is invalid.
+    Book book = event.getNewValue();
+    Region<String, Book> bookRegion = event.getRegion();
+    try {
+      if (!validateNewValue(book, bookRegion)) {
+        long itemNumber = event.getNewValue().getItemNumber();
+        throw new CacheWriterException("Book with item number " +
+            itemNumber + " already exists!");
+      }
+    } catch (QueryException e) {
+      throw new RuntimeException(e);
+    }
   }
 
   /**

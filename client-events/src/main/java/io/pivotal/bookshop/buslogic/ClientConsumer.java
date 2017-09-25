@@ -27,6 +27,7 @@ public class ClientConsumer {
     log.info("Asking the server to send me events for data with the keys: 999, which will be inserted by the ClientWorker");
 
     // TODO-05: Using the Region API, register interest in the entry who's key is 999 (this will be inserted by the ClientWorker)
+    region.registerInterest(999L);
 
 
 		/*
