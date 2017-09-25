@@ -2,6 +2,7 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class BookOrder {
   private long orderNumber;
   private long customerNumber;
   private Date orderDate, shipDate;
-  @Singular private List<BookOrderItem> orderItems;
+  private final List<BookOrderItem> orderItems = new ArrayList<>();
   private float shippingCost, totalPrice;
 
 }
