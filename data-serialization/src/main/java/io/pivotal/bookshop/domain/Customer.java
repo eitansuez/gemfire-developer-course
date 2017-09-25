@@ -17,8 +17,7 @@ import java.util.List;
 public class Customer {
   private long customerNumber;
   private String firstName, lastName;
-  @Singular
-  private List<Address> addresses;
+  private Address address;
   @Singular
   private List<Long> bookOrders;
 

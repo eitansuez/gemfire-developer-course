@@ -3,9 +3,7 @@ package io.pivotal.bookshop.domain;
 
 import lombok.*;
 
-@NoArgsConstructor
-@Getter
-@Setter
+@NoArgsConstructor @Getter @Setter
 @ToString(of={"addressLine1", "city", "state", "postalCode", "country", "phoneNumber"})
 @AllArgsConstructor
 @Builder
