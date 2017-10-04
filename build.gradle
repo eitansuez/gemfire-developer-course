@@ -6,14 +6,14 @@ subprojects {
 
   repositories {
     mavenCentral()
-    maven { url 'https://repo.spring.io/libs-milestone' }
     maven { url 'https://repo.spring.io/release' }
+    maven { url 'https://repo.spring.io/libs-milestone' }
   }
 
   sourceCompatibility = 1.8
 
   dependencies {
-    compile 'org.springframework.data:spring-data-gemfire:2.0.0.RC3'
+    compile 'org.springframework.data:spring-data-gemfire:2.0.0.RELEASE'
     compile 'org.projectlombok:lombok:1.16.18'
 
     compile 'org.apache.logging.log4j:log4j-core:2.8.2'
