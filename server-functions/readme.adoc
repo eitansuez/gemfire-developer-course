@@ -73,6 +73,7 @@ This action should produce a jar file in the `build/libs` folder named `server-f
 . `cd` into `build/libs`, and start `gfsh`, and invoke:
 +
 ----
+gfsh> connect
 gfsh> list functions
 ----
 
