@@ -110,6 +110,105 @@ Place your cursor in the console area and hit enter. The program will now procee
 . Make sure that both the `ClientWorker` and `ClientConsumer` have terminated.
 
 
+== Extra Credit:  Transactions with Spring Data GemFire
+
+
+=== Create a `BookService` class
+
+In the `buslogic` package, create a new class named `BookService`.  Annotate it with the Spring annotation `@Component`.
+
+In order for these beans to get automatically picked up by Spring, we need to turn on component scanning.  Add the following to the spring config xml file:
+
+[source.small,xml]
+----
+<context:component-scan base-package="io.pivotal.bookshop.buslogic" />
+----
+
+. Autowire a `BookRepository` into this service class.
+
+. Next, create a method named `addBook` that takes two arguments:  the book's title (a String) and author (another String).
++
+This method should be implemented by:
+
+.. constructing a `Book` object from these two arguments (can omit other fields or default them), and
+.. using the book repository's built-in `save()` method to save the book to the `Book` region
+
+. Finally, annotate the method with `@Transactional`
+
+The resulting code should look similar to this:
+
+[source.small,java]
+----
+package io.pivotal.bookshop.buslogic;
+
+import io.pivotal.bookshop.domain.Book;
+import io.pivotal.bookshop.repositories.BookRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import javax.transaction.Transactional;
+
+@Component
+public class BookService {
+
+  @Autowired
+  BookRepository bookRepository;
+
+  @Transactional
+  public void createBook(String title, String author) {
+    Book book = Book.builder().title(title)
+        .author(author)
+        .build();
+    bookRepository.save(book);
+  }
+}
+----
+
+
+=== Turn on Annotation-based Transactions
+
+In order to enable annotation-based transactions, we must do the following:
+
+. In the spring config xml, set transactions to be "annotation-driven", like this:
++
+[source.small,xml]
+----
+<tx:annotation-driven />
+----
+
+. Next, in the same config xml file, declare the Spring Data GemFire's platform transaction manager, like this:
++
+[source.small,xml]
+----
+<gfe:transaction-manager id="transactionManager" />
+----
+
+=== Write a test client
+
+In this case we won't go to the extent of writing an automated test, just a simple `@Test` annotated method that will call our bookService to create a book.  The idea is to run this test in debug mode, with a breakpoint inside the service method.  When the breakpoint hits, we should be able to inspect the call trace for the thread, and visually validate that the method is called in the context of a wrapping transaction.
+
+. In `BasicSpringClientTests`, autowire a `bookService` bean, and add a test method, something similar to this:
++
+[source.small,java]
+----
+  @Autowired
+  BookService bookService;
+
+  @Test
+  public void shouldBeTransactional() {
+    bookService.createBook("My Life", "Eitan Suez");
+  }
+----
+
+. Now, place your breakpoint, and debug the test (or, run it in debug mode).
++
+Your call stack should show that the method is called within a transaction.  You should see a `TransactionInterceptor` (part of Spring) method named `invokeWithinTransaction` effectively wrap our call in a transaction for us:
++
+image::images/call_trace_annotated.png[alt=Call Trace,width=800]
+
+We now have the ability to write transactional code by simply adorning methods with an annotation.
+
+
 Congratulations! You have completed this lab.
 
 
