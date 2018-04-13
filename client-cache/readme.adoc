@@ -82,7 +82,7 @@ In this final section, you will define a local region and run a test to load and
 
 To begin, open the `BookDao.java` class in the `io.pivotal.bookshop.buslogic` package in the IDE. The purpose of this class is to hide the basic operations involved in creating, reading, updating and deleting entries (the CRUD operations).
 
-Note that the region is defined to store `Book` objects with an `Integer` key as illustrated by the private field defined at the top of the DAO. The constructor is responsible for initializing the region using the `ClientCache` that is passed in. You will implement the basic functionality of this class in the following steps.
+Note that the region is defined to store `Book` objects with an `Long` key as illustrated by the private field defined at the top of the DAO. The constructor is responsible for initializing the region using the `ClientCache` that is passed in. You will implement the basic functionality of this class in the following steps.
 
 . (`TODO-10`) Before implementing the functionality in `BookDao`, open the corresponding JUnit test class (`DataOperationsTests.java` in the `io.pivotal.bookshop.tests` package in `src/test/java`). Take a moment to inspect the various test methods to see how the DAO is used.
 

@@ -39,7 +39,7 @@ public class DataOperationsTests {
 
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     ClientCache cache = new ClientCacheFactory().create();
 
     dao = new BookDao(cache);
